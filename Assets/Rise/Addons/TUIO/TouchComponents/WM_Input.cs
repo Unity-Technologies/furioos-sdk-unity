@@ -1,0 +1,112 @@
+/*
+Unity3d-TUIO connects touch tracking from a TUIO to objects in Unity3d.
+
+Copyright 2011 - Mindstorm Limited (reg. 05071596)
+
+Author - Simon Lerpiniere
+
+This file is part of Unity3d-TUIO.
+
+Unity3d-TUIO is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Unity3d-TUIO is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser Public License for more details.
+
+You should have received a copy of the GNU Lesser Public License
+along with Unity3d-TUIO.  If not, see <http://www.gnu.org/licenses/>.
+
+If you have any questions regarding this library, or would like to purchase 
+a commercial licence, please contact Mindstorm via www.mindstorm.com.
+*/
+
+using System.Text;
+using System.Collections;
+using UnityEngine;
+using System.Linq;
+
+/// <summary>
+/// Provides touch information from Windows 7 to UnityEngine.Touch objects
+/// Must be attached to a GameObject in the Hierachy to be used.
+/// 
+/// Provides exactly the same interface as UnityEngine.Input regarding touch data
+/// allowing any code using UnityEngine.Input to use TuioInput instead.
+/// 
+/// NOTE: DOES NOT WORK IN THE EDITOR, ONLY IN BUILDS
+/// </summary>
+public class WM_Input : MonoBehaviour
+{
+    static TuioComponentBase tracking;
+	
+	static Touch[] frameTouches = new Touch[0];
+	
+	public static readonly bool multiTouchEnabled = true;
+	
+	public static int touchCount
+	{
+		get;
+		private set;
+	}
+	
+	void Awake()
+	{
+		if (Application.platform == RuntimePlatform.WindowsPlayer) tracking = InitTracking(new WM_TrackingComponent());
+	}
+		
+	void Update()
+	{
+		if (tracking == null) return;
+		TuioComponentBase tr = tracking;
+		UpdateTouches(tr);
+	}
+	
+	void UpdateTouches(TuioComponentBase tr)
+	{
+		tr.BuildTouchDictionary();
+		frameTouches = tr.AllTouches.Values.Select(t => t.ToUnityTouch()).ToArray();
+		touchCount = frameTouches.Length;
+	}
+	
+	TuioComponentBase InitTracking(TuioComponentBase tr)
+	{
+		tr.ScreenWidth = Camera.main.pixelWidth;
+		tr.ScreenHeight = Camera.main.pixelHeight;
+		return tr;
+	}
+	
+	public static Touch GetTouch(int index)
+	{
+		return frameTouches[index];		
+	}
+	
+	public static Touch[] touches
+	{
+		get
+		{
+			return frameTouches;
+		}
+	}
+	
+	bool allowQuit = false;
+	
+	void OnApplicationQuit()
+	{
+		if (allowQuit) return;
+		
+		StartCoroutine(doQuit());
+		Application.CancelQuit();
+	}
+	
+	IEnumerator doQuit()
+	{
+		if (tracking != null) tracking.Close();
+		yield return null;
+		allowQuit = true;
+		
+		Application.Quit();
+	}
+}

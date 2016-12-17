@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: DynamicSky
+  m_Shader: {fileID: 4800000, guid: 8c927139d43a8a642a2e625bb187a4c2, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 5
+  m_CustomRenderQueue: -1
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+      data:
+        first:
+          name: _MainTex
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: stars
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: StarsTexture
+        second:
+          m_Texture: {fileID: 2800000, guid: c0116d0e0e58922489109142ea43f793, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _StarsTexture
+        second:
+          m_Texture: {fileID: 2800000, guid: c0116d0e0e58922489109142ea43f793, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
+      data:
+        first:
+          name: day_of_year
+        second: 204.461533
+      data:
+        first:
+          name: SunPan
+        second: -.230769232
+      data:
+        first:
+          name: SunTilt
+        second: .769230783
+      data:
+        first:
+          name: _SunPan
+        second: .661538482
+      data:
+        first:
+          name: _SunTilt
+        second: .230769247
+      data:
+        first:
+          name: _DayProgress
+        second: .412658691
+    m_Colors:
+      data:
+        first:
+          name: _Color
+        second: {r: .588235319, g: .588235319, b: .588235319, a: 1}
+      data:
+        first:
+          name: _SunOrientation
+        second: {r: .380801022, g: .800776482, b: .462328464, a: 1}
+      data:
+        first:
+          name: _AmbianceCoefficients
+        second: {r: 0, g: 0, b: .854991078, a: .145008951}
+      data:
+        first:
+          name: _SunColor
+        second: {r: .333333343, g: .166666672, b: 0, a: .333333343}
+      data:
+        first:
+          name: _MorningZenithColor
+        second: {r: .153925166, g: .324076086, b: .536764741, a: 1}
+      data:
+        first:
+          name: _MorningMediumColor
+        second: {r: .58477509, g: .630688429, b: .764705896, a: 1}
+      data:
+        first:
+          name: _MorningHorizonColor
+        second: {r: .801470578, g: .695203483, b: .548064411, a: 1}
+      data:
+        first:
+          name: _NoonZenithColor
+        second: {r: .289999992, g: .540000021, b: .819999993, a: 1}
+      data:
+        first:
+          name: _NoonMediumColor
+        second: {r: .629999995, g: .829999983, b: 1, a: 1}
+      data:
+        first:
+          name: _NoonHorizonColor
+        second: {r: .829999983, g: .939999998, b: 1, a: 1}
+      data:
+        first:
+          name: _EveningZenithColor
+        second: {r: .305147052, g: .314769417, b: .5, a: 1}
+      data:
+        first:
+          name: _EveningMediumColor
+        second: {r: .985294104, g: .884923339, b: .709991336, a: 1}
+      data:
+        first:
+          name: _EveningHorizonColor
+        second: {r: .845588207, g: .432938516, b: .242484838, a: 1}
+      data:
+        first:
+          name: daytime
+        second: {r: 4.5999999, g: 29.8700008, b: 0, a: 0}
+      data:
+        first:
+          name: MorningZenithColor
+        second: {r: 0, g: .119999997, b: .270000011, a: 1}
+      data:
+        first:
+          name: MorningMediumColor
+        second: {r: 1, g: .939999998, b: .800000012, a: 1}
+      data:
+        first:
+          name: MorningHorizonColor
+        second: {r: .819999993, g: .560000002, b: .25, a: 1}
+      data:
+        first:
+          name: NoonZenithColor
+        second: {r: .289999992, g: .540000021, b: .819999993, a: 1}
+      data:
+        first:
+          name: NoonMediumColor
+        second: {r: .629999995, g: .829999983, b: 1, a: 1}
+      data:
+        first:
+          name: NoonHorizonColor
+        second: {r: .829999983, g: .939999998, b: 1, a: 1}
+      data:
+        first:
+          name: EveningZenithColor
+        second: {r: .00999999978, g: .0299999993, b: .100000001, a: 1}
+      data:
+        first:
+          name: EveningMediumColor
+        second: {r: .0599999987, g: .119999997, b: .219999999, a: 1}
+      data:
+        first:
+          name: EveningHorizonColor
+        second: {r: .779999971, g: .560000002, b: .340000004, a: 1}
