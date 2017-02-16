@@ -22,13 +22,6 @@ namespace Rise.Core {
 		}
 
 		public override void RenderGui(RenderTexture guiTexture){
-			GL.PushMatrix();
-			GL.LoadPixelMatrix(0,OutputModesManager.RenderWidth,OutputModesManager.RenderHeight,0);
-
-			Graphics.DrawTexture (new Rect(0, 0,OutputModesManager.RenderWidth, OutputModesManager.RenderHeight),
-			                      RSSceneManager.GetInstance<RSUI>().UiTexture);
-
-			GL.PopMatrix();
 		}
 	}
 }

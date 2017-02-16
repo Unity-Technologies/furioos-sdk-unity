@@ -13,13 +13,13 @@ namespace Rise.Features.PathFinding {
 		private float lastTimeCheck;
 		
 		private Animation animationComponent;
-		private NavMeshAgent agent;
+		private UnityEngine.AI.NavMeshAgent agent;
 
 		private List<Vector3> listPoints;
 
 		public void Start() {
 			animationComponent = gameObject.GetComponent<Animation> ();
-			agent = gameObject.GetComponent<NavMeshAgent>();
+			agent = gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
 
 			listPoints = new List<Vector3> ();
 

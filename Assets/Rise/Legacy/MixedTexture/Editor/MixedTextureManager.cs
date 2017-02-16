@@ -63,7 +63,7 @@ public class MixedTextureManager : EditorWindow
 		
 		TextureImporter textureImporter = (TextureImporter) AssetImporter.GetAtPath(texturePathAndName) ;
 		
-		textureImporter.textureType   = TextureImporterType.Image ;
+		textureImporter.textureType   = TextureImporterType.Default ;
 		textureImporter.textureFormat = TextureImporterFormat.ARGB32 ;
 		textureImporter.isReadable = true ;
 		textureImporter.mipmapEnabled = false ;

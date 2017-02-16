@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Observ3d/Specific/SP-Water"
 {
    Properties
@@ -55,12 +57,12 @@ Shader "Observ3d/Specific/SP-Water"
          {
             vertexOutput output;
  
-            output.viewDir   = float3(mul(_Object2World, input.vertex) - float4(_WorldSpaceCameraPos, 1.0));
+            output.viewDir   = float3(mul(unity_ObjectToWorld, input.vertex) - float4(_WorldSpaceCameraPos, 1.0));
             output.pos       = mul(UNITY_MATRIX_MVP, input.vertex);
             output.texcoord  = input.texcoord;
             
-            output.tangentWorld  = normalize(float3(mul(_Object2World, float4(float3(input.tangent), 0.0))));
-            output.normalWorld   = normalize(mul(_Object2World, float4(input.normal, 0.0))).xyz;//normalize(mul(float4(input.normal, 0.0), _World2Object));
+            output.tangentWorld  = normalize(float3(mul(unity_ObjectToWorld, float4(float3(input.tangent), 0.0))));
+            output.normalWorld   = normalize(mul(unity_ObjectToWorld, float4(input.normal, 0.0))).xyz;//normalize(mul(float4(input.normal, 0.0), _World2Object));
             output.binormalWorld = normalize(cross(output.normalWorld, output.tangentWorld) * input.tangent.w);
             
             return output;

@@ -54,7 +54,7 @@ public class ExrLightmapTo : ScriptableWizard {
 			
 			TextureImporter dstTextureImporter = (TextureImporter) AssetImporter.GetAtPath(dstTexturePath) ;
 			
-			dstTextureImporter.textureType   = TextureImporterType.Advanced ;
+			dstTextureImporter.textureType   = TextureImporterType.Default ;
 			dstTextureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor ;
 			dstTextureImporter.isReadable = true ;
 			dstTextureImporter.mipmapEnabled = false ;

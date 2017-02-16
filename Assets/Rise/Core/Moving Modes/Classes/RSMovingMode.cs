@@ -42,7 +42,7 @@ namespace Rise.Core {
 
 				if(OnPreactivate!=null)OnPreactivate(this);
 
-				Debug.Log ("Activating moving mode " + ToString());
+				//Debug.Log ("Activating moving mode " + ToString());
 
 				LastActivityTime = Time.time;
 

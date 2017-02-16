@@ -48,7 +48,7 @@ namespace Rise.Core {
 		}
 
 		public void Start(){
-			Debug.Log("Starting moving modes manager");
+			//Debug.Log("Starting moving modes manager");
 
 			List<RSMovingMode> movingModes = GetAvailableMovingModes();
 

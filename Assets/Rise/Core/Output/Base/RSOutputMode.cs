@@ -33,22 +33,22 @@ namespace Rise.Core {
 		}
 
 		public virtual void AttachToMovingMode(RSMovingMode movingMode){
-			Debug.Log("Attaching " + ToString()+" to "+movingMode.ToString());
+			//Debug.Log("Attaching " + ToString()+" to "+movingMode.ToString());
 		}
 		
 
 		public virtual void DetachFromMovingMode(){
-			Debug.Log("Detaching " + ToString()+" from moving mode");
+			//Debug.Log("Detaching " + ToString()+" from moving mode");
 		}
 
 		void OnEnable(){
 			if(OnPreactivate!=null)OnPreactivate(this);
-			Debug.Log("Enabling output mode " + ToString());
+			//Debug.Log("Enabling output mode " + ToString());
 			if(OnActivated!=null)OnActivated(this);
 		}
 
 		void OnDisable(){
-			Debug.Log("Disabling output mode " + ToString());
+			//Debug.Log("Disabling output mode " + ToString());
 			if(OnDesactivated!=null)OnDesactivated(this);
 		}
 

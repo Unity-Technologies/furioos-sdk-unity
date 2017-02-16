@@ -85,11 +85,6 @@ namespace Rise.Core {
 			get;
 			set;
 		}
-
-		protected OVRDevice OculusDevice{
-			get;
-			private set;
-		}
 		
 		protected float ScenePan{
 			get{ return 0; }
@@ -185,7 +180,6 @@ namespace Rise.Core {
 		
 		public void StartPanTilt(){
 			if(savedUseDeviceOrientationSet)useDeviceOrientation = savedUseDeviceOrientation;
-			OculusDevice = RSSceneManager.GetInstance<OVRDevice>();
 			Pan = startPan;
 			Tilt = startTilt;
 			
@@ -397,21 +391,7 @@ namespace Rise.Core {
 		}
 		
 		void UpdateOculusOrientation(){
-			if(!deviceOrientationComputed && OculusDevice!=null){
-				Quaternion devOri = new Quaternion();
-				Vector3 devPos = new Vector3();
-				OVRDevice.GetCameraPositionOrientation(ref devPos,ref devOri);
-				
-				deviceTilt = devOri.eulerAngles.x;
-				deviceTilt = deviceTilt>180 ? - deviceTilt + 360 : - deviceTilt;
 
-				DevicePan = devOri.eulerAngles.y;
-				
-				deviceRoll = devOri.eulerAngles.z;
-				deviceRoll = deviceRoll>180 ? deviceRoll - 360 : deviceRoll;
-
-				deviceOrientationComputed = true;
-			}
 		}
 		
 			

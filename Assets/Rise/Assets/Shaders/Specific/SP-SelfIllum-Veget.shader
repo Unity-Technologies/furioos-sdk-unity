@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Observ3d/Specific/SP-Selfillum-Veget" {
 	Properties {
 		_Color ("Main Color", Color) = (1, 1, 1, 1)
@@ -44,8 +46,8 @@ SubShader {
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-				half3 worldNormal = mul((float3x3)_Object2World,v.normal);
-				half4 worldPosition = mul(_Object2World,v.vertex);
+				half3 worldNormal = mul((float3x3)unity_ObjectToWorld,v.normal);
+				half4 worldPosition = mul(unity_ObjectToWorld,v.vertex);
 				half3 worldViewDir = normalize(_WorldSpaceCameraPos.xyz - worldPosition);
 				o.viewCoeff = abs(dot(worldViewDir,worldNormal));
 				return o;
@@ -106,8 +108,8 @@ SubShader {
 				v2f o;
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-				half3 worldNormal = mul((float3x3)_Object2World,v.normal);
-				half4 worldPosition = mul(_Object2World,v.vertex);
+				half3 worldNormal = mul((float3x3)unity_ObjectToWorld,v.normal);
+				half4 worldPosition = mul(unity_ObjectToWorld,v.vertex);
 				half3 worldViewDir = normalize(_WorldSpaceCameraPos.xyz - worldPosition);
 				o.viewCoeff = abs(dot(worldViewDir,worldNormal));
 				return o;

@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+
 Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Bump-Mask-DS" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
@@ -55,11 +57,11 @@ Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Bump-Mask-DS
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.uv_MaskMap = TRANSFORM_TEX(v.texcoord, _MaskMap);
-				o.worldNormal = normalize( mul((float3x3)_Object2World,v.normal));
+				o.worldNormal = normalize( mul((float3x3)unity_ObjectToWorld,v.normal));
 				o.uv_BumpMap = TRANSFORM_TEX(v.texcoord, _BumpMap);
 				float3 binormal = cross( v.normal, v.tangent.xyz ) * v.tangent.w;
-				o.worldBinormal = normalize( mul((float3x3)_Object2World,binormal));
-				o.worldTangent = normalize( mul((float3x3)_Object2World,v.tangent.xyz));
+				o.worldBinormal = normalize( mul((float3x3)unity_ObjectToWorld,binormal));
+				o.worldTangent = normalize( mul((float3x3)unity_ObjectToWorld,v.tangent.xyz));
 				return o;
 			}
 			
@@ -121,11 +123,11 @@ Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Bump-Mask-DS
 				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.uv_MaskMap = TRANSFORM_TEX(v.texcoord, _MaskMap);
-				o.worldNormal = normalize( mul((float3x3)_Object2World,v.normal));
+				o.worldNormal = normalize( mul((float3x3)unity_ObjectToWorld,v.normal));
 				o.uv_BumpMap = TRANSFORM_TEX(v.texcoord, _BumpMap);
 				float3 binormal = cross( v.normal, v.tangent.xyz ) * v.tangent.w;
-				o.worldBinormal = normalize( mul((float3x3)_Object2World,binormal));
-				o.worldTangent = normalize( mul((float3x3)_Object2World,v.tangent.xyz));
+				o.worldBinormal = normalize( mul((float3x3)unity_ObjectToWorld,binormal));
+				o.worldTangent = normalize( mul((float3x3)unity_ObjectToWorld,v.tangent.xyz));
 				return o;
 			}
 			
