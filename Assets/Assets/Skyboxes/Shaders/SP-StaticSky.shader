@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Specific/SP-StaticSky" {
 
 	Properties {
@@ -42,7 +44,7 @@ Shader "Observ3d/Specific/SP-StaticSky" {
 			v2f vert (appdata_t v)
 				{
 				    v2f o;
-				    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				    o.pos = UnityObjectToClipPos (v.vertex);
 				    o.pos.z = 0.9999999 * o.pos.w;
 				    o.uv = TRANSFORM_TEX (float2(v.uv.x+_OrientationOffset,v.uv.y), _MainTex);
 				    return o;

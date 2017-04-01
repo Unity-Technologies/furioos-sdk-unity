@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Specific/SP-DynamicSky" {
 	Properties {
 		_MainTex   ("Stars (RGB)", 2D) = "black" {}
@@ -68,7 +70,7 @@ Shader "Observ3d/Specific/SP-DynamicSky" {
 				v2f vert (appdata_t v)
 				{
 				    v2f o;
-				    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				    o.pos = UnityObjectToClipPos (v.vertex);
 				    o.pos.z = 0.9999999 * o.pos.w;
 				    o.uv = TRANSFORM_TEX (v.uv, _MainTex);
 				    o.orient = float3(

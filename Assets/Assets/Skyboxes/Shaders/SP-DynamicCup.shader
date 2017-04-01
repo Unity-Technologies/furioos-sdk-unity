@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Specific/SP-DynamicCup" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
@@ -44,7 +46,7 @@ Shader "Observ3d/Specific/SP-DynamicCup" {
 				v2f vert (appdata_t v)
 				{
 				    v2f o;
-				    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				    o.pos = UnityObjectToClipPos (v.vertex);
 				    o.pos.z = 0.9999999 * o.pos.w;
 				    o.uv = TRANSFORM_TEX (float2(v.uv.x+_OrientationOffset,v.uv.y), _MainTex);
 				    return o;
@@ -92,7 +94,7 @@ Shader "Observ3d/Specific/SP-DynamicCup" {
 				v2f vert (appdata_t v)
 				{
 				    v2f o;
-				    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				    o.pos = UnityObjectToClipPos (v.vertex);
 				    o.uv = TRANSFORM_TEX (float2(v.uv.x+_OrientationOffset,v.uv.y), _MainTex);
 				    return o;
 				}

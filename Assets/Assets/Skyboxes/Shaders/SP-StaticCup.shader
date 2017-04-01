@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Specific/SP-StaticCup" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
@@ -41,7 +43,7 @@ Shader "Observ3d/Specific/SP-StaticCup" {
 				v2f vert (appdata_t v)
 				{
 				    v2f o;
-				    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				    o.pos = UnityObjectToClipPos (v.vertex);
 				    o.uv = TRANSFORM_TEX (float2(v.uv.x+_OrientationOffset,v.uv.y), _MainTex);
 				    return o;
 				}
@@ -91,7 +93,7 @@ Shader "Observ3d/Specific/SP-StaticCup" {
 				v2f vert (appdata_t v)
 				{
 				    v2f o;
-				    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+				    o.pos = UnityObjectToClipPos (v.vertex);
 				    o.uv = o.uv = TRANSFORM_TEX (float2(v.uv.x+_OrientationOffset,v.uv.y), _MainTex);
 				    return o;
 				}

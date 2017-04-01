@@ -56,14 +56,8 @@ float4 _MainTex_ST;
 v2f vert (appdata_t v)
 {
 	v2f o;
-	o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-	#if UNITY_UV_STARTS_AT_TOP
-	float scale = -1.0;
-	#else
-	float scale = 1.0;
-	#endif
-	o.uvgrab.xy = (float2(o.vertex.x, o.vertex.y*scale) + o.vertex.w) * 0.5;
-	o.uvgrab.zw = o.vertex.zw;
+	o.vertex = UnityObjectToClipPos(v.vertex);
+	o.uvgrab = ComputeGrabScreenPos(o.vertex);
 	o.uvbump = TRANSFORM_TEX( v.texcoord, _BumpMap );
 	o.uvmain = TRANSFORM_TEX( v.texcoord, _MainTex );
 	UNITY_TRANSFER_FOG(o,o.vertex);

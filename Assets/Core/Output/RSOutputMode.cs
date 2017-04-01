@@ -59,7 +59,7 @@ namespace Rise.Core {
 			dst.fieldOfView  = src.fieldOfView ;
 			dst.cullingMask  = src.cullingMask ;
 			dst.clearFlags = src.clearFlags;
-			dst.hdr = src.hdr;
+			dst.allowHDR = src.allowHDR;
 			dst.renderingPath = src.renderingPath;
 			dst.backgroundColor = src.backgroundColor;
 			dst.orthographic = src.orthographic;

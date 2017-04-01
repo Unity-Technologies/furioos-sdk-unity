@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Cutout-DS" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
@@ -36,7 +38,7 @@ Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Cutout-DS" {
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				return o;
 			}
@@ -77,7 +79,7 @@ Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Cutout-DS" {
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				return o;
 			}

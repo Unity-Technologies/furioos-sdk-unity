@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Observ3d/Specific/SP-Selfillum-Veget" {
@@ -44,7 +46,7 @@ SubShader {
 			v2f vert (appdata_t v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 				half3 worldNormal = mul((float3x3)unity_ObjectToWorld,v.normal);
 				half4 worldPosition = mul(unity_ObjectToWorld,v.vertex);
@@ -106,7 +108,7 @@ SubShader {
 			v2f vert (appdata_t v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 				half3 worldNormal = mul((float3x3)unity_ObjectToWorld,v.normal);
 				half4 worldPosition = mul(unity_ObjectToWorld,v.vertex);

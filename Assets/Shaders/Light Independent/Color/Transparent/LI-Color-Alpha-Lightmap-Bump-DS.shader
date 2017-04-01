@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Lightmap-Bump-DS" {
@@ -59,7 +61,7 @@ Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Lightmap-Bum
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.uv2_LightMap = TRANSFORM_TEX(v.texcoord1, _LightMap);
 				o.worldNormal = normalize( mul((float3x3)unity_ObjectToWorld,v.normal));
@@ -128,7 +130,7 @@ Shader "Observ3d/Light Independent/Color/Transparent/LI-Color-Alpha-Lightmap-Bum
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.uv2_LightMap = TRANSFORM_TEX(v.texcoord1, _LightMap);
 				o.worldNormal = normalize( mul((float3x3)unity_ObjectToWorld,v.normal));

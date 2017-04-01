@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Observ3d/Light Independent/Color/Opaque/LI-Color-Bump-Reflect" {
@@ -64,7 +66,7 @@ Shader "Observ3d/Light Independent/Color/Opaque/LI-Color-Bump-Reflect" {
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.worldPosition = mul(unity_ObjectToWorld,v.vertex);
 				o.worldNormal = normalize( mul((float3x3)unity_ObjectToWorld,v.normal));

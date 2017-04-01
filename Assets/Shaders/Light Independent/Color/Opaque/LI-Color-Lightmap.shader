@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Light Independent/Color/Opaque/LI-Color-Lightmap" {
 	Properties {
 		_Color ("Main Color", Color) = (1,1,1,1)
@@ -42,7 +44,7 @@ Shader "Observ3d/Light Independent/Color/Opaque/LI-Color-Lightmap" {
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.uv2_LightMap = TRANSFORM_TEX(v.texcoord1, _LightMap);
 				return o;

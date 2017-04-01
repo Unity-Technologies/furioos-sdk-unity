@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "Observ3d/Light Independent/Textured/Transparent/LI-Texture-Alpha-Lightmap-Reflect-DS" {
@@ -71,7 +73,7 @@ Shader "Observ3d/Light Independent/Textured/Transparent/LI-Texture-Alpha-Lightma
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.uv_MainTex = TRANSFORM_TEX(v.texcoord, _MainTex);
 				o.uv2_LightMap = TRANSFORM_TEX(v.texcoord1, _LightMap);
@@ -146,7 +148,7 @@ Shader "Observ3d/Light Independent/Textured/Transparent/LI-Texture-Alpha-Lightma
 			
 			FragInput vert (VertInput v) {
 				FragInput o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.vertex.z -= _AntiFlick*o.vertex.w;
 				o.uv_MainTex = TRANSFORM_TEX(v.texcoord, _MainTex);
 				o.uv2_LightMap = TRANSFORM_TEX(v.texcoord1, _LightMap);

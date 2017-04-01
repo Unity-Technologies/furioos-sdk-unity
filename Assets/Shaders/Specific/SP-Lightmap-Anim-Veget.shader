@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Specific/SP-Lightmap-Anim-Veget" {
 	Properties {
 		_Color ("Main Color", Color) = (1, 1, 1, 1)
@@ -67,7 +69,7 @@ Shader "Observ3d/Specific/SP-Lightmap-Anim-Veget" {
 		final_offset.y = lerp(breeze_offset.y, wind_offset.y, wind_force);
 		final_offset.z = breeze_offset.z;
 		
-		o.vertex = mul(UNITY_MATRIX_MVP, v.vertex + fixed4(final_offset, 0.0));
+		o.vertex = UnityObjectToClipPos(v.vertex + fixed4(final_offset, 0.0));
 		o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 		o.texcoord1 = TRANSFORM_TEX(v.texcoord1, _LightMap);
 		return o;

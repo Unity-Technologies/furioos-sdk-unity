@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Observ3d/Specific/SP-Texture-Mask-Matrix" {
 	Properties {
 		_Color ("Main Color", COLOR) = (1,1,1,1)
@@ -36,7 +38,7 @@ Shader "Observ3d/Specific/SP-Texture-Mask-Matrix" {
 			{
 			    v2f o;
 			    float2 texcoordMainTex = mul(_Rotation, v.texcoord);
-			    o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+			    o.pos = UnityObjectToClipPos (v.vertex);
 			    o.uv = TRANSFORM_TEX (v.texcoord, _MainTex);
 			    o.uv2 = TRANSFORM_TEX (v.texcoord, _Alpha);
 			    return o;
