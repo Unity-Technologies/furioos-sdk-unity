@@ -1,0 +1,16 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Features\DataModel\Package\Package.cs">
+    <Files>
+      <File FileName="Assets\Features\DataModel\Model\Model.cs" Line="7" Column="1" />
+      <File FileName="Assets\Core\Network\RSWebRequest.cs" Line="17" Column="19" />
+      <File FileName="Assets\Core\App\RSAppManager.cs" Line="59" Column="51" />
+      <File FileName="Assets\Features\DataModel\Data\Data.cs" Line="41" Column="19" />
+      <File FileName="Assets\Features\DataModel\Package\Package.cs" Line="59" Column="9" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

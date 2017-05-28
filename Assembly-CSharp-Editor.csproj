@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{9EFD10FC-E4CA-EAEB-E090-4B18FFEC5CF9}</ProjectGuid>
+    <ProjectGuid>{9EC80D2F-4775-D674-CE81-05FC6B163345}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_0;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_ANDROID;ENABLE_SUBSTANCE;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_VR;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;UNITY_HAS_GOOGLEVR;ENABLE_DUCK_TYPING</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_1;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
@@ -46,10 +46,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Addons\LeanTween\Editor\LeanTweenDocumentationEditor.cs" />
-     <Compile Include="Assets\Features\Tools\Editor\ExrLightmapToPng.cs" />
-     <Compile Include="Assets\Features\Tools\Editor\Flipper.cs" />
-     <Compile Include="Assets\Features\Tools\Editor\RenderIntoCubemap.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\AccordionElementEditor.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\BoxSliderEditor.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\CanvasGroupActivator.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\CompressionTests.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\NonDrawingGraphicEditor.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\TextPicEditor.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\UIExtensionsMenuOptions.cs" />
+     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\uGUITools.cs" />
+     <Compile Include="Assets\Src\Viewer\Tools\Editor\ExrLightmapToPng.cs" />
+     <Compile Include="Assets\Src\Viewer\Tools\Editor\Flipper.cs" />
+     <Compile Include="Assets\Src\Viewer\Tools\Editor\RenderIntoCubemap.cs" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Reflect-Mask-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Cutout.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Mask-DS.shader" />
@@ -65,6 +72,7 @@
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Reflect-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Cutout-DS.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIAdditive.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Opaque\LI-Texture-Bump.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Opaque\LI-Texture-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Bump-Reflect-Mask-Cutout.shader" />
@@ -92,7 +100,6 @@
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Mask-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Reflect-Mask-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Reflect-Mask-DS.shader" />
-     <None Include="Assets\Addons\LeanTween\Examples\Archived\2dUnlitWithFade.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Bump-Reflect-Cutout.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Bump-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump.shader" />
@@ -116,6 +123,7 @@
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Reflect-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Bump-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-DS.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UISoftAdditive.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Mask-Cutout.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Bump-Cutout-DS.shader" />
@@ -140,7 +148,7 @@
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Bump-Mask-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Opaque\LI-Color-Reflect-DS.shader" />
      <None Include="Assets\Standard Assets\Effects\ImageEffects\Readme.txt" />
-     <None Include="Assets\Addons\LeanTween\ReadMe.txt" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIParticleHidden.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Opaque\LR-Texture-Bump-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Bump-Reflect.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Reflect-DS.shader" />
@@ -148,6 +156,7 @@
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Reflect-Cutout.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Mask.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Cutout.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\SoftMaskShader.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Opaque\LR-Texture-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Bump-Mask-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Reflect-Mask-DS.shader" />
@@ -158,6 +167,7 @@
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Reflect-Mask.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Cutout.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Scripts\Utilities\Serialization\Surrogates\SurrogatesReadMe.txt" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Bump-Mask.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Bump-Reflect-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Bump-DS.shader" />
@@ -183,7 +193,7 @@
      <None Include="Assets\Shaders\Light Responsive\Textured\Opaque\LR-Texture-Lightmap.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Reflect-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Cutout.shader" />
-     <None Include="Assets\Features\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Alpha-Matrix.shader" />
+     <None Include="Assets\Src\Viewer\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Alpha-Matrix.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Reflect-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Bump-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Bump-Mask-Cutout-DS.shader" />
@@ -200,7 +210,6 @@
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Reflect-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Opaque\LR-Texture-Lightmap-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Reflect-Cutout-DS.shader" />
-     <None Include="Assets\Assets\Skyboxes\Shaders\SP-StaticSky.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Reflect.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Reflect.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Opaque\LR-Texture-Lightmap-Bump-DS.shader" />
@@ -223,7 +232,7 @@
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Reflect-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Reflect-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Bump-Cutout-DS.shader" />
-     <None Include="Assets\Features\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Alpha-Mask.shader" />
+     <None Include="Assets\Src\Viewer\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Alpha-Mask.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Reflect-Mask-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-DS.shader" />
@@ -238,6 +247,7 @@
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Mask.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Reflect-Mask.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIImageCrop.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Bump-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Bump-Reflect-Cutout.shader" />
@@ -250,11 +260,11 @@
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Reflect.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Opaque\LI-Texture-Lightmap-Reflect.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Reflect-Mask-Cutout-DS.shader" />
-     <None Include="Assets\Assets\Skyboxes\Shaders\SP-DynamicSky.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Reflect-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Bump-Reflect-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Bump-Reflect-Mask-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Opaque\LR-Texture-Lightmap-Bump.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UILinearDodge.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Opaque\LR-Color-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Reflect-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Reflect-Cutout-DS.shader" />
@@ -285,12 +295,12 @@
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Bump-Reflect-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Reflect-Mask.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Mask-Cutout.shader" />
-     <None Include="Assets\Assets\Skyboxes\Shaders\SP-DynamicCup.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Reflect-Mask-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Cutout.shader" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorLight.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Bump-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Bump-Reflect.shader" />
+     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Reflect-Cutout.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Reflect.shader" />
@@ -319,6 +329,7 @@
      <None Include="Assets\Shaders\Light Independent\Color\Opaque\LI-Color-Lightmap-Bump-Reflect.shader" />
      <None Include="Assets\Shaders\Specific\SP-Water.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Reflect-DS.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIMultiply.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Bump-Reflect-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Bump-Reflect-Mask-Cutout.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Mask-Cutout-DS.shader" />
@@ -330,7 +341,6 @@
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Bump.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Opaque\LI-Texture-Lightmap-Bump-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Bump-Mask.shader" />
-     <None Include="Assets\Addons\LeanTween\License.txt" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Opaque\LR-Texture-Bump-Reflect.shader" />
      <None Include="Assets\Standard Assets\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Opaque\LI-Texture-Bump-Reflect.shader" />
@@ -341,10 +351,10 @@
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Opaque\LR-Color-Lightmap-Bump-Reflect-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Reflect-Cutout.shader" />
-     <None Include="Assets\Features\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Mask-Matrix.shader" />
+     <None Include="Assets\Src\Viewer\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Mask-Matrix.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Reflect-Mask-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Bump-Reflect-Mask-DS.shader" />
-     <None Include="Assets\Features\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Alpha-Mask-Matrix.shader" />
+     <None Include="Assets\Src\Viewer\MovingModes\MiniMap\Assets\Shaders\SP-Texture-Alpha-Mask-Matrix.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Reflect-Mask.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Mask-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Opaque\LR-Color-Bump.shader" />
@@ -380,13 +390,13 @@
      <None Include="Assets\Shaders\Specific\SP-Overlay-Texture.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Bump.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Opaque\LI-Texture-Lightmap-Bump.shader" />
+     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIScreen.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Opaque\LR-Color-Lightmap-Bump-Reflect.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Bump-Cutout.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Mask.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap-Bump-Mask.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Bump-Reflect-DS.shader" />
-     <None Include="Assets\Assets\Skyboxes\Shaders\SP-StaticCup.shader" />
      <None Include="Assets\Shaders\Light Responsive\Color\Transparent\LR-Color-Alpha-Lightmap.shader" />
      <None Include="Assets\Shaders\Specific\SP-Overlay-Color.shader" />
      <None Include="Assets\Shaders\Light Independent\Color\Transparent\LI-Color-Alpha-Lightmap-Bump-Cutout-DS.shader" />
@@ -402,9 +412,6 @@
      <None Include="Assets\Shaders\Light Responsive\Textured\Transparent\LR-Texture-Alpha-Lightmap-Reflect-Mask.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Reflect-Mask-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Cutout-DS.shader" />
- <Reference Include="Assembly-UnityScript">
- <HintPath>D:/Projects/Rise/Rise_Client/Library/ScriptAssemblies/Assembly-UnityScript.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.Advertisements">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
  </Reference>
@@ -480,9 +487,9 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{C2F1253E-BAB8-449C-A54F-917701FFA192}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+      <Project>{4F22AAD9-B426-634C-4B04-B849F0394E54}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{FCC94B79-6730-5AA8-E4C0-A62ABAD1F3DB}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+      <Project>{3DE48259-833A-F435-265D-6C022EB68198}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
