@@ -198,6 +198,9 @@
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\Utilities\switchToRectTransform.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\VR Extensions\VRCursor.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\VR Extensions\VRInputModule.cs" />
+     <Compile Include="Assets\Src\App\Controllers\AppController.cs" />
+     <Compile Include="Assets\Src\App\Controllers\CategoryController.cs" />
+     <Compile Include="Assets\Src\App\Controllers\ProjectController.cs" />
      <Compile Include="Assets\Src\App\Models\Category.cs" />
      <Compile Include="Assets\Src\App\Models\Data.cs" />
      <Compile Include="Assets\Src\App\Models\Organisation.cs" />
