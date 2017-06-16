@@ -206,8 +206,13 @@
      <Compile Include="Assets\Src\App\Models\Organisation.cs" />
      <Compile Include="Assets\Src\App\Models\Package.cs" />
      <Compile Include="Assets\Src\App\Models\Project.cs" />
-     <Compile Include="Assets\Src\Core\App\RSAppManagerModule.cs" />
-     <Compile Include="Assets\Src\Core\App\RSManager.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailDataViewModel.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailMediaIndicatorViewModel.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailMediaPreviewViewModel.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailSubProjectViewModel.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailViewModel.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectMenuItemViewModel.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectViewModel.cs" />
      <Compile Include="Assets\Src\Core\Behaviour\RSBehaviour.cs" />
      <Compile Include="Assets\Src\Core\Behaviour\RSUniqueBehaviour.cs" />
      <Compile Include="Assets\Src\Core\Input\Manager\RSInputManager.cs" />
@@ -217,6 +222,8 @@
      <Compile Include="Assets\Src\Core\Input\RSFingerTouch.cs" />
      <Compile Include="Assets\Src\Core\Input\RSInputBinding.cs" />
      <Compile Include="Assets\Src\Core\Loader\Loader.cs" />
+     <Compile Include="Assets\Src\Core\Manager\RSAppManagerModule.cs" />
+     <Compile Include="Assets\Src\Core\Manager\RSManager.cs" />
      <Compile Include="Assets\Src\Core\Math\Matrix.cs" />
      <Compile Include="Assets\Src\Core\Math\Matrix3DTools.cs" />
      <Compile Include="Assets\Src\Core\MovingMode\Manager\RSMovingModesManager.cs" />

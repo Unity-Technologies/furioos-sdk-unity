@@ -1,8 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Addons\unity-ui-extensions\Scripts\Effects\Gradient.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\App\ViewModels\ProjectViewModel.cs">
     <Files>
-      <File FileName="Assets\Addons\unity-ui-extensions\Scripts\Effects\Gradient.cs" Line="61" Column="1" />
+      <File FileName="Assets\Src\App\ViewModels\ProjectDetailViewModel.cs" Line="11" Column="12" />
+      <File FileName="Assets\Src\App\ViewModels\ProjectDetailMediaPreviewViewModel.cs" Line="7" Column="21" />
+      <File FileName="Assets\Src\App\ViewModels\ProjectMenuItemViewModel.cs" Line="7" Column="12" />
+      <File FileName="Assets\Src\App\ViewModels\ProjectDetailSubProjectViewModel.cs" Line="7" Column="12" />
+      <File FileName="Assets\Src\App\ViewModels\ProjectViewModel.cs" Line="7" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

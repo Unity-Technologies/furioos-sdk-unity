@@ -54,6 +54,7 @@
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\TextPicEditor.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\UIExtensionsMenuOptions.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\uGUITools.cs" />
+     <Compile Include="Assets\Src\Editor\FBXImporter.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\Editor\ExrLightmapToPng.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\Editor\Flipper.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\Editor\RenderIntoCubemap.cs" />
