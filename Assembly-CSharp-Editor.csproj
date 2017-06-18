@@ -54,7 +54,10 @@
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\TextPicEditor.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\UIExtensionsMenuOptions.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\uGUITools.cs" />
-     <Compile Include="Assets\Src\Editor\FBXImporter.cs" />
+     <Compile Include="Assets\SDK\Editor\Importer\Classes\RSImporterMaterial.cs" />
+     <Compile Include="Assets\SDK\Editor\Importer\Classes\RSImporterMesh.cs" />
+     <Compile Include="Assets\SDK\Editor\Importer\Classes\RSImporterModel.cs" />
+     <Compile Include="Assets\SDK\Editor\Importer\RSImporter.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\Editor\ExrLightmapToPng.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\Editor\Flipper.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\Editor\RenderIntoCubemap.cs" />
@@ -478,6 +481,9 @@
  </Reference>
  <Reference Include="UnityEditor.OSXStandalone.Extensions">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>D:/Projects/Rise/rise-unity-client/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

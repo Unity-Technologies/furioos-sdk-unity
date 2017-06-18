@@ -129,7 +129,6 @@
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\Effects\ShineEffector.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\Effects\SoftMaskScript.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\Effects\UIFlippable.cs" />
-     <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\Effects\UIParticleSystem.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\InputModules\AimerInputModule.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\InputModules\GamePadInputModule.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Scripts\Layout\CurvedLayout.cs" />
@@ -630,6 +629,9 @@
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>D:/Projects/Rise/rise-unity-client/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
