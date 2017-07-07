@@ -1,11 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SDK\Editor\Importer\RSImporter.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\App\Controllers\AppController.cs">
     <Files>
-      <File FileName="Assets\SDK\Editor\Importer\RSImporter.cs" Line="47" Column="4" />
-      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterModel.cs" Line="9" Column="15" />
-      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterMesh.cs" Line="10" Column="15" />
-      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterMaterial.cs" Line="13" Column="2" />
+      <File FileName="Assets\SDK\Editor\Importer\RSImporter.cs" Line="1" Column="1" />
+      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterModel.cs" Line="1" Column="1" />
+      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterMesh.cs" Line="1" Column="1" />
+      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterMaterial.cs" Line="1" Column="1" />
+      <File FileName="Assets\Src\App\ViewModels\CategoryViewModel.cs" Line="8" Column="23" />
+      <File FileName="Assets\Src\App\Controllers\CategoryController.cs" Line="10" Column="3" />
+      <File FileName="Assets\Src\Core\Network\RSWebRequest.cs" Line="1" Column="1" />
+      <File FileName="Assets\Src\App\Controllers\AppController.cs" Line="13" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -1,16 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Rise.Core;
 
-public class AppController : MonoBehaviour {
+public class AppController : RSBehaviour {
+	private string organisationId;
+	public string OrganisationId {
+		get { return organisationId; }
+	}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

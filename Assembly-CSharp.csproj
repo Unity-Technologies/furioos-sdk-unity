@@ -205,6 +205,7 @@
      <Compile Include="Assets\Src\App\Models\Organisation.cs" />
      <Compile Include="Assets\Src\App\Models\Package.cs" />
      <Compile Include="Assets\Src\App\Models\Project.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\CategoryViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectDetailDataViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectDetailMediaIndicatorViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectDetailMediaPreviewViewModel.cs" />

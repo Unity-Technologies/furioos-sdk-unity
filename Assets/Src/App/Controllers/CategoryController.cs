@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CategoryController : MonoBehaviour {
+	public const string METHOD = "category";
 
-	// Use this for initialization
-	void Start () {
-		
+	public void Start() {
+
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void GetAll() {
+
+	}
+
+	public void Get(string id) {
+
 	}
 }
