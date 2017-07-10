@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Rise.SDK.Importer {
+namespace Rise.SDK.ModelBuilder {
 	[Serializable]
-	public class RSImporterMaterial {
+	public class RSMBMaterial {
 		public int Id;
 		public string Type;
 		public string Path;
