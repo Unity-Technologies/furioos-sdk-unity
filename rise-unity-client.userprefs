@@ -1,16 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SDK/Editor/Importer/RSModelBuilder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SDK/Editor/Tools/ExrLightmapToPng.cs">
     <Files>
-      <File FileName="Assets/SDK/Editor/Importer/RSModelBuilder.cs" Line="161" Column="46" />
-      <File FileName="Assets/Dev/Test/export.json" Line="1779" Column="67" />
+      <File FileName="Assets/SDK/Editor/Importer/RSModelBuilder.cs" Line="187" Column="100" />
+      <File FileName="Assets/Dev/Test/export.json" Line="1405" Column="22" />
+      <File FileName="Assets/SDK/Editor/Tools/ExrLightmapToPng.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint conditionExpression="materialDefinition.Parameters == null" file="/Users/Mick/rise/rise-unity-client/Assets/SDK/Editor/Importer/RSModelBuilder.cs" line="233" column="1" />
-      <Breakpoint file="/Users/Mick/rise/rise-unity-client/Assets/SDK/Editor/Importer/RSModelBuilder.cs" line="132" column="60" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

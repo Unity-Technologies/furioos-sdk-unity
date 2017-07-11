@@ -29,7 +29,7 @@ class RenderCubemapWizard : ScriptableWizard {
         DestroyImmediate( go );
     }
     
-	[MenuItem("Observ3d/Object/Render into cubemap")]
+	[MenuItem("Rise/Camera/Render into cubemap")]
     static void RenderCubemap () {
         ScriptableWizard.DisplayWizard<RenderCubemapWizard>("Render cubemap", "Render!");
     }

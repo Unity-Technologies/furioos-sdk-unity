@@ -10,7 +10,7 @@ public class ExrLightmapTo : ScriptableWizard {
 
 	public List<Texture2D> srcTextures = new List<Texture2D>();
 	
-	[MenuItem("Observ3d/Textures/EXR Lightmap to PNG")]
+	[MenuItem("Rise SDK/Textures/Convert EXR to PNG")]
     public static void ConvertLightmapToExr () {
 		ScriptableWizard.DisplayWizard<ExrLightmapTo>("Convert Exr to Png", "Convert!");
     }
