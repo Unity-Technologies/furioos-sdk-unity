@@ -22,6 +22,7 @@ namespace Rise.SDK.ModelBuilder {
 
 		private static List<string> sbars;
 		private static List<string> textures;
+		private static Dictionary<int, Material> handledMaterials;
 
 		private static RSMBModel modelDefinition;
 
@@ -31,11 +32,23 @@ namespace Rise.SDK.ModelBuilder {
 		}
 
 		[MenuItem("Rise SDK/Model/Build")]
+		public static void BuildEntry() {
+			//try {
+				Build();
+			/*}
+			catch(System.Exception e) {
+				Debug.LogError(e.Message);
+				EditorUtility.ClearProgressBar();
+			}*/
+		}
+
 		public static void Build() {
 			if(Selection.activeObject == null) {
 				Debug.LogError("[ModelBuilder] > Please select a model in project.");
 				return;
 			}
+
+			EditorUtility.DisplayProgressBar("Model builder", "Initialisation", 0.0f);
 
 			Object model = Selection.activeObject;
 			string modelPath = AssetDatabase.GetAssetPath(model);
@@ -59,6 +72,12 @@ namespace Rise.SDK.ModelBuilder {
 			if(!Directory.Exists(materialsFolderPath)) {
 				AssetDatabase.CreateFolder(basePath, materialFolderName);
 			}
+				
+			EditorUtility.DisplayProgressBar(
+				"Model builder", 
+				"Handle texture folder",
+				0.2f
+			);
 
 			HandleTextureFolder(basePath);
 
@@ -69,12 +88,16 @@ namespace Rise.SDK.ModelBuilder {
 			GameObject instantiedModel = (GameObject)PrefabUtility.InstantiatePrefab(model);
 			PrefabUtility.DisconnectPrefabInstance(instantiedModel);
 
-			foreach(RSMBMesh mesh in modelDefinition.Meshes) {
-				GameObject go = instantiedModel.transform.Find(mesh.Name).gameObject;
+			handledMaterials = new Dictionary<int, Material>();
 
-				if(go == null) {
+			foreach(RSMBMesh mesh in modelDefinition.Meshes) {
+				Transform tgo = instantiedModel.transform.Find(mesh.Name);
+
+				if(tgo == null) {
 					continue;
 				}
+
+				GameObject go = tgo.gameObject;
 
 				if(go.GetComponent<MeshRenderer>() == null) {
 					continue;
@@ -95,9 +118,17 @@ namespace Rise.SDK.ModelBuilder {
 
 				HandleMaterials(go, materialsDefintion);
 			}
-				
+
+			EditorUtility.DisplayProgressBar(
+				"Model buider", 
+				"Building and saving prefab", 
+				1.0f
+			);
+
 			GameObject prefabModel = PrefabUtility.CreatePrefab(basePath + directorySeparatorChar + modelName + ".prefab", instantiedModel, ReplacePrefabOptions.ConnectToPrefab);
 			Object.DestroyImmediate(instantiedModel);
+
+			EditorUtility.ClearProgressBar();
 		}
 
 		private static void HandleMaterials(GameObject go, RSMBMaterial[] materialsDefinition) {
@@ -105,6 +136,20 @@ namespace Rise.SDK.ModelBuilder {
 			Material[] materials = new Material[materialsDefinition.Length];
 
 			for(int i = 0; i < materialsDefinition.Length; i++) {
+				int materialId = materialsDefinition[i].Id;
+
+				EditorUtility.DisplayProgressBar(
+					"Model buider", 
+					"Handle material - " + materialsDefinition[i].Id, 
+					0.5f + (i / materialsDefinition.Length) * 0.9f
+				);
+
+				if(handledMaterials.ContainsKey(materialId)) {
+					materials[i] = handledMaterials[materialId];
+
+					continue;
+				}
+
 				RSMBMaterial materialDefinition = materialsDefinition[i];
 				switch(materialDefinition.Type) {
 					case "SubstanceMtl":
@@ -117,6 +162,8 @@ namespace Rise.SDK.ModelBuilder {
 						materials[i] = HandleStandardMaterial(materialDefinition);
 						break;
 				}
+
+				handledMaterials.Add(materialId, materials[i]);
 			}
 
 			mr.sharedMaterials = materials;
@@ -129,7 +176,15 @@ namespace Rise.SDK.ModelBuilder {
 				return new Material(Shader.Find("Standard"));
 			}
 
-			ProceduralMaterial substanceMtl = AssetDatabase.LoadAssetAtPath<ProceduralMaterial>(materialsFolderPath + directorySeparatorChar + materialName);
+			SubstanceImporter substanceIpt = (SubstanceImporter)AssetImporter.GetAtPath(materialsFolderPath + directorySeparatorChar + materialName);
+			ProceduralMaterial substanceMtl = substanceIpt.GetMaterials()[0];
+
+			substanceIpt.SetPlatformTextureSettings(substanceMtl, "", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
+			substanceIpt.SetPlatformTextureSettings(substanceMtl, "Standalone", 2048, 2048, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
+			substanceIpt.SetPlatformTextureSettings(substanceMtl, "Android", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
+			substanceIpt.SetPlatformTextureSettings(substanceMtl, "iPhone", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
+			substanceIpt.SetPlatformTextureSettings(substanceMtl, "WebGL", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
+			substanceIpt.SetPlatformTextureSettings(substanceMtl, "Windows Store Apps", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
 
 			ProceduralPropertyDescription[] propertiesDescription = substanceMtl.GetProceduralPropertyDescriptions();
 			foreach(ProceduralPropertyDescription propertyDescription in propertiesDescription) {
@@ -186,7 +241,7 @@ namespace Rise.SDK.ModelBuilder {
 		}
 
 		private static float HandleProceduralPropertyFloat(string value) {
-			Regex floatRgx = new Regex("^([0-9]+).([0-9]+)$");
+			Regex floatRgx = new Regex("^([0-9].+)$");
 			Match matchFloat = floatRgx.Match(value);
 
 			if(!matchFloat.Success) {
@@ -224,11 +279,15 @@ namespace Rise.SDK.ModelBuilder {
 		}
 
 		private static Material HandleStandardMaterial(RSMBMaterial materialDefinition) {
-			string materialName = "Mat_" + System.Guid.NewGuid().ToString();
+			string materialName = "Mat_" + materialDefinition.Id;
 
 			Material stdMaterial = new Material(Shader.Find("Standard"));
 
 			Regex colorRgx = new Regex("^([0-9.]+) ([0-9.]+) ([0-9.]+) ?([0-9.]*)$");
+
+			if(materialDefinition.Parameters == null || materialDefinition.Parameters.Count == 0) {
+				return stdMaterial;
+			}
 
 			if(materialDefinition.Parameters.ContainsKey("diffuseColor")) {
 				Match matchColor = colorRgx.Match(materialDefinition.Parameters["diffuseColor"]);
@@ -276,6 +335,12 @@ namespace Rise.SDK.ModelBuilder {
 
 					continue;
 				}
+
+				EditorUtility.DisplayProgressBar(
+					"Model buider", 
+					"Moving - " + fileName,
+					0.2f + (i / paths.Length) * 0.3f
+				);
 
 				textures.Add(fileName);
 			}

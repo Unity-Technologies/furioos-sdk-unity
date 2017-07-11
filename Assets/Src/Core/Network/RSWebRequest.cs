@@ -27,7 +27,7 @@ namespace Rise.Core {
 			UnityWebRequest www = UnityWebRequest.Get(uri);
 			yield return www.Send();
 
-			if (www.isError) {
+			if (www.isNetworkError) {
 				Debug.Log (www.error);
 			} else {
 				Debug.Log (www.downloadHandler.text);

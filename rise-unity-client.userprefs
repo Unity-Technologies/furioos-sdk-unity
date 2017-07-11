@@ -1,19 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\App\Controllers\AppController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SDK/Editor/Importer/RSModelBuilder.cs">
     <Files>
-      <File FileName="Assets\SDK\Editor\Importer\RSImporter.cs" Line="1" Column="1" />
-      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterModel.cs" Line="1" Column="1" />
-      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterMesh.cs" Line="1" Column="1" />
-      <File FileName="Assets\SDK\Editor\Importer\Classes\RSImporterMaterial.cs" Line="1" Column="1" />
-      <File FileName="Assets\Src\App\ViewModels\CategoryViewModel.cs" Line="8" Column="23" />
-      <File FileName="Assets\Src\App\Controllers\CategoryController.cs" Line="10" Column="3" />
-      <File FileName="Assets\Src\Core\Network\RSWebRequest.cs" Line="1" Column="1" />
-      <File FileName="Assets\Src\App\Controllers\AppController.cs" Line="13" Column="2" />
+      <File FileName="Assets/SDK/Editor/Importer/RSModelBuilder.cs" Line="161" Column="46" />
+      <File FileName="Assets/Dev/Test/export.json" Line="1779" Column="67" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint conditionExpression="materialDefinition.Parameters == null" file="/Users/Mick/rise/rise-unity-client/Assets/SDK/Editor/Importer/RSModelBuilder.cs" line="233" column="1" />
+      <Breakpoint file="/Users/Mick/rise/rise-unity-client/Assets/SDK/Editor/Importer/RSModelBuilder.cs" line="132" column="60" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
