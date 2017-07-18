@@ -128,33 +128,19 @@ namespace Rise.Core {
 			switch (mode) {
 				case RenderModes.TwoD:
 					OutputModesManager.ActivateOutputMode ("2D");
-					SetDeviceOrientation (UseDeviceOrientationType.None);
 				break;
 				case RenderModes.Stereoscopic:
 					Screen.SetResolution(1920, 1080, true);
 					RSManager.GetInstance<RSOutputMode3DSplitted>().splitMode = RSOutputMode3DSplitted.SplitMode.SideBySide;
-					OutputModesManager.ActivateOutputMode ("3D Splitted");
 					break;
 				case RenderModes.Oculus:
 					OutputModesManager.ActivateOutputMode ("3D Oculus");
-					SetDeviceOrientation (UseDeviceOrientationType.Oculus);
 				break;
 				case RenderModes.Cardboard:
 					RSManager.GetInstance<RSOutputMode3DSplitted>().splitMode = RSOutputMode3DSplitted.SplitMode.SideBySide;
 					OutputModesManager.ActivateOutputMode ("3D Splitted");
-					SetDeviceOrientation (UseDeviceOrientationType.Gyroscope);
 				break;
 			}
-		}
-
-		public void SetDeviceOrientation(UseDeviceOrientationType newDeviceOrientationType) {
-			
-			foreach(var mm in RSManager.GetAllInstances<RSPanTiltMovingMode>())
-			{
-				mm.useDeviceOrientation = newDeviceOrientationType;
-			}
-
-			DeviceOrientationType = newDeviceOrientationType;
 		}
 
 		public void ToFullScreen() {

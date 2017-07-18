@@ -8,6 +8,4 @@ public class AppController : RSBehaviour {
 	public string OrganisationId {
 		get { return organisationId; }
 	}
-
-
 }
