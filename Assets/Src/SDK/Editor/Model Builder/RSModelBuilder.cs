@@ -56,7 +56,7 @@ namespace Rise.SDK.ModelBuilder {
 
 			basePath = Path.GetDirectoryName(modelPath);
 
-			string textureFolderPath = basePath + directorySeparatorChar + textureFolderName;
+			textureFolderPath = basePath + directorySeparatorChar + textureFolderName;
 			if(!Directory.Exists(textureFolderPath)) {
 				Debug.LogError("[ModelBuilder] > No texture file found.");
 				return;
@@ -102,6 +102,17 @@ namespace Rise.SDK.ModelBuilder {
 				if(go.GetComponent<MeshRenderer>() == null) {
 					continue;
 				}
+
+				GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.LightmapStatic);
+				GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.OccluderStatic);
+
+				SerializedObject mr = new SerializedObject(go.GetComponent<MeshRenderer>());
+				SerializedProperty mrls = mr.FindProperty("m_LightmapParameters");
+
+				SerializedProperty iterator = mrls.Copy();
+				while(iterator.Next(true)) {
+					Debug.Log(iterator.name);
+				}
 					
 				int materialLength = mesh.Materials.Length;
 				RSMBMaterial[] materialsDefintion = new RSMBMaterial[materialLength];
@@ -135,12 +146,14 @@ namespace Rise.SDK.ModelBuilder {
 			MeshRenderer mr = go.GetComponent<MeshRenderer>();
 			Material[] materials = new Material[materialsDefinition.Length];
 
+
+
 			for(int i = 0; i < materialsDefinition.Length; i++) {
 				int materialId = materialsDefinition[i].Id;
 
 				EditorUtility.DisplayProgressBar(
 					"Model buider", 
-					"Handle material - " + materialsDefinition[i].Id, 
+					"Handle material - " + materialsDefinition[i].Name, 
 					0.5f + (i / materialsDefinition.Length) * 0.9f
 				);
 
@@ -285,7 +298,7 @@ namespace Rise.SDK.ModelBuilder {
 		}
 
 		private static Material HandleStandardMaterial(RSMBMaterial materialDefinition) {
-			string materialName = "Mat_" + materialDefinition.Id;
+			string materialName = materialDefinition.Name + "_" + materialDefinition.Id;
 
 			Material stdMaterial = new Material(Shader.Find("Standard"));
 
@@ -314,15 +327,99 @@ namespace Rise.SDK.ModelBuilder {
 				string texturePath = textureFolderPath + directorySeparatorChar + textureName;
 
 				if(File.Exists(texturePath)) {
+					TextureImporter diffuseTextureImpt = (TextureImporter)AssetImporter.GetAtPath(texturePath);
+
+					HandleTexturePlateformSettings(diffuseTextureImpt);
+
+					diffuseTextureImpt.SaveAndReimport();
+
 					Texture2D diffuseTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
 
 					stdMaterial.mainTexture = diffuseTexture;
 				}
 			}
 
+			if(materialDefinition.Parameters.ContainsKey("bumpMap")) {
+				string textureName = Path.GetFileName(materialDefinition.Parameters["bumpMap"]);
+				string texturePath = textureFolderPath + directorySeparatorChar + textureName;
+
+				if(File.Exists(texturePath)) {
+					TextureImporter bumpTextureImpt = (TextureImporter)AssetImporter.GetAtPath(texturePath);
+					bumpTextureImpt.textureType = TextureImporterType.NormalMap;
+					bumpTextureImpt.convertToNormalmap = true;
+					bumpTextureImpt.normalmapFilter = TextureImporterNormalFilter.Standard;
+
+					HandleTexturePlateformSettings(bumpTextureImpt);
+
+					bumpTextureImpt.SaveAndReimport();
+
+					Texture2D bumpTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+
+					stdMaterial.SetTexture("_BumpMap", bumpTexture);
+				}
+			}
+
+			if(materialDefinition.Parameters.ContainsKey("bumpMapIntensity")) {
+				float bumpMapIntensity = float.Parse(materialDefinition.Parameters["bumpMapIntensity"]);
+
+				switch(materialDefinition.Type) {
+				case "StdMtl":
+					bumpMapIntensity /= 100.0f;
+					break;
+				case "VrayMtl":
+					bumpMapIntensity /= 30.0f;
+					break;
+				}
+
+				stdMaterial.SetFloat("_BumpScale", bumpMapIntensity);
+			}
+
 			AssetDatabase.CreateAsset(stdMaterial, materialsFolderPath + directorySeparatorChar + materialName + ".mat");
 
 			return stdMaterial;
+		}
+
+		private static void HandleTexturePlateformSettings(TextureImporter textureIpt) {
+			TextureImporterPlatformSettings[] plateformSettings = new TextureImporterPlatformSettings[5];
+			plateformSettings[0] = new TextureImporterPlatformSettings() {
+				name = "",
+				maxTextureSize = 2048,
+				textureCompression = TextureImporterCompression.CompressedHQ,
+				format = TextureImporterFormat.Automatic,
+				overridden = true
+			};
+
+			plateformSettings[1] = new TextureImporterPlatformSettings() {
+				name = "Standalone",
+				maxTextureSize = 2048,
+				textureCompression = TextureImporterCompression.CompressedHQ,
+				format = TextureImporterFormat.Automatic
+			};
+
+			plateformSettings[2] = new TextureImporterPlatformSettings() {
+				name = "iPhone",
+				maxTextureSize = 1024,
+				textureCompression = TextureImporterCompression.CompressedLQ,
+				format = TextureImporterFormat.Automatic
+			};
+
+			plateformSettings[3] = new TextureImporterPlatformSettings() {
+				name = "Android",
+				maxTextureSize = 1024,
+				textureCompression = TextureImporterCompression.CompressedLQ,
+				format = TextureImporterFormat.Automatic
+			};
+
+			plateformSettings[4] = new TextureImporterPlatformSettings() {
+				name = "WebGL",
+				maxTextureSize = 1024,
+				textureCompression = TextureImporterCompression.CompressedLQ,
+				format = TextureImporterFormat.Automatic
+			};
+					
+			for(int i = 0; i < plateformSettings.Length; i++) {
+				textureIpt.SetPlatformTextureSettings(plateformSettings[i]);
+			}
 		}
 
 		private static void HandleTextureFolder(string basePath) {

@@ -6,6 +6,7 @@ namespace Rise.SDK.ModelBuilder {
 	[Serializable]
 	public class RSMBMaterial {
 		public int Id;
+		public string Name;
 		public string Type;
 		public string Path;
 		public Dictionary<string, string> Parameters;
