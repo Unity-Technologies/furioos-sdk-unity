@@ -1,9 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Src/SDK/Editor/Model Builder/RSModelBuilder.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Assets/Src/Viewer/MovingModes/Animated/Class/MovingModeAnimatedCamera.cs" Line="1" Column="1" />
-      <File FileName="Assets/Src/SDK/Editor/Model Builder/RSModelBuilder.cs" Line="185" Column="36" />
+      <File FileName="Assets/Src/SDK/Editor/Model Builder/RSModelBuilder.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/SDK/Editor/Model Builder/Classes/RSMBMaterial.cs" Line="1" Column="1" />
+      <File FileName="Assets/Dev/Test/export.json" Line="1" Column="1" />
+      <File FileName="Assets/Shaders/Standard/Standard.shader" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
