@@ -493,6 +493,12 @@
  <Reference Include="Newtonsoft.Json">
  <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/JsonNet/Newtonsoft.Json.dll</HintPath>
  </Reference>
+ <Reference Include="rise-core">
+ <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/rise-core.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/UnityEngine.UI.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>

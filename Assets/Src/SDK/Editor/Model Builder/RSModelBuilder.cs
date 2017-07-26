@@ -11,6 +11,8 @@ using Newtonsoft.Json.Linq;
 namespace Rise.SDK.ModelBuilder {
 	public class RSModelBuilder : AssetPostprocessor {
 		private const string materialFolderName = "Materials";
+		private const string substanceMatFolderName = "Substances";
+		private const string standardMatFolderName = "Standards";
 		private const string textureFolderName = "textures";
 		private const string substanceExtensionName = ".sbsar";
 		private const string jsonExtensionName = ".json";
@@ -19,6 +21,8 @@ namespace Rise.SDK.ModelBuilder {
 		private static string basePath = "";
 		private static string textureFolderPath = "";
 		private static string materialsFolderPath = "";
+		private static string substanceFolderPath = "";
+		private static string standardFolderPath = "";
 
 		private static List<string> sbars;
 		private static List<string> textures;
@@ -33,13 +37,25 @@ namespace Rise.SDK.ModelBuilder {
 
 		[MenuItem("Rise SDK/Model/Build")]
 		public static void BuildEntry() {
-			//try {
+			try {
 				Build();
-			/*}
+
+				basePath = "";
+				textureFolderPath = "";
+				materialsFolderPath = "";
+				substanceFolderPath = "";
+				standardFolderPath = "";
+				
+				sbars = new List<string>();
+				textures = new List<string>();
+				handledMaterials = new Dictionary<int, Material>();
+				
+				modelDefinition = null;
+			}
 			catch(System.Exception e) {
 				Debug.LogError(e.Message);
 				EditorUtility.ClearProgressBar();
-			}*/
+			}
 		}
 
 		public static void Build() {
@@ -73,6 +89,16 @@ namespace Rise.SDK.ModelBuilder {
 				AssetDatabase.CreateFolder(basePath, materialFolderName);
 			}
 				
+			substanceFolderPath = materialsFolderPath + directorySeparatorChar + substanceMatFolderName;
+			if(!Directory.Exists(substanceFolderPath)) {
+				AssetDatabase.CreateFolder(materialsFolderPath, substanceMatFolderName);
+			}
+
+			standardFolderPath = materialsFolderPath + directorySeparatorChar + standardMatFolderName;
+			if(!Directory.Exists(standardFolderPath)) {
+				AssetDatabase.CreateFolder(materialsFolderPath, standardMatFolderName);
+			}
+				
 			EditorUtility.DisplayProgressBar(
 				"Model builder", 
 				"Handle texture folder",
@@ -88,16 +114,16 @@ namespace Rise.SDK.ModelBuilder {
 			GameObject instantiedModel = (GameObject)PrefabUtility.InstantiatePrefab(model);
 			PrefabUtility.DisconnectPrefabInstance(instantiedModel);
 
+			Transform[] instantiedTransforms = instantiedModel.GetComponentsInChildren<Transform>(true);
+
 			handledMaterials = new Dictionary<int, Material>();
 
 			foreach(RSMBMesh mesh in modelDefinition.Meshes) {
-				Transform tgo = instantiedModel.transform.Find(mesh.Name);
+				GameObject go = instantiedTransforms.SingleOrDefault(it => it.name == mesh.Name).gameObject;
 
-				if(tgo == null) {
+				if(go == null) {
 					continue;
 				}
-
-				GameObject go = tgo.gameObject;
 
 				if(go.GetComponent<MeshRenderer>() == null) {
 					continue;
@@ -108,11 +134,6 @@ namespace Rise.SDK.ModelBuilder {
 
 				SerializedObject mr = new SerializedObject(go.GetComponent<MeshRenderer>());
 				SerializedProperty mrls = mr.FindProperty("m_LightmapParameters");
-
-				SerializedProperty iterator = mrls.Copy();
-				while(iterator.Next(true)) {
-					Debug.Log(iterator.name);
-				}
 					
 				int materialLength = mesh.Materials.Length;
 				RSMBMaterial[] materialsDefintion = new RSMBMaterial[materialLength];
@@ -131,7 +152,7 @@ namespace Rise.SDK.ModelBuilder {
 			}
 
 			EditorUtility.DisplayProgressBar(
-				"Model buider", 
+				"Model builder", 
 				"Building and saving prefab", 
 				1.0f
 			);
@@ -146,13 +167,17 @@ namespace Rise.SDK.ModelBuilder {
 			MeshRenderer mr = go.GetComponent<MeshRenderer>();
 			Material[] materials = new Material[materialsDefinition.Length];
 
-
-
 			for(int i = 0; i < materialsDefinition.Length; i++) {
+				if(materialsDefinition[i] == null) {
+					Debug.LogError("[ModelBuilder] > No material found at index: " + i + " for gameobject: " + go.name);
+
+					continue;
+				}
+
 				int materialId = materialsDefinition[i].Id;
 
 				EditorUtility.DisplayProgressBar(
-					"Model buider", 
+					"Model builder", 
 					"Handle material - " + materialsDefinition[i].Name, 
 					0.5f + (i / materialsDefinition.Length) * 0.9f
 				);
@@ -189,7 +214,8 @@ namespace Rise.SDK.ModelBuilder {
 				return new Material(Shader.Find("Standard"));
 			}
 
-			SubstanceImporter substanceIpt = (SubstanceImporter)AssetImporter.GetAtPath(materialsFolderPath + directorySeparatorChar + materialName);
+			string path = substanceFolderPath + directorySeparatorChar + materialName;
+			SubstanceImporter substanceIpt = (SubstanceImporter)AssetImporter.GetAtPath(path);
 			ProceduralMaterial substanceMtl = substanceIpt.GetMaterials()[0];
 
 			bool materialExist = handledMaterials.ContainsValue((Material)substanceMtl);
@@ -233,6 +259,7 @@ namespace Rise.SDK.ModelBuilder {
 				}
 			}
 
+			substanceMtl.RebuildTextures();
 
 			return substanceMtl;
 		}
@@ -271,7 +298,7 @@ namespace Rise.SDK.ModelBuilder {
 		}
 
 		private static Color HandleProceduralPropertyColor(string value) {
-			Regex colorRgx = new Regex("^\\(color ([0-9]+) ([0-9]+) ([0-9]+)\\)$");
+			Regex colorRgx = new Regex("^\\(color ([0-9.]+) ([0-9.]+) ([0-9.]+)\\)$");
 			Match matchColor = colorRgx.Match(value);
 
 			if(!matchColor.Success) {
@@ -302,7 +329,7 @@ namespace Rise.SDK.ModelBuilder {
 
 			Material stdMaterial = new Material(Shader.Find("Standard"));
 
-			Regex colorRgx = new Regex("^([0-9.]+) ([0-9.]+) ([0-9.]+) ?([0-9.]*)$");
+			Regex colorRgx = new Regex("^([0-9.]+), ([0-9.]+), ([0-9.]+), ?([0-9.]*)$");
 
 			if(materialDefinition.Parameters == null || materialDefinition.Parameters.Count == 0) {
 				return stdMaterial;
@@ -319,6 +346,12 @@ namespace Rise.SDK.ModelBuilder {
 						float.Parse(matchColor.Groups[3].Value) / 255.0f,
 						(matchColor.Groups.Count == 5) ? float.Parse(matchColor.Groups[4].Value) : 1.0f
 					);
+
+					stdMaterial.color = diffuseColor;
+
+					if(diffuseColor.a < 1) {
+						stdMaterial.SetFloat("_Mode", 3);
+					}
 				}
 			}
 
@@ -374,7 +407,7 @@ namespace Rise.SDK.ModelBuilder {
 				stdMaterial.SetFloat("_BumpScale", bumpMapIntensity);
 			}
 
-			AssetDatabase.CreateAsset(stdMaterial, materialsFolderPath + directorySeparatorChar + materialName + ".mat");
+			AssetDatabase.CreateAsset(stdMaterial, standardFolderPath + directorySeparatorChar + materialName + ".mat");
 
 			return stdMaterial;
 		}
@@ -432,7 +465,8 @@ namespace Rise.SDK.ModelBuilder {
 				string fileName = Path.GetFileName(paths[i]);
 
 				if(fileName.Contains(substanceExtensionName)) {
-					AssetDatabase.MoveAsset(paths[i], basePath + directorySeparatorChar + materialFolderName + directorySeparatorChar + fileName);
+					string path = substanceFolderPath + directorySeparatorChar + fileName;
+					AssetDatabase.MoveAsset(paths[i], path);
 
 					sbars.Add(fileName);
 
@@ -440,7 +474,7 @@ namespace Rise.SDK.ModelBuilder {
 				}
 
 				EditorUtility.DisplayProgressBar(
-					"Model buider", 
+					"Model builder", 
 					"Moving - " + fileName,
 					0.2f + (i / paths.Length) * 0.3f
 				);

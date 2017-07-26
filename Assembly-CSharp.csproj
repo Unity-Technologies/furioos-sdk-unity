@@ -636,6 +636,12 @@
  <Reference Include="Newtonsoft.Json">
  <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/JsonNet/Newtonsoft.Json.dll</HintPath>
  </Reference>
+ <Reference Include="rise-core">
+ <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/rise-core.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/UnityEngine.UI.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
