@@ -196,6 +196,9 @@ namespace Rise.SDK.ModelBuilder {
 					case "StdMtl":
 						materials[i] = HandleStandardMaterial(materialDefinition);
 						break;
+					case "VrayLightMtl":
+						materials[i] = HandleStandardMaterial(materialDefinition, true);
+						break;
 					default:
 						materials[i] = HandleStandardMaterial(materialDefinition);
 						break;
@@ -324,34 +327,21 @@ namespace Rise.SDK.ModelBuilder {
 			return int.Parse(matchInt.Groups[1].Value);
 		}
 
-		private static Material HandleStandardMaterial(RSMBMaterial materialDefinition) {
+		private static Material HandleStandardMaterial(RSMBMaterial materialDefinition, bool isSelfillum = false) {
 			string materialName = materialDefinition.Name + "_" + materialDefinition.Id;
 
 			Material stdMaterial = new Material(Shader.Find("Standard"));
-
-			Regex colorRgx = new Regex("^([0-9.]+), ([0-9.]+), ([0-9.]+), ?([0-9.]*)$");
 
 			if(materialDefinition.Parameters == null || materialDefinition.Parameters.Count == 0) {
 				return stdMaterial;
 			}
 
 			if(materialDefinition.Parameters.ContainsKey("diffuseColor")) {
-				Match matchColor = colorRgx.Match(materialDefinition.Parameters["diffuseColor"]);
-				Color diffuseColor = Color.white;
+				Color diffuseColor = HandleStandardColor(materialDefinition.Parameters["diffuseColor"]);
+				stdMaterial.color = diffuseColor;
 
-				if(matchColor.Success) {
-					diffuseColor = new Color(
-						float.Parse(matchColor.Groups[1].Value) / 255.0f,
-						float.Parse(matchColor.Groups[2].Value) / 255.0f,
-						float.Parse(matchColor.Groups[3].Value) / 255.0f,
-						(matchColor.Groups.Count == 5) ? float.Parse(matchColor.Groups[4].Value) : 1.0f
-					);
-
-					stdMaterial.color = diffuseColor;
-
-					if(diffuseColor.a < 1) {
-						stdMaterial.SetFloat("_Mode", 3);
-					}
+				if(diffuseColor.a < 1) {
+					stdMaterial.SetFloat("_Mode", 3);
 				}
 			}
 
@@ -407,9 +397,39 @@ namespace Rise.SDK.ModelBuilder {
 				stdMaterial.SetFloat("_BumpScale", bumpMapIntensity);
 			}
 
+			if(isSelfillum) {
+				Color emissionColor = HandleStandardColor(materialDefinition.Parameters["Color"]);
+
+				stdMaterial.SetColor("_EmissionColor", emissionColor);
+
+				if(materialDefinition.Parameters.ContainsKey(materialDefinition.Parameters["Intensity"])) {
+					stdMaterial.SetFloat("_EmissionScaleUI", float.Parse(materialDefinition.Parameters["Intensity"]));
+				}
+			}
+
 			AssetDatabase.CreateAsset(stdMaterial, standardFolderPath + directorySeparatorChar + materialName + ".mat");
 
 			return stdMaterial;
+		}
+
+		private static Color HandleStandardColor(string value) {
+			if(string.IsNullOrEmpty(value)) {
+				return Color.white;
+			}
+
+			Regex colorRgx = new Regex("^([0-9.]+), ([0-9.]+), ([0-9.]+), ?([0-9.]*)$");
+
+			Match matchColor = colorRgx.Match(value);
+			if(!matchColor.Success) {
+				return Color.white;
+			}
+				
+			return new Color(
+				float.Parse(matchColor.Groups[1].Value) / 255.0f,
+				float.Parse(matchColor.Groups[2].Value) / 255.0f,
+				float.Parse(matchColor.Groups[3].Value) / 255.0f,
+				(matchColor.Groups.Count == 5) ? float.Parse(matchColor.Groups[4].Value) : 1.0f
+			);
 		}
 
 		private static void HandleTexturePlateformSettings(TextureImporter textureIpt) {
