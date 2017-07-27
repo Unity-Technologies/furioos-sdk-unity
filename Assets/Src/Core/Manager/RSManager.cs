@@ -56,7 +56,7 @@ namespace Rise.Core {
 
 		private RSInputManager inputController;
 		private RSOutputModesManager outputModesManager;
-		private RSMovingModesManager movingModesManager;
+		private RSCamerasManager movingModesManager;
 
 
 		public new static RSManager AppManager {
@@ -79,9 +79,9 @@ namespace Rise.Core {
 			} 
 		}
 
-		public override RSMovingModesManager MovingModesManager {
+		public override RSCamerasManager CamerasManager {
 			get {
-				if (movingModesManager == null) movingModesManager = new RSMovingModesManager();
+				if (movingModesManager == null) movingModesManager = new RSCamerasManager();
 				return movingModesManager ;
 			} 
 		}
@@ -93,7 +93,7 @@ namespace Rise.Core {
 			//Warning Start order is important !!!
 			InputManager.Start ();
 
-			MovingModesManager.Start ();
+			CamerasManager.Start ();
 			OutputModesManager.Start ();
 		}
 

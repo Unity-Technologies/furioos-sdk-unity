@@ -199,6 +199,10 @@
      <Compile Include="Assets\Src\App\ViewModels\ProjectViewModel.cs" />
      <Compile Include="Assets\Src\Core\Behaviour\RSBehaviour.cs" />
      <Compile Include="Assets\Src\Core\Behaviour\RSUniqueBehaviour.cs" />
+     <Compile Include="Assets\Src\Core\Camera\Manager\RSCamerasManager.cs" />
+     <Compile Include="Assets\Src\Core\Camera\RSCamera.cs" />
+     <Compile Include="Assets\Src\Core\Camera\RSCharacterMovingMode.cs" />
+     <Compile Include="Assets\Src\Core\Camera\RSPanTiltMovingMode.cs" />
      <Compile Include="Assets\Src\Core\Input\Manager\RSInputManager.cs" />
      <Compile Include="Assets\Src\Core\Input\Modules\Base\RSInputController.cs" />
      <Compile Include="Assets\Src\Core\Input\Modules\Input Touch Screen\RSInputTouchScreen.cs" />
@@ -231,10 +235,6 @@
      <Compile Include="Assets\Src\Core\Manager\RSManager.cs" />
      <Compile Include="Assets\Src\Core\Math\Matrix.cs" />
      <Compile Include="Assets\Src\Core\Math\Matrix3DTools.cs" />
-     <Compile Include="Assets\Src\Core\MovingMode\Manager\RSMovingModesManager.cs" />
-     <Compile Include="Assets\Src\Core\MovingMode\RSCharacterMovingMode.cs" />
-     <Compile Include="Assets\Src\Core\MovingMode\RSMovingMode.cs" />
-     <Compile Include="Assets\Src\Core\MovingMode\RSPanTiltMovingMode.cs" />
      <Compile Include="Assets\Src\Core\Network\RSWebRequest.cs" />
      <Compile Include="Assets\Src\Core\Output\Manager\RSOutputModesManager.cs" />
      <Compile Include="Assets\Src\Core\Output\RSOutputMode.cs" />

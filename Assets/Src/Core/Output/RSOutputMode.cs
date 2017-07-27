@@ -14,7 +14,7 @@ namespace Rise.Core {
 		public event OnActivatedHandler OnActivated;
 		public event OnDesactivatedHandler OnDesactivated;
 
-		public RSMovingMode AttachedTo{
+		public RSCamera AttachedTo{
 			get ;
 			private set;
 		}
@@ -32,7 +32,7 @@ namespace Rise.Core {
 
 		}
 
-		public virtual void AttachToMovingMode(RSMovingMode movingMode){
+		public virtual void AttachToMovingMode(RSCamera movingMode){
 			//Debug.Log("Attaching " + ToString()+" to "+movingMode.ToString());
 		}
 		

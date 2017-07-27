@@ -6,7 +6,7 @@ using Rise.Core;
 namespace Rise.Features.MovingMode {
 	[System.Serializable]
 	[RequireComponent (typeof(Camera))]
-	public class Animated : RSMovingMode {
+	public class Animated : RSCamera {
 		
 		public GameObject animatedGameObject;
 		public string clipName = "Take 001";

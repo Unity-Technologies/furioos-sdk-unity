@@ -39,7 +39,7 @@ namespace Rise.Core {
 			}
 		}
 
-		public override void AttachToMovingMode(RSMovingMode movingMode){
+		public override void AttachToMovingMode(RSCamera movingMode){
 
 			base.AttachToMovingMode(movingMode);
 

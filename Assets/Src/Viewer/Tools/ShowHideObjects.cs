@@ -10,7 +10,7 @@ namespace Rise.Features.ShowHideObjects {
 		public GameObject[] objects;
 		public string tagName;
 		
-		public List<RSMovingMode> hideIn;
+		public List<RSCamera> hideIn;
 
 		private GameObject[]taggedObjects;
 
@@ -18,15 +18,15 @@ namespace Rise.Features.ShowHideObjects {
 			if(tagName != null && tagName != "")
 				taggedObjects = GameObject.FindGameObjectsWithTag(tagName);
 
-			MovingModesManager.MovingModeChanged += HandleMovingModeChanged;
-			ShowHide(MovingModesManager.Active);
+			CamerasManager.CameraChanged += HandleMovingModeChanged;
+			ShowHide(CamerasManager.Active);
 		}
 
-		void HandleMovingModeChanged (RSMovingMode movingMode){
+		void HandleMovingModeChanged (RSCamera movingMode){
 			ShowHide(movingMode);
 		}
 
-		private void ShowHide(RSMovingMode mm){
+		private void ShowHide(RSCamera mm){
 			bool show = !hideIn.Contains(mm);
 		
 			foreach(GameObject objectToHide in objects){

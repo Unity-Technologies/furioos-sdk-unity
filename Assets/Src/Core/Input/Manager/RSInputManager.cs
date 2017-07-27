@@ -57,56 +57,56 @@ namespace Rise.Core {
 		private Dictionary<string,RSInputBinding> inputBindings = new Dictionary<string, RSInputBinding>();
 		
 		
-		public Vector2 Position{
-			get{
+		public Vector2 Position {
+			get {
 				UpdateControlState();
 				return defaultTouch.Position;
 			}
 		}
 		
-		public Vector2 NormalizedPosition{
-			get{
+		public Vector2 NormalizedPosition {
+			get {
 				UpdateControlState();
 				return defaultTouch.NormalizedPosition;
 			}
 		}
 		
-		public Vector2 Delta{
-			get{
+		public Vector2 Delta {
+			get {
 				UpdateControlState();
 				return defaultTouch.Delta;
 			}
 		}
 		
-		public int NumClick{
-			get{
+		public int NumClick {
+			get {
 				UpdateControlState();
 				return numClick;
 			}
 		}
 		
-		public bool HasBeenClicked{
-			get{
+		public bool HasBeenClicked {
+			get {
 				UpdateControlState();
 				return hasBeenClicked;
 			}
 		}
 		
-		public bool HasBeenSimpleClicked{
-			get{
+		public bool HasBeenSimpleClicked {
+			get {
 				UpdateControlState();
 				return hasBeenSimpleClicked;
 			}
 		}
 		
-		public Vector2 NormalizedDelta{
-			get{
+		public Vector2 NormalizedDelta {
+			get {
 				UpdateControlState();
 				return defaultTouch.NormalizedDelta;
 			}
 		}
 		
-		public bool IsMoving{
+		public bool IsMoving {
 			get {
 				UpdateControlState();
 				return defaultTouch.IsMoving;
@@ -114,7 +114,7 @@ namespace Rise.Core {
 
 		}
 		
-		public bool HasGoneActive{
+		public bool HasGoneActive {
 			get {
 				UpdateControlState();
 				return defaultTouch.HasGoneActive;
@@ -122,7 +122,7 @@ namespace Rise.Core {
 
 		}
 		
-		public bool HasGoneInactive{
+		public bool HasGoneInactive {
 			get {
 				UpdateControlState();
 				return defaultTouch.HasGoneInactive;
@@ -130,45 +130,43 @@ namespace Rise.Core {
 
 		}
 		
-		public float Distance{
+		public float Distance {
 			get {
 				UpdateControlState();
 				return defaultTouch.Distance;
 			}
 		}
 		
-		public bool IsZooming{
-			get{
+		public bool IsZooming {
+			get {
 				UpdateControlState();
 				return isZooming;
 			}
 		}
 		
-		public float DeltaZoom{
-			get{
+		public float DeltaZoom {
+			get {
 				UpdateControlState();
 				return deltaZoom;
 			}
 		}
 		
-		public int NumTouch{
-			get{
+		public int NumTouch {
+			get {
 				UpdateControlState();
 				return numTouches;
 			}
 		}
 		
-		public List<RSFingerTouch> Touches{
-			get{
+		public List<RSFingerTouch> Touches {
+			get {
 				UpdateControlState();
 				return aliveTouches;
 			}
 		}
 		
 		
-		public void Start(){ 
-
-
+		public void Start() { 
 			savedMousePos = Input.mousePosition;
 
 			desktopZoom = 1.0f;
@@ -202,11 +200,6 @@ namespace Rise.Core {
 				inputBindings.Add ("Click", new RSInputBinding ());
 				inputBindings.Add ("Jet Pack", new RSInputBinding ());
 				inputBindings.Add ("Zoom", new RSInputBinding ());
-				inputBindings.Add ("To Orbital", new RSInputBinding());
-				inputBindings.Add ("To FPS", new RSInputBinding());
-				inputBindings.Add ("Display Mode", new RSInputBinding());
-				inputBindings.Add ("Quit", new RSInputBinding());
-				inputBindings.Add ("Minimap Zoom", new RSInputBinding());
 			}
 			
 			if(Application.platform == RuntimePlatform.OSXEditor ||
@@ -223,13 +216,9 @@ namespace Rise.Core {
 				inputBindings["Click"].SetJoyStick("joystick button 16");
 				inputBindings["Jet Pack"].SetJoyStick("joystick button 17");
 				inputBindings["Zoom"].SetJoyStick("joystick axis 1");
-				inputBindings["To Orbital"].SetJoyStick("joystick button 18");
-				inputBindings["To FPS"].SetJoyStick("joystick button 16");
-				inputBindings["Display Mode"].SetJoyStick("joystick button 9");
-				inputBindings["Minimap Zoom"].SetJoyStick("joystick button 10");
 				
-			}else{
-				
+			} 
+			else {
 				inputBindings["Move X"].SetJoyStick("joystick axis 0");
 				inputBindings["Move Y"].SetJoyStick("joystick axis 1");
 				inputBindings["Look X"].SetJoyStick("joystick axis 3");
@@ -239,26 +228,14 @@ namespace Rise.Core {
 				inputBindings["Click"].SetJoyStick("joystick button 0");
 				inputBindings["Jet Pack"].SetJoyStick("joystick button 1");
 				inputBindings["Zoom"].SetJoyStick("joystick axis 1");
-				inputBindings["To Orbital"].SetJoyStick("joystick button 2");
-				inputBindings["To FPS"].SetJoyStick("joystick button 0");
-				inputBindings["Display Mode"].SetJoyStick("joystick button 7");
-				inputBindings["Minimap Zoom"].SetJoyStick("joystick button 6");
 			}
 			
 			inputBindings["Move X"].SetKeyboard(KeyCode.RightArrow,KeyCode.LeftArrow);
 			inputBindings["Move Y"].SetKeyboard(KeyCode.DownArrow,KeyCode.UpArrow);
-			
-			//inputBindings["Move X"].SetKeyboard(KeyCode.D,KeyCode.Q);
-			//inputBindings["Move Y"].SetKeyboard(KeyCode.S,KeyCode.Z);
-			//inputBindings["Look X"].SetKeyboard("joystick axis 3");
-			//inputBindings["Look Y"].SetKeyboard("joystick axis 4");
 			inputBindings["Cursor X"].SetKeyboard(KeyCode.Keypad6,KeyCode.Keypad4);
 			inputBindings["Cursor Y"].SetKeyboard(KeyCode.Keypad8,KeyCode.Keypad2);
 			inputBindings["Click"].SetKeyboard(KeyCode.Return);
 			inputBindings["Jet Pack"].SetKeyboard(KeyCode.Space);
-			inputBindings["To Orbital"].SetKeyboard(KeyCode.O);
-			inputBindings["To FPS"].SetKeyboard(KeyCode.P);
-			inputBindings["Display Mode"].SetKeyboard(KeyCode.I);
 			
 			if (!joypadIsConnected) {
 				inputBindings ["Zoom"].SetJoyStick ("mouse scrollwheel");
@@ -286,26 +263,27 @@ namespace Rise.Core {
 		}
 
 
-		public Ray GetRay(Camera camera){
-			if(camera!=null){
+		public Ray GetRay(Camera camera) {
+			if(camera!=null) {
 				UpdateControlState();
+
 				return camera.ScreenPointToRay(new Vector3(defaultTouch.Position.x,Screen.height - defaultTouch.Position.y));
 			}
 			return new Ray();
 		}
 
-		public RSFingerTouch findOrCreateTouch(int touchId){
-
+		public RSFingerTouch findOrCreateTouch(int touchId) {
 			RSFingerTouch fingerTouch = null;
 			bool found = false;
 			
-			foreach(RSFingerTouch testTouch in aliveTouches){
+			foreach(RSFingerTouch testTouch in aliveTouches) {
 				if(testTouch.Id == touchId){
 					fingerTouch = testTouch;
 					found = true;
 					break;
 				}
 			}
+
 			if(!found){
 				fingerTouch = new RSFingerTouch();
 				fingerTouch.Id = touchId;
@@ -315,38 +293,34 @@ namespace Rise.Core {
 			aliveTouchesIds.Add(fingerTouch.Id);
 
 			return fingerTouch;
-
 		}
 
 
-		private void UpdateControlState(){
+		private void UpdateControlState() {
 			if(!isUpdated){
-
 				Vector2 defaultTouchPosition = new Vector2(0,0);
 				bool defaultTouchActive = false;
-				
-				
+
 				//Reset touches
 				if(aliveTouches != null) {
-					foreach(RSFingerTouch testTouch in aliveTouches)
-					{
+					foreach(RSFingerTouch testTouch in aliveTouches) {
 						testTouch.ResetLastState();
 					}
 				}
 				
-				if(defaultTouch!=null){
+				if(defaultTouch!=null) {
 					defaultTouchPosition = defaultTouch.Position;
 					defaultTouch.ResetLastState();
 				}
 
-				if(aliveTouchesIds != null)
+				if(aliveTouchesIds != null) {
 					aliveTouchesIds.Clear();
-
-
+				}
+					
 				List<RSInputController> touchInputs = RSManager.GetAllInstances<RSInputController>();
 
 
-				foreach(RSInputController ti in touchInputs){
+				foreach(RSInputController ti in touchInputs) {
 					ti.UpdateTouches(this);
 				}
 
@@ -356,35 +330,33 @@ namespace Rise.Core {
 
 				}*/
 
-				if(aliveTouchesIds.Count==0){
-
+				if(aliveTouchesIds.Count==0) {
 					RSFingerTouch fingerTouch  = findOrCreateTouch(mouseToucheId);
-					if(Input.mousePosition != savedMousePos){
+
+					if(Input.mousePosition != savedMousePos) {
 						fingerTouch.UpdatePosition(Input.mousePosition.x,Screen.height - Input.mousePosition.y);
 						savedMousePos = Input.mousePosition;
 					}
+
 					fingerTouch.IsActive = Input.GetMouseButton(0);
 				}
 				//Joypad
 				
-				if(useJoypadAsMouse && joypadIsConnected){
+				if(useJoypadAsMouse && joypadIsConnected) {
 					RSFingerTouch fingerTouch  = findOrCreateTouch(mouseToucheId);
-					if(GetAxisRaw("Click")==1){
+
+					if(GetAxisRaw("Click")==1) {
 						fingerTouch.IsActive = true;
 					}
+
 					fingerTouch.UpdatePosition(fingerTouch.Position.x+GetAxisRaw("Cursor X")*joypadCursorSpeed*Screen.width*Time.deltaTime, 
 					                           fingerTouch.Position.y-GetAxisRaw("Cursor Y")*joypadCursorSpeed*Screen.width*Time.deltaTime);
 
-					
 				}
-				
-				
-			
-				
-				
+
 				//Remove not active touches
-				for(int i = aliveTouches.Count-1 ; i >=0 ; i--){
-					if(!aliveTouchesIds.Contains(aliveTouches[i].Id)){
+				for(int i = aliveTouches.Count-1 ; i >= 0 ; i--) {
+					if(!aliveTouchesIds.Contains(aliveTouches[i].Id)) {
 						aliveTouches[i].IsActive = false;
 						aliveTouches.RemoveAt(i);
 					}
@@ -392,38 +364,34 @@ namespace Rise.Core {
 				
 				int numTouches = aliveTouches.Count;
 
-				if (numTouches == 1){
+				if (numTouches == 1) {
 					defaultTouchActive = aliveTouches[0].IsActive;
 					defaultTouchPosition = aliveTouches[0].Position;
 				}
 				
 				defaultTouch.IsActive = defaultTouchActive;
-				defaultTouch.UpdatePosition(defaultTouchPosition.x,defaultTouchPosition.y);
-				
-				
+				defaultTouch.UpdatePosition(defaultTouchPosition.x, defaultTouchPosition.y);
 
-				
-				
 				if (numTouches == 2) {
 					RSFingerTouch touch1 = aliveTouches[0];
 			        RSFingerTouch touch2 = aliveTouches[1];
 			        float curDist = Vector2.Distance(touch1.Position, touch2.Position);
 					if(touch1.IsMoving && touch2.IsMoving && savedZoomDist > 0) {
-						deltaZoom = curDist/savedZoomDist;
+						deltaZoom = curDist / savedZoomDist;
 						isZooming = true;
 					}
 					
 					//Debug.Log("distance " + deltaZoom);
 					savedZoomDist = curDist;
-				}else{
-
-
+				} 
+				else {
 					float scroll = GetAxisRaw("Zoom");
 
-					if(scroll!=0){
+					if(scroll!=0) {
 						isZooming = true;
-						desktopZoomSpeed += scroll/10.0f;
-					}else if(desktopZoomSpeed==0){
+						desktopZoomSpeed += scroll / 10.0f;
+					}
+					else if(desktopZoomSpeed == 0) {
 						isZooming = false;
 					}
 
@@ -433,20 +401,19 @@ namespace Rise.Core {
 
 				desktopLastZoom = desktopZoom;
 				
-				if(desktopZoomSpeed < - 0.01f ||  desktopZoomSpeed > 0.01f){
+				if(desktopZoomSpeed < - 0.01f ||  desktopZoomSpeed > 0.01f) {
 					desktopZoomSpeed -= desktopZoomSpeed  * Time.deltaTime * 3;
 					desktopZoom += desktopZoomSpeed * Time.deltaTime * 3;
-				}else{
+				}
+				else {
 					desktopZoomSpeed = 0;
 				}
-				
-				
 
 				//Click processing
 				hasBeenClicked = false;
 				hasBeenSimpleClicked = false;
 				
-				if(defaultTouch.HasGoneActive){
+				if(defaultTouch.HasGoneActive) {
 				
 					lastGoneActiveTime = Time.time;
 				}
@@ -455,28 +422,33 @@ namespace Rise.Core {
 					if(((numClick == 0 && (Time.time - lastGoneActiveTime < clickTime)) || (Time.time - lastGoneInactiveTime < clickTime)) && defaultTouch.Distance < clickDistanceTolerance * dpiFactor){
 						hasBeenClicked = true;
 						numClick++;
-						if(Clicked!=null)Clicked(defaultTouch);
+						if(Clicked!=null) {
+							Clicked(defaultTouch);
+						}
 					}
+
 					lastGoneInactiveTime = Time.time;
-				}else if(numClick>0 && (Time.time - lastGoneInactiveTime > clickTime)){
+				}
+				else if(numClick>0 && (Time.time - lastGoneInactiveTime > clickTime)) {
 					numClick = 0;
 					hasBeenSimpleClickedDone = false;
 				}
 				
-				if(!hasBeenSimpleClickedDone && numClick == 1 && (Time.time - lastGoneActiveTime > clickTime)){
+				if(!hasBeenSimpleClickedDone && numClick == 1 && (Time.time - lastGoneActiveTime > clickTime)) {
 					hasBeenSimpleClicked =true;
 					hasBeenSimpleClickedDone = true;
-					if(SimpleClicked!=null)SimpleClicked(defaultTouch);
+					if(SimpleClicked!=null) {
+						SimpleClicked(defaultTouch);
+					}
 					
 				}
 				
 				isUpdated = true;
 			}
 		}
-
-
+			
 		private void UpdateRSInputBinding() {
-			bool joypadConnected = (Input.GetJoystickNames ().Length > 0) ? true : false;
+			bool joypadConnected = (Input.GetJoystickNames().Length > 0) ? true : false;
 
 			if (joypadConnected == joypadIsConnected) return;
 

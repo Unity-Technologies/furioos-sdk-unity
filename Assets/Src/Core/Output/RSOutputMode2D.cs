@@ -5,7 +5,7 @@ using Rise.UI;
 namespace Rise.Core {
 	public class RSOutputMode2D : RSOutputMode {
 
-		public override void AttachToMovingMode(RSMovingMode movingMode){
+		public override void AttachToMovingMode(RSCamera movingMode){
 			
 			base.AttachToMovingMode(movingMode);
 			

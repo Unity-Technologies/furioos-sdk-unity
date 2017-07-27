@@ -36,7 +36,7 @@ namespace Rise.Features.MovingMode {
 		}
 		
 		void Update() {
-			if(useDoubleTapDisplacement && InputManager!=null && characterCamera!=null){
+			if(useDoubleTapDisplacement && InputManager != null && characterCamera != null){
 				if(InputManager.HasGoneInactive  && InputManager.NumClick >= 2){
 					if(!DestPositionActive){
 						RaycastHit hit;
@@ -46,7 +46,7 @@ namespace Rise.Features.MovingMode {
 							
 							SetDestPosition(hit.point);
 							
-							if(destMesh==null && doubleTapDestinationMesh!=null){
+							if(destMesh == null && doubleTapDestinationMesh != null){
 								destMesh = (GameObject)Instantiate(doubleTapDestinationMesh);
 							}
 							

@@ -15,8 +15,8 @@ namespace Rise.Core {
 			get { return AppManager!= null ? AppManager.OutputModesManager : null; }
 		}
 
-		public RSMovingModesManager MovingModesManager {
-			get { return AppManager!= null ? AppManager.MovingModesManager : null; }
+		public RSCamerasManager MovingModesManager {
+			get { return AppManager!= null ? AppManager.CamerasManager : null; }
 		}
 	}
 }

@@ -11,7 +11,7 @@ namespace Rise.Core {
 
 	public enum UseDeviceOrientationType { None, Gyroscope, Oculus };
 
-	public class RSPanTiltMovingMode : RSMovingMode {
+	public class RSPanTiltMovingMode : RSCamera {
 		
 		public float sensitivity = 1; 
 		
