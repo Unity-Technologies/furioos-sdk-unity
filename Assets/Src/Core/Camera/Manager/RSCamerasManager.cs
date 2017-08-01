@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Rise.Core {
-	public class RSCamerasManager : RSAppManagerModule {
+	public class RSCamerasManager : RSManagerModule {
 
 		private RSCamera activeMovingMode;
 		
@@ -11,9 +11,8 @@ namespace Rise.Core {
 		public event MovingModeChangedEventHandler CameraChanged;
 
 
-		public List<RSCamera> GetAvailableCameras()
-		{	
-			return RSManager.GetAllInstances<RSCamera>();
+		public List<RSCamera> GetAvailableCameras() {	
+			return Manager.GetAllInstances<RSCamera>();
 		}
 
 		public RSCamera Active {
@@ -48,8 +47,6 @@ namespace Rise.Core {
 		}
 
 		public void Start() {
-			//Debug.Log("Starting moving modes manager");
-
 			List<RSCamera> movingModes = GetAvailableCameras();
 
 			for(int i=0;i<movingModes.Count;i++) {
@@ -77,8 +74,7 @@ namespace Rise.Core {
 				}
 			}
 		}
-
-		
+			
 		void OnCameraActivated (RSCamera movingMode) {
 			Active = movingMode;
 			if(OutputModesManager.Active != null) {
@@ -103,7 +99,7 @@ namespace Rise.Core {
 		}
 
 		public RSCamera ActivateMovingMode(string id) {
-			RSCamera newMovingMode = RSManager.GetInstance<RSCamera>(id);
+			RSCamera newMovingMode = Manager.GetInstance<RSCamera>(id);
 			
 			if(newMovingMode != null) {
 				newMovingMode.Activate();
@@ -113,7 +109,7 @@ namespace Rise.Core {
 		}
 		
 		public void DesactivateAllMovingModes() {
-			List<RSCamera> movingModes = RSManager.GetAllInstances<RSCamera>();
+			List<RSCamera> movingModes = Manager.GetAllInstances<RSCamera>();
 
 			foreach(RSCamera mm in movingModes) {
 				if(mm.IsActivated) {

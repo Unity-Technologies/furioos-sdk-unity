@@ -5,32 +5,30 @@ using System;
 using Rise.UI;
 
 namespace Rise.Core {
-	public abstract class RSBehaviour
-		: MonoBehaviour
-	{
+	public abstract class RSBehaviour : MonoBehaviour {
 		public string id;
 
-		public virtual RSManager AppManager {
+		public virtual RSManager Manager {
 			get { 
-				return RSManager.AppManager;
+				return RSManager.Manager;
 			}
 		}
 
 		public virtual RSInputManager InputManager {
 			get { 
-				return RSManager.AppManager != null ? RSManager.AppManager.InputManager : null; 
+				return RSManager.Manager != null ? RSManager.Manager.InputManager : null; 
 			}
 		}
 
-		public virtual RSOutputModesManager OutputModesManager {
+		public virtual RSOutputManager OutputsManager {
 			get { 
-				return RSManager.AppManager != null ? RSManager.AppManager.OutputModesManager : null;
+				return RSManager.Manager != null ? RSManager.Manager.OutputsManager : null;
 			}
 		}
 
 		public virtual RSCamerasManager CamerasManager {
 			get { 
-				return RSManager.AppManager != null ? RSManager.AppManager.CamerasManager : null;
+				return RSManager.Manager != null ? RSManager.Manager.CamerasManager : null;
 			}
 		}
 
@@ -45,23 +43,24 @@ namespace Rise.Core {
 				return Application.isMobilePlatform;
 			}
 		}
+
+		void Awake() { 
+			Init();
+		}
 		
-		protected virtual void Init()
-		{
+		protected virtual void Init() {
 			if(string.IsNullOrEmpty(id)) {
-				id = RSManager.GetUnique(GetType().ToString());
+				id = Manager.GetUnique(GetType().ToString());
 			}
 
-			RSManager.Register(this);
+			Manager.Register(this);
 		}
-
 
 		private string GetSettingKey(string key) {
 			return GetType().ToString()+"-"+key;
 		}
-
-
-		public string GetSetting(string key,string defaultValue) {
+			
+		public string GetSetting(string key, string defaultValue) {
 			key = GetSettingKey(key);
 
 			if(PlayerPrefs.HasKey(key)) {
@@ -72,14 +71,14 @@ namespace Rise.Core {
 			}
 		}
 
-		public void SetSetting(string key,string value) {
+		public void SetSetting(string key, string value) {
 			key = GetSettingKey(key);
 			PlayerPrefs.SetString(key,value) ;
 			PlayerPrefs.Save();
 		}
 
 
-		public int GetSetting(string key,int defaultValue) {
+		public int GetSetting(string key, int defaultValue) {
 			key = GetSettingKey(key);
 
 			if(PlayerPrefs.HasKey(key)) {
@@ -90,14 +89,14 @@ namespace Rise.Core {
 			}
 		}
 
-		public void SetSetting(string key,int value) {
+		public void SetSetting(string key, int value) {
 			key = GetSettingKey(key);
 			PlayerPrefs.SetInt(key,value) ;
 			PlayerPrefs.Save();
 		}
 
 
-		public float GetSetting(string key,float defaultValue) {
+		public float GetSetting(string key, float defaultValue) {
 			key = GetSettingKey(key);
 
 			if(PlayerPrefs.HasKey(key)) {
@@ -108,14 +107,14 @@ namespace Rise.Core {
 			}
 		}
 
-		public void SetSetting(string key,float value) {
+		public void SetSetting(string key, float value) {
 			key = GetSettingKey(key);
 			PlayerPrefs.SetFloat(key,value) ;
 			PlayerPrefs.Save();
 		}
 
 
-		public bool GetSetting(string key,bool defaultValue) {
+		public bool GetSetting(string key, bool defaultValue) {
 			key = GetSettingKey(key);
 			if(PlayerPrefs.HasKey(key)) {
 				bool.TryParse(PlayerPrefs.GetString(key), out defaultValue);
@@ -124,14 +123,14 @@ namespace Rise.Core {
 			return defaultValue;
 		}
 
-		public void SetSetting(string key,bool value) {
+		public void SetSetting(string key, bool value) {
 			key = GetSettingKey(key);
 			PlayerPrefs.SetString(key,value.ToString()) ;
 			PlayerPrefs.Save();
 		}
 
 
-		public Type GetSetting(string key,Type defaultValue) {
+		public Type GetSetting(string key, Type defaultValue) {
 			key = GetSettingKey(key);
 			Type type = null;
 
@@ -142,23 +141,18 @@ namespace Rise.Core {
 			return type!=null ? type : defaultValue;			
 		}
 
-		public void SetSetting(string key,Type value) {
+		public void SetSetting(string key, Type value) {
 			key = GetSettingKey(key);
 			PlayerPrefs.SetString(key,value.ToString()) ;
 			PlayerPrefs.Save();		
 		}
 		
-		void Awake() { 
-			Init();
-		}
-		
 		public virtual void OnDestroy() {
-			RSManager.Unregister(this);
+			Manager.Unregister(this);
 		}
 
 		public override string ToString() {
 			return string.Format("'{0}' ({1})", id, GetType().ToString());
 		}
-
 	}
 }

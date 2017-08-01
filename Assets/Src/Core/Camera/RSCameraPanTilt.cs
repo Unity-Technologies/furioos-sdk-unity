@@ -11,8 +11,7 @@ namespace Rise.Core {
 
 	public enum UseDeviceOrientationType { None, Gyroscope, Oculus };
 
-	public class RSPanTiltMovingMode : RSCamera {
-		
+	public class RSCameraPanTilt : RSCamera {
 		public float sensitivity = 1; 
 		
 		public bool canPan = true;
@@ -44,16 +43,17 @@ namespace Rise.Core {
 		private bool tiltModified;
 		private bool rollModified;
 
-		public bool MouseAndFingerControlInverted{
+		public bool MouseAndFingerControlInverted {
 			get;
 			set;
 		}
 		
-		protected float ScenePan{
-			get{ return 0; }
+		protected float ScenePan {
+			get { 
+				return 0; 
+			}
 		}
-		
-		
+
 		public float FinalPan {
 			get { 
 				return Pan + DevicePan + ScenePan;
@@ -71,18 +71,18 @@ namespace Rise.Core {
 				}
 			}
 		}
-		
-		
+
 		public float Pan {
 			get { 
 				return pan;
 			}
 			set {
 				float newPan = (maxPan - minPan < 360.0f) ? Mathf.Clamp (value, minPan, maxPan): value;
+
 				while (newPan>180f) newPan -= 360f;
 				while (newPan<-180f) newPan += 360f;
 				
-				if(pan!=newPan){
+				if(pan != newPan) {
 					pan = newPan;
 					panModified=true;
 				}
@@ -90,7 +90,7 @@ namespace Rise.Core {
 		}
 		
 		public float Roll {
-			get{
+			get {
 				return roll;
 			}
 			set {
@@ -138,7 +138,7 @@ namespace Rise.Core {
 			}
 		}
 			
-		public float ComputeDeltaPan (float destPan,float srcPan) {
+		public float ComputeDeltaPan(float destPan,float srcPan) {
 			float deltaPan = destPan - srcPan;
 
 			while (deltaPan>180f) {
@@ -153,21 +153,20 @@ namespace Rise.Core {
 		}
 		
 		
-		public void StartPanTilt(){
+		public void StartPanTilt() {
 			Pan = startPan;
 			Tilt = startTilt;
 		}
 		
 		protected void UpdateDeltaPan(ref float deltaPan,ref bool panControlled) {
-			if(InputManager!=null){
-				if(InputManager.IsMoving){
+			if(InputManager!=null) {
+				if(InputManager.IsMoving) {
 					deltaPan += (invertPan ^ MouseAndFingerControlInverted ? -sensitivity : sensitivity) * InputManager.NormalizedDelta.x * panSensitivity;
 					panControlled = true;
 				}
-				
-				
+
 				float lookAxis = InputManager.GetAxisRaw("Look X");
-				if(lookAxis!=0){
+				if(lookAxis!=0) {
 					deltaPan += (invertPan ? -sensitivity : sensitivity) * lookAxis * Time.deltaTime * panSensitivity;
 					panControlled = true;
 				}
@@ -190,20 +189,25 @@ namespace Rise.Core {
 		}
 		
 		protected void UpdateDeltaRoll(ref float deltaRoll,ref bool rollControlled) { }
-		
-		//this function have to be called one and only one time by update in child classes
+
 		protected virtual void UpdatePan(float deltaPan,bool panControlled){
-			if (panControlled && canPan){
+			if (panControlled && canPan) {
 				Pan += deltaPan;
 				//small smoothing of the speeds over two values, avoiding brutal breaks
 				panSpeed = (panSpeed + deltaPan / Time.deltaTime)/2.0f;
 				LastActivityTime = Time.time;
-			}else{
-				if(inertia > Time.deltaTime ){
+			}
+			else {
+				if(inertia > Time.deltaTime ) {
 					panSpeed -= panSpeed  * Time.deltaTime / inertia;
-					if(panSpeed < - 0.1f ||  panSpeed > 0.1f)Pan += panSpeed * Time.deltaTime;
-					else panSpeed = 0.0f;
-				}else{
+					if(panSpeed < - 0.1f ||  panSpeed > 0.1f) {
+						Pan += panSpeed * Time.deltaTime;
+					}
+					else {
+						panSpeed = 0.0f;
+					}
+				}
+				else {
 					panSpeed = 0.0f;
 				}
 			}
@@ -218,8 +222,12 @@ namespace Rise.Core {
 			} else {
 				if(inertia > Time.deltaTime ) {
 					tiltSpeed -= tiltSpeed  * Time.deltaTime / inertia;
-					if(tiltSpeed < - 0.1f ||  tiltSpeed > 0.1f)Tilt -= tiltSpeed * Time.deltaTime;
-					else tiltSpeed = 0.0f;
+					if(tiltSpeed < - 0.1f ||  tiltSpeed > 0.1f) {
+						Tilt -= tiltSpeed * Time.deltaTime;
+					}
+					else {
+						tiltSpeed = 0.0f;
+					}
 				} else {
 					tiltSpeed = 0.0f;
 				}
@@ -227,18 +235,24 @@ namespace Rise.Core {
 		}
 		
 		//this function have to be called one and only one time by update in child classes
-		protected virtual void UpdateRoll(float deltaRoll,bool rollControlled){
-			if (rollControlled && canRoll){
+		protected virtual void UpdateRoll(float deltaRoll,bool rollControlled) {
+			if (rollControlled && canRoll) {
 				Roll += deltaRoll;
 				//small smoothing of the speeds over two values, avoiding brutal breaks
-				rollSpeed = (rollSpeed + deltaRoll / Time.deltaTime)/2.0f;
+				rollSpeed = (rollSpeed + deltaRoll / Time.deltaTime) / 2.0f;
 				LastActivityTime = Time.time;
-			}else{
-				if(inertia > Time.deltaTime ){
+			}
+			else {
+				if(inertia > Time.deltaTime ) {
 					rollSpeed -= rollSpeed  * Time.deltaTime / inertia;
-					if(rollSpeed < - 0.1f ||  rollSpeed > 0.1f)Roll += rollSpeed * Time.deltaTime;
-					else rollSpeed = 0.0f;
-				}else{
+					if(rollSpeed < - 0.1f ||  rollSpeed > 0.1f) {
+						Roll += rollSpeed * Time.deltaTime;
+					}
+					else {
+						rollSpeed = 0.0f;
+					}
+				}
+				else {
 					rollSpeed = 0.0f;
 				}
 			}
@@ -256,8 +270,7 @@ namespace Rise.Core {
 		protected void UpdateRollEnd() {
 			rollModified = false;
 		}
-		
-		
+
 		public override void Activate () {
 			if(resetOnActivate) {
 				Pan = startPan;
@@ -275,7 +288,6 @@ namespace Rise.Core {
 			Camera cam = GetCameraGameObject().GetComponent<Camera>();
 			tiltSensitivity = cam.fieldOfView;
 			panSensitivity = 2.0f * Mathf.Atan(Mathf.Tan(cam.fieldOfView * Mathf.Deg2Rad * 0.5f) * cam.aspect) * Mathf.Rad2Deg;
-			
 
 			base.Activate ();
 		}

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using Tuio;
 
 namespace Rise.Core {
-	public class RSInputManager  : RSAppManagerModule{
+	public class RSInputManager  : RSManagerModule {
 
 		public const int mouseToucheId = -150000;
 
-		public delegate void FingerTouchEventHandler(RSFingerTouch sender);
+		public delegate void FingerTouchEventHandler(RSInputTouch sender);
 		
 		
 		public static event FingerTouchEventHandler Clicked;
@@ -29,7 +29,7 @@ namespace Rise.Core {
 
 		private bool isUpdated;
 		
-		private List<RSFingerTouch> aliveTouches;
+		private List<RSInputTouch> aliveTouches;
 		private List<int> aliveTouchesIds;
 		
 		private float desktopZoom;
@@ -41,7 +41,7 @@ namespace Rise.Core {
 		
 		private int numTouches;
 		
-		private RSFingerTouch defaultTouch;
+		private RSInputTouch defaultTouch;
 		private float lastGoneActiveTime;
 		private float lastGoneInactiveTime;
 		private int numClick;
@@ -158,7 +158,7 @@ namespace Rise.Core {
 			}
 		}
 		
-		public List<RSFingerTouch> Touches {
+		public List<RSInputTouch> Touches {
 			get {
 				UpdateControlState();
 				return aliveTouches;
@@ -175,8 +175,8 @@ namespace Rise.Core {
 			
 			numTouches = 0;
 			
-			defaultTouch = new RSFingerTouch();
-			aliveTouches = new List<RSFingerTouch>();
+			defaultTouch = new RSInputTouch();
+			aliveTouches = new List<RSInputTouch>();
 			aliveTouchesIds = new List<int>();
 			lastGoneActiveTime = Time.time;
 			lastGoneInactiveTime = Time.time;
@@ -272,11 +272,11 @@ namespace Rise.Core {
 			return new Ray();
 		}
 
-		public RSFingerTouch findOrCreateTouch(int touchId) {
-			RSFingerTouch fingerTouch = null;
+		public RSInputTouch findOrCreateTouch(int touchId) {
+			RSInputTouch fingerTouch = null;
 			bool found = false;
 			
-			foreach(RSFingerTouch testTouch in aliveTouches) {
+			foreach(RSInputTouch testTouch in aliveTouches) {
 				if(testTouch.Id == touchId){
 					fingerTouch = testTouch;
 					found = true;
@@ -285,7 +285,7 @@ namespace Rise.Core {
 			}
 
 			if(!found){
-				fingerTouch = new RSFingerTouch();
+				fingerTouch = new RSInputTouch();
 				fingerTouch.Id = touchId;
 				aliveTouches.Add(fingerTouch);
 			}
@@ -303,7 +303,7 @@ namespace Rise.Core {
 
 				//Reset touches
 				if(aliveTouches != null) {
-					foreach(RSFingerTouch testTouch in aliveTouches) {
+					foreach(RSInputTouch testTouch in aliveTouches) {
 						testTouch.ResetLastState();
 					}
 				}
@@ -317,7 +317,7 @@ namespace Rise.Core {
 					aliveTouchesIds.Clear();
 				}
 					
-				List<RSInputController> touchInputs = RSManager.GetAllInstances<RSInputController>();
+				List<RSInputController> touchInputs = Manager.GetAllInstances<RSInputController>();
 
 
 				foreach(RSInputController ti in touchInputs) {
@@ -331,7 +331,7 @@ namespace Rise.Core {
 				}*/
 
 				if(aliveTouchesIds.Count==0) {
-					RSFingerTouch fingerTouch  = findOrCreateTouch(mouseToucheId);
+					RSInputTouch fingerTouch  = findOrCreateTouch(mouseToucheId);
 
 					if(Input.mousePosition != savedMousePos) {
 						fingerTouch.UpdatePosition(Input.mousePosition.x,Screen.height - Input.mousePosition.y);
@@ -343,7 +343,7 @@ namespace Rise.Core {
 				//Joypad
 				
 				if(useJoypadAsMouse && joypadIsConnected) {
-					RSFingerTouch fingerTouch  = findOrCreateTouch(mouseToucheId);
+					RSInputTouch fingerTouch  = findOrCreateTouch(mouseToucheId);
 
 					if(GetAxisRaw("Click")==1) {
 						fingerTouch.IsActive = true;
@@ -373,8 +373,8 @@ namespace Rise.Core {
 				defaultTouch.UpdatePosition(defaultTouchPosition.x, defaultTouchPosition.y);
 
 				if (numTouches == 2) {
-					RSFingerTouch touch1 = aliveTouches[0];
-			        RSFingerTouch touch2 = aliveTouches[1];
+					RSInputTouch touch1 = aliveTouches[0];
+			        RSInputTouch touch2 = aliveTouches[1];
 			        float curDist = Vector2.Distance(touch1.Position, touch2.Position);
 					if(touch1.IsMoving && touch2.IsMoving && savedZoomDist > 0) {
 						deltaZoom = curDist / savedZoomDist;

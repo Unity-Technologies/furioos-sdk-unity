@@ -5,7 +5,7 @@ using Rise.Core;
 
 namespace Rise.Features.MovingMode {
 	[RequireComponent (typeof(Camera))]
-	public class OrbitalCamera : RSPanTiltMovingMode {
+	public class OrbitalCamera : RSCameraPanTilt {
 		public Transform target;
 		
 		

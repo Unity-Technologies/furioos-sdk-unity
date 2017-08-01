@@ -14,7 +14,7 @@ namespace Rise.Core {
 		public string baseUrl = "";
 
 		public void Start() {
-			baseUrl = AppManager.baseUrl;
+			baseUrl = Manager.baseUrl;
 		}
 
 		public delegate void ResponseCallBack<T>(T result);

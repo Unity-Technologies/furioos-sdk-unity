@@ -3,7 +3,7 @@ using System.Collections;
 using Rise.Core;
 
 namespace Rise.Features.MovingMode {
-	public class FPSCamera : RSCharacterMovingMode {
+	public class FPSCamera : RSCameraCharacter {
 		public VirtualJoystick moveJoystick;
 		public VirtualJoystick lookJoystick;
 		public GameObject doubleTapDestinationMesh;
@@ -30,7 +30,7 @@ namespace Rise.Features.MovingMode {
 		}
 
 		void OnGUI () {
-			if(showDebugInfo){
+			if(showDebugInfo) {
 				GUI.Label (new Rect (100, 100, 300, 200), string.Format("Is Stuck: {3}\nSpeed: {4}\nPan: {5}\nTilt: {6}", Input.location.status, IsStuck, velocity.magnitude,Pan,Tilt));
 			}
 		}
@@ -38,15 +38,14 @@ namespace Rise.Features.MovingMode {
 		void Update() {
 			if(useDoubleTapDisplacement && InputManager != null && characterCamera != null){
 				if(InputManager.HasGoneInactive  && InputManager.NumClick >= 2){
-					if(!DestPositionActive){
+					if(!DestPositionActive) {
 						RaycastHit hit;
 						Ray ray = InputManager.GetRay(characterCamera);
 			
 						if(Physics.Raycast(ray, out hit, Mathf.Infinity)) {
-							
 							SetDestPosition(hit.point);
 							
-							if(destMesh == null && doubleTapDestinationMesh != null){
+							if(destMesh == null && doubleTapDestinationMesh != null) {
 								destMesh = (GameObject)Instantiate(doubleTapDestinationMesh);
 							}
 							
@@ -59,20 +58,19 @@ namespace Rise.Features.MovingMode {
 				}
 			}
 			
-			if(DestPositionActive){
-				if(destMesh!=null){
+			if(DestPositionActive) {
+				if(destMesh!=null) {
 					destMesh.transform.LookAt(characterCamera.transform);
 					float scale = 1.0f + 0.2f * Mathf.Cos(Time.time*4.0f);
 					destMesh.transform.localScale = new Vector3(scale,scale,0);
 				}
-			} else{
+			} else {
 				if(destMesh!=null) {
 					DestroyImmediate(destMesh);
 				}
 			}
 
 			//pan and tilt movements
-			
 			float deltaPan = 0;
 			float deltaTilt = 0;
 			float deltaRoll = 0;
@@ -84,19 +82,18 @@ namespace Rise.Features.MovingMode {
 			UpdateDeltaTilt(ref deltaTilt,ref tiltControlled);
 			UpdateDeltaRoll(ref deltaRoll,ref rollControlled);
 
-			if(lookJoystick!=null){
-				if(lookJoystick.X!=0.0f){
+			if(lookJoystick!=null) {
+				if(lookJoystick.X!=0.0f) {
 					panControlled = true;
 					deltaPan = (invertPan ? -sensitivity : sensitivity) * lookJoystick.X * Time.deltaTime * 60.0f;
 				}
-				if(lookJoystick.Y!=0.0f){
+				if(lookJoystick.Y!=0.0f) {
 					tiltControlled = true;
 					deltaTilt = (invertPan ? -sensitivity : sensitivity) * lookJoystick.Y  * Time.deltaTime * 60.0f;
 				}
 			}
 
 			//character movement
-			
 			float straffDeltaSpeed = 0;
 			float frontDeltaSpeed = 0;
 			bool straffControlled = false;
@@ -104,32 +101,41 @@ namespace Rise.Features.MovingMode {
 
 			UpdateDeltaSpeed(ref frontDeltaSpeed,ref straffDeltaSpeed, ref frontControlled, ref straffControlled);
 
-			if(InputManager!=null){
-
+			if(InputManager!=null) {
 				float moveYAxis = InputManager.GetAxisRaw("Move Y");
-				if(moveYAxis!=0){
-					if(moveYAxis < 0) frontDeltaSpeed -= moveYAxis * acceleration * (characterSpeedKPH * 0.2777777f - FrontSpeed) * Time.deltaTime;
-					else frontDeltaSpeed += moveYAxis * acceleration * (-characterSpeedKPH * 0.2777777f - FrontSpeed)* Time.deltaTime;
+				if(moveYAxis!=0) {
+					if(moveYAxis < 0) {
+						frontDeltaSpeed -= moveYAxis * acceleration * (characterSpeedKPH * 0.2777777f - FrontSpeed) * Time.deltaTime;
+					}
+					else {
+						frontDeltaSpeed += moveYAxis * acceleration * (-characterSpeedKPH * 0.2777777f - FrontSpeed)* Time.deltaTime;
+					}
 					frontControlled = true;
 				}
 
-				float moveXAxis = InputManager.GetAxisRaw("Move X");
-				if(moveXAxis!=0){
-					if(moveXAxis < 0 ) straffDeltaSpeed -= moveXAxis * acceleration * (-straffSpeedKPH * 0.2777777f - StraffSpeed)* Time.deltaTime;
-					else straffDeltaSpeed += moveXAxis * acceleration * (straffSpeedKPH * 0.2777777f - StraffSpeed)* Time.deltaTime;
+				float moveXAxis = InputManager.GetAxisRaw("Move X")
+					;
+				if(moveXAxis!=0) {
+					if(moveXAxis < 0) {
+						straffDeltaSpeed -= moveXAxis * acceleration * (-straffSpeedKPH * 0.2777777f - StraffSpeed)* Time.deltaTime;
+					}
+					else {
+						straffDeltaSpeed += moveXAxis * acceleration * (straffSpeedKPH * 0.2777777f - StraffSpeed)* Time.deltaTime;
+					}
 					straffControlled = true;
 				}
 
-				if(moveXAxis != 0 || moveYAxis != 0)
+				if(moveXAxis != 0 || moveYAxis != 0) {
 					UpdateHeadBobber(moveYAxis, moveXAxis);
+				}
 			}
 
-			if(moveJoystick!=null){
-				if(moveJoystick.Y!=0.0f){
+			if(moveJoystick!=null) {
+				if(moveJoystick.Y!=0.0f) {
 					frontDeltaSpeed = - moveJoystick.Y * characterSpeedKPH * 0.2777777f* Time.deltaTime;
 					frontControlled = true;
 				}
-				if(moveJoystick.X!=0.0f){
+				if(moveJoystick.X!=0.0f) {
 					straffDeltaSpeed = moveJoystick.X * straffSpeedKPH * 0.2777777f* Time.deltaTime;
 					straffControlled = true;
 				}
@@ -140,23 +146,26 @@ namespace Rise.Features.MovingMode {
 				frontControlled = true;
 			}
 
-			if(InputManager!=null){
+			if(InputManager!=null) {
 				float jump = InputManager.GetAxisRaw("Jet Pack");
-				//Debug.Log(jump);
-				if(jump>0){
-					ApplyDeltaForce(0,jump*1200.0f*Time.deltaTime,0);
+				if(jump>0) {
+					ApplyDeltaForce(0, jump * 1200.0f * Time.deltaTime, 0);
 				}
 			}
 
 			//Parent classes updates
-			
 			UpdatePan(deltaPan,panControlled);
 			UpdateTilt(deltaTilt,tiltControlled);
 			UpdateRoll(deltaRoll,rollControlled);
 			UpdateCharacter( frontDeltaSpeed, straffDeltaSpeed, frontControlled, straffControlled);
 
-			if(IsStuck)LayDownAtPosition(DestPosition);
-			if(IsFalling)ResetPosition();
+			if(IsStuck) {
+				LayDownAtPosition(DestPosition);
+			}
+
+			if(IsFalling) {
+				ResetPosition();
+			}
 
 			/*
 			if (useDeviceOrientation == UseDeviceOrientationType.Gyroscope) {
@@ -184,12 +193,10 @@ namespace Rise.Features.MovingMode {
 			UpdateTiltEnd();
 			UpdateRollEnd();
 			UpdateCharacterEnd();
-			
 		}
 
 		public override void PreActivate() {
 			base.PreActivate ();
-
 			this.Start ();
 			this.Update ();
 		}
@@ -199,8 +206,12 @@ namespace Rise.Features.MovingMode {
 			                   Application.platform == RuntimePlatform.Android)
 			                 && useJoysticksOnMobileDevices);
 			
-			if(moveJoystick!=null)moveJoystick.enabled = useJoysticks;
-			if(lookJoystick!=null)lookJoystick.enabled = useJoysticks;
+			if(moveJoystick!=null) {
+				moveJoystick.enabled = useJoysticks;
+			}
+			if(lookJoystick!=null) {
+				lookJoystick.enabled = useJoysticks;
+			}
 			
 			StopDestPosition();
 			

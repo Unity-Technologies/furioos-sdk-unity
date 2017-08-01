@@ -4,7 +4,7 @@ using Rise.Core;
 
 namespace Rise.Features.MovingMode {
 	[RequireComponent (typeof(Camera))]
-	public class PanoramicCamera : RSPanTiltMovingMode {
+	public class PanoramicCamera : RSCameraPanTilt {
 		public virtual void Start(){
 			StartPanTilt();
 			MouseAndFingerControlInverted = true;

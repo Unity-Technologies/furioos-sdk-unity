@@ -6,6 +6,8 @@ using Rise.Core;
 public class AppController : RSBehaviour {
 	private string organisationId;
 	public string OrganisationId {
-		get { return organisationId; }
+		get { 
+			return organisationId; 
+		}
 	}
 }

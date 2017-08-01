@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Rise.Core {
-	public class RSCamera : RSBehaviour 
-	{
+	public class RSCamera : RSBehaviour {
 		public string movingModeName = "" ;
 		
-		public delegate void OnActivatedHandler( RSCamera mm );
-		public delegate void OnDesactivatedHandler( RSCamera mm );
+		public delegate void OnActivatedHandler(RSCamera mm);
+		public delegate void OnDesactivatedHandler(RSCamera mm);
 
 		public event OnActivatedHandler OnPreactivate;
 		public event OnActivatedHandler OnActivated;
@@ -18,32 +17,28 @@ namespace Rise.Core {
 		public bool showDebugInfo = false;
 		
 		public bool IsActivated {
-			get ;
+			get;
 			private set;
 		}
 		
 		public float LastActivityTime {
-			get ;
+			get;
 			protected set;
 		}
 		
-		public virtual void Awake ()
-		{
+		public virtual void Awake() {
 			base.Init();
 		}
 
-		public virtual void Activate(){
+		public virtual void Activate() {
 			if(IsActivated) {
 				return;
-				//Debug.LogError("Moving mode " + ToString()+" is already activated, it shouldn't be activated a new time\r\n"+System.Environment.StackTrace);
-
 			}
 			else {
 				if(OnPreactivate!=null) {
 					OnPreactivate(this);
 				}
 
-				//Debug.Log ("Activating moving mode " + ToString());
 				LastActivityTime = Time.time;
 
 				IsActivated = true;

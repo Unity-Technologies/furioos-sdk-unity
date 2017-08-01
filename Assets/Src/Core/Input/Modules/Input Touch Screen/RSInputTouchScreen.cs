@@ -7,7 +7,7 @@ namespace Rise.Core {
 		public override void UpdateTouches(RSInputManager oic){
 			for(int i = 0 ; i < Input.touchCount; i++){
 				UnityEngine.Touch touch = Input.GetTouch(i);
-				RSFingerTouch fingerTouch = oic.findOrCreateTouch(touch.fingerId);
+				RSInputTouch fingerTouch = oic.findOrCreateTouch(touch.fingerId);
 				fingerTouch.IsActive = true;
 				fingerTouch.UpdatePosition(touch.position.x,Screen.height - touch.position.y);
 			}

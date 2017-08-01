@@ -1,17 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Src/Core/Behaviour/RSBehaviour.cs">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Assets/Dev/Test/export.json" Line="1" Column="1" />
-      <File FileName="Assets/Src/SDK/Editor/Model Builder/RSModelBuilder.cs" Line="1" Column="1" />
-      <File FileName="Assets/Src/SDK/Editor/Model Builder/Classes/RSMBMaterial.cs" Line="1" Column="1" />
-      <File FileName="Assets/Shaders/Standard/Standard.shader" Line="1" Column="1" />
-      <File FileName="Assets/Src/SDK/Cameras/Animated/Src/AnimatedCamera.cs" Line="1" Column="1" />
-      <File FileName="Assets/Src/SDK/Cameras/FPS/Src/FPSCamera.cs" Line="43" Column="33" />
-      <File FileName="Assets/Src/Core/Behaviour/RSBehaviour.cs" Line="38" Column="8" />
-      <File FileName="Assets/Src/Core/Input/Manager/RSInputManager.cs" Line="201" Column="47" />
-      <File FileName="Assets/Src/Core/Input/RSInputBinding.cs" Line="21" Column="3" />
-      <File FileName="Assets/Src/Core/Camera/Manager/RSCamerasManager.cs" Line="14" Column="44" />
+      <File FileName="Assets/Src/SDK/Cameras/FPS/Src/FPSCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/Core/Camera/Manager/RSCamerasManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/Core/Camera/RSCharacterCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/Core/Camera/RSPanTiltCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/Core/Output/RSOutputMode3DSplitted.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/App/Controllers/AppController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/Core/Camera/RSCamera.cs" Line="1" Column="1" />
+      <File FileName="Assets/Src/Core/Manager/RSManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

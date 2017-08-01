@@ -25,7 +25,7 @@ namespace Rise.Features.MovingMode {
 		private float valX;
 		private float valY;
 		
-		private RSFingerTouch touch;
+		private RSInputTouch touch;
 		
 		public float X {
 			get {
@@ -40,7 +40,7 @@ namespace Rise.Features.MovingMode {
 		}
 
 		void Start () {
-			mouseAndFingerControl = RSManager.AppManager.InputManager;
+			mouseAndFingerControl = RSManager.Manager.InputManager;
 			
 			joystickRect = new Rect();
 			
@@ -57,7 +57,7 @@ namespace Rise.Features.MovingMode {
 		void Update () {
 			if(mouseAndFingerControl!=null) {
 				if(touch==null){
-					foreach(RSFingerTouch testTouch in mouseAndFingerControl.Touches) {
+					foreach(RSInputTouch testTouch in mouseAndFingerControl.Touches) {
 						if(testTouch.HasGoneActive && IsInside(testTouch.Position)) {
 							touch = testTouch;
 							break;
