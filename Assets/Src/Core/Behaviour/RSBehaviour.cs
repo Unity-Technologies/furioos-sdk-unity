@@ -49,11 +49,20 @@ namespace Rise.Core {
 		}
 		
 		protected virtual void Init() {
+			if(Manager == null) {
+				CreateTemporaryManager();
+			}
+
 			if(string.IsNullOrEmpty(id)) {
-				id = Manager.GetUnique(GetType().ToString());
+				id = Manager.GetUniqueId(GetType().ToString());
 			}
 
 			Manager.Register(this);
+		}
+
+		private void CreateTemporaryManager() {
+			GameObject go = new GameObject("_Manager");
+			RSManager.Manager = go.AddComponent<RSManager>();
 		}
 
 		private string GetSettingKey(string key) {

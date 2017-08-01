@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using Rise.Core;
-using Rise.Features.MovingMode;
+using Rise.SDK.Cameras;
 
 namespace Rise.Features.ShowHideObjects {
 	public class ShowHideObjects : RSBehaviour {
-
 		public GameObject[] objects;
 		public string tagName;
 		
@@ -14,29 +13,33 @@ namespace Rise.Features.ShowHideObjects {
 
 		private GameObject[]taggedObjects;
 
-		void Start () {
-			if(tagName != null && tagName != "")
+		void Start() {
+			if(tagName != null && tagName != "") {
 				taggedObjects = GameObject.FindGameObjectsWithTag(tagName);
+			}
 
-			CamerasManager.CameraChanged += HandleMovingModeChanged;
+			CamerasManager.CameraChanged += HandleCameraChanged;
 			ShowHide(CamerasManager.Active);
 		}
 
-		void HandleMovingModeChanged (RSCamera movingMode){
-			ShowHide(movingMode);
+		void HandleCameraChanged(RSCamera camera) {
+			ShowHide(camera);
 		}
 
-		private void ShowHide(RSCamera mm){
-			bool show = !hideIn.Contains(mm);
+		private void ShowHide(RSCamera camera) {
+			bool show = !hideIn.Contains(camera);
 		
 			foreach(GameObject objectToHide in objects){
-				if(objectToHide!=null)objectToHide.SetActive(show);
+				if(objectToHide != null) {
+					objectToHide.SetActive(show);
+				}
 			}
 
-			if (taggedObjects != null && taggedObjects.Length > 0) {
-				foreach (GameObject objectToHide in taggedObjects) {
-					if (objectToHide != null)
+			if(taggedObjects != null && taggedObjects.Length > 0) {
+				foreach(GameObject objectToHide in taggedObjects) {
+					if(objectToHide != null) {
 						objectToHide.SetActive (show);
+					}
 				}
 			}
 		}

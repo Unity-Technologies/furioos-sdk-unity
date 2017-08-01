@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Rise.Core;
 
-namespace Rise.Features.MovingMode {
+namespace Rise.SDK.Cameras {
 	public class FPSCamera : RSCameraCharacter {
 		public VirtualJoystick moveJoystick;
 		public VirtualJoystick lookJoystick;

@@ -13,7 +13,7 @@ namespace Rise.Core {
 
 		private void EnableTUIO(bool enable) {
 			if(enable && !this.enabled) { 
-				return ; 
+				return; 
 			}
 
 			if(enable != savedUseTuio) {

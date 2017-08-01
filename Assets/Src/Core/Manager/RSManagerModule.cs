@@ -9,19 +9,19 @@ namespace Rise.Core {
 			}
 		}
 		
-		public RSInputManager InputController {
+		public RSInputManager InputManager {
 			get { 
 				return Manager!= null ? Manager.InputManager : null; 
 			}
 		}
 
-		public RSOutputManager OutputModesManager {
+		public RSOutputManager OutputsManager {
 			get { 
 				return Manager!= null ? Manager.OutputsManager : null; 
 			}
 		}
 
-		public RSCamerasManager MovingModesManager {
+		public RSCamerasManager CamerasManager {
 			get { 
 				return Manager!= null ? Manager.CamerasManager : null; 
 			}

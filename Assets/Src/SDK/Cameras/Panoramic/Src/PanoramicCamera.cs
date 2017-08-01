@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Rise.Core;
 
-namespace Rise.Features.MovingMode {
+namespace Rise.SDK.Cameras {
 	[RequireComponent (typeof(Camera))]
 	public class PanoramicCamera : RSCameraPanTilt {
 		public virtual void Start(){

@@ -4,10 +4,10 @@ using UnityEngine;
 using Rise.Core;
 
 public class AppController : RSBehaviour {
-	private string organisationId;
+	private string _organisationId;
 	public string OrganisationId {
 		get { 
-			return organisationId; 
+			return _organisationId; 
 		}
 	}
 }

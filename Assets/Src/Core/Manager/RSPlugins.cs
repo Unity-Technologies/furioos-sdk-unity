@@ -5,14 +5,14 @@ using UnityEngine;
 namespace Rise.Core {
 	public class RSPlugins : RSUniqueBehaviour {
 		private static Dictionary<string, RSBehaviour> plugins = new Dictionary<string,RSBehaviour>();
-		private static int pluginsUniqueIndex = 0;
+		private static int pluginsUniqueId = 0;
 
-		public string GetUnique(string prefix) {
+		public string GetUniqueId(string prefix) {
 			if(!string.IsNullOrEmpty(prefix)) {
-				return prefix + "_" + (pluginsUniqueIndex++);
+				return prefix + "_" + (pluginsUniqueId++);
 			}
 			else {
-				return (pluginsUniqueIndex++).ToString();
+				return (pluginsUniqueId++).ToString();
 			}
 		}
 

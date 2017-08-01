@@ -39,5 +39,7 @@ namespace Rise.Core {
 
 			callback (wrapper.values);
 		}
+
+		public void Post() {}
 	}
 }

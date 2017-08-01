@@ -1,13 +1,15 @@
 #pragma warning disable 0414
+
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+
 using Rise.Core;
-using Rise.Features.MovingMode;
+using Rise.SDK.Cameras;
 
 namespace Rise.Features.MiniMap {
 	[System.Serializable]
-	public class OBSMiniMap : RSBehaviour {
+	public class RSMiniMap : RSBehaviour {
 		public enum Mode {
 			mini,
 			full
@@ -25,7 +27,6 @@ namespace Rise.Features.MiniMap {
 		public float zoomMini = 0.2f;
 		public float zoomFull = 1.2f;
 		public float fullMapSize = 3;
-
 
 		private Texture2D textureBake;
 		private GameObject renderCamera;
@@ -50,11 +51,6 @@ namespace Rise.Features.MiniMap {
 			Bake();
 		}
 
-		public override void OnDestroy(){
-			base.OnDestroy();
-		}
-		
-		
 		public void Bake() {
 			MeshCollider[] meshes = (MeshCollider[])Object.FindObjectsOfType(typeof(MeshCollider));		
 			Bounds sceneBounds = new Bounds();
@@ -99,7 +95,7 @@ namespace Rise.Features.MiniMap {
 			
 			renderCamera.transform.position = new Vector3(sceneBounds.center.x, 100.0f, sceneBounds.center.z);
 			
-			Vector3 worldPositionOfScreenCenter = renderCamera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Screen.width/2, Screen.height/2, 0.0f));
+			Vector3 worldPositionOfScreenCenter = renderCamera.GetComponent<Camera>().ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
 			
 			Vector3 xVector = new Vector3(Mathf.Abs(minVector.x), Mathf.Abs(maxVector.x));
 			Vector3 zVector = new Vector3(Mathf.Abs(minVector.z), Mathf.Abs(maxVector.z));
@@ -135,8 +131,9 @@ namespace Rise.Features.MiniMap {
 			Matrix4x4 mapRotationMatrix = new Matrix4x4();
 			Matrix4x4 translate = new Matrix4x4();
 	        
-			Quaternion rotation = Quaternion.Euler(0, 0, -GetComponent<FPSCamera>().FinalPan);
-			
+			float pan = ((RSCameraPanTilt)CamerasManager.CamerasManager.Active).FinalPan;
+			Quaternion rotation = Quaternion.Euler(0, 0, pan);
+
 			playerScreenCoordinates = renderCamera.GetComponent<Camera>().WorldToScreenPoint(transform.position);
 			
 			translate.m00 = 1;
@@ -161,15 +158,15 @@ namespace Rise.Features.MiniMap {
 
 				Vector2 markerPosition = new Vector2(0, 0);
 
-				markerPosition.x = ((playerScreenCoordinates.x / textureBake.width) * mapRectTransform.sizeDelta.x * zoomFull) - mapRectTransform.sizeDelta.x / 2;
-				markerPosition.y = -((((textureBake.height - playerScreenCoordinates.y) / textureBake.height) * mapRectTransform.sizeDelta.y * zoomFull) - mapRectTransform.sizeDelta.y / 2);
+				markerPosition.x = ((playerScreenCoordinates.x / textureBake.width) * mapRectTransform.sizeDelta.x * zoomFull) - mapRectTransform.sizeDelta.x / 2.0f;
+				markerPosition.y = -((((textureBake.height - playerScreenCoordinates.y) / textureBake.height) * mapRectTransform.sizeDelta.y * zoomFull) - mapRectTransform.sizeDelta.y / 2.0f);
 
 				markerRectDrawer.anchoredPosition = markerPosition;
 
 				markerRectDrawer.eulerAngles = new Vector3(
 					0,
 					0,
-					-GetComponent<FPSCamera>().FinalPan
+					-pan
 				);
 			}
 
@@ -178,11 +175,11 @@ namespace Rise.Features.MiniMap {
 
 		public void SwitchMode() {
 			if (mode == Mode.mini) {
-				RectTransform rectTransform = miniMap.GetComponent<RectTransform> ();
+				RectTransform rectTransform = miniMap.GetComponent<RectTransform>();
 
 				rectTransform.anchoredPosition = new Vector2(
-					referenceResolution.x / 2,
-					-referenceResolution.y / 2
+					referenceResolution.x / 2.0f,
+					-referenceResolution.y / 2.0f
 				);
 
 				rectTransform.sizeDelta = new Vector2(
@@ -191,12 +188,13 @@ namespace Rise.Features.MiniMap {
 				);
 
 				mode = Mode.full;
-			} else {
-				RectTransform rectTransform = miniMap.GetComponent<RectTransform> ();
+			} 
+			else {
+				RectTransform rectTransform = miniMap.GetComponent<RectTransform>();
 
 				rectTransform.anchoredPosition = new Vector2(
-					rectTransform.sizeDelta.x / 2 / 2,
-					-rectTransform.sizeDelta.y / 2 / 2
+					rectTransform.sizeDelta.x / 2.0f / 2.0f,
+					-rectTransform.sizeDelta.y / 2.0f / 2.0f
 				);
 
 				rectTransform.sizeDelta = new Vector2(

@@ -249,7 +249,7 @@
      <Compile Include="Assets\Src\SDK\Cameras\Obital\Src\OrbitalCamera.cs" />
      <Compile Include="Assets\Src\SDK\Cameras\Panoramic\Src\PanoramicCamera.cs" />
      <Compile Include="Assets\Src\Viewer\DataModel\Model\Model.cs" />
-     <Compile Include="Assets\Src\Viewer\MiniMap\Class\RSMiniMap.cs" />
+     <Compile Include="Assets\Src\Viewer\MiniMap\Src\RSMiniMap.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\CameraTarget.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\ColorExtension.cs" />
      <Compile Include="Assets\Src\Viewer\Tools\DirectoryExtension.cs" />
@@ -639,9 +639,6 @@
  </Reference>
  <Reference Include="rise-core">
  <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/rise-core.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

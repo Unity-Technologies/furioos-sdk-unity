@@ -159,14 +159,14 @@ namespace Rise.Core {
 		}
 		
 		protected void UpdateDeltaPan(ref float deltaPan,ref bool panControlled) {
-			if(InputManager!=null) {
+			if(InputManager != null) {
 				if(InputManager.IsMoving) {
 					deltaPan += (invertPan ^ MouseAndFingerControlInverted ? -sensitivity : sensitivity) * InputManager.NormalizedDelta.x * panSensitivity;
 					panControlled = true;
 				}
 
 				float lookAxis = InputManager.GetAxisRaw("Look X");
-				if(lookAxis!=0) {
+				if(lookAxis != 0) {
 					deltaPan += (invertPan ? -sensitivity : sensitivity) * lookAxis * Time.deltaTime * panSensitivity;
 					panControlled = true;
 				}
@@ -174,14 +174,14 @@ namespace Rise.Core {
 		}
 		
 		protected void UpdateDeltaTilt(ref float deltaTilt,ref bool tiltControlled) {			
-			if(InputManager!=null) {
+			if(InputManager != null) {
 				if(InputManager.IsMoving) {
 					deltaTilt += (invertTilt ^ MouseAndFingerControlInverted ? -sensitivity : sensitivity) * InputManager.NormalizedDelta.y * tiltSensitivity;
 					tiltControlled = true;
 				}
 				
 				float lookAxis = InputManager.GetAxisRaw("Look Y");
-				if(lookAxis!=0) {
+				if(lookAxis != 0) {
 					deltaTilt += (invertTilt ? -sensitivity : sensitivity) * lookAxis * Time.deltaTime * tiltSensitivity;
 					tiltControlled = true;
 				}

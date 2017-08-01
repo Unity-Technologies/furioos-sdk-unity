@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace Rise.Core {
 	public class RSCamera : RSBehaviour {
-		public string movingModeName = "" ;
-		
-		public delegate void OnActivatedHandler(RSCamera mm);
-		public delegate void OnDesactivatedHandler(RSCamera mm);
+		public delegate void OnActivatedHandler(RSCamera c);
+		public delegate void OnDesactivatedHandler(RSCamera c);
 
 		public event OnActivatedHandler OnPreactivate;
 		public event OnActivatedHandler OnActivated;
@@ -57,8 +55,6 @@ namespace Rise.Core {
 				//Debug.LogError("Moving mode " + ToString()+" is already desactivated, it shouldn't be desactivated a new time\r\n"+System.Environment.StackTrace);
 			}
 			else {
-				Debug.Log("Desactivating moving mode " + ToString());
-
 				IsActivated = false;
 				enabled = false;
 				
@@ -90,8 +86,6 @@ namespace Rise.Core {
 			return transform.gameObject;
 		}
 		
-		public virtual void PreActivate() {
-
-		}
+		public virtual void PreActivate() {}
 	}
 }

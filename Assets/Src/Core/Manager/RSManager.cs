@@ -18,6 +18,7 @@ namespace Rise.Core {
 	[System.Serializable]
 	public class RSManager : RSPlugins {
 		public string baseUrl = "";
+		public bool standalone = false;
 
 		public delegate void OutputHasChanged(Outputs mode);
 		public static event OutputHasChanged onOutputChange;
@@ -37,60 +38,63 @@ namespace Rise.Core {
 
 		public delegate void DeviceOrientationTypeHasChanged(UseDeviceOrientationType deviceOrientationType);
 		public static event DeviceOrientationTypeHasChanged onDeviceOrientationTypeChange;
-		private static UseDeviceOrientationType deviceOrientationType = UseDeviceOrientationType.None;
+		private static UseDeviceOrientationType _deviceOrientationType = UseDeviceOrientationType.None;
 		public static UseDeviceOrientationType DeviceOrientationType {
 			set {
-				deviceOrientationType = value;
+				_deviceOrientationType = value;
 
 				if(onDeviceOrientationTypeChange != null) {
-					onDeviceOrientationTypeChange(deviceOrientationType);
+					onDeviceOrientationTypeChange(_deviceOrientationType);
 				}
 			}
 			get {
-				return deviceOrientationType;
+				return _deviceOrientationType;
 			}
 		}
 
-		private static RSManager manager = null;
-		public static RSManager Manager {
+		private static RSManager _manager = null;
+		public static new RSManager Manager {
 			get { 
-				return manager ;
-			} 
+				return _manager ;
+			}
+			set {
+				_manager = value;
+			}
 		}
 
-		private RSInputManager inputController;
+		private RSInputManager _inputController;
 		public override RSInputManager InputManager {
 			get { 
-				if (inputController == null) {
-					inputController = new RSInputManager();
+				if (_inputController == null) {
+					_inputController = new RSInputManager();
 				}
 
-				return inputController ;
+				return _inputController ;
 			} 
 		}
 
-		private RSOutputManager outputsManager;
+		private RSOutputManager _outputsManager;
 		public override RSOutputManager OutputsManager {
 			get {
-				if (outputsManager == null) {
-					outputsManager = new RSOutputManager();
+				if (_outputsManager == null) {
+					_outputsManager = new RSOutputManager();
 				}
-				return outputsManager ;
+				return _outputsManager ;
 			} 
 		}
 
-		private RSCamerasManager camerasManager;
+		private RSCamerasManager _camerasManager;
 		public override RSCamerasManager CamerasManager {
 			get {
-				if (camerasManager == null) {
-					camerasManager = new RSCamerasManager();
+				if (_camerasManager == null) {
+					_camerasManager = new RSCamerasManager();
 				}
-				return camerasManager ;
+				return _camerasManager ;
 			} 
 		}
 
 		void Awake() {
-			manager = this;
+			_manager = this;
 
 			base.Init();
 		}
@@ -117,23 +121,6 @@ namespace Rise.Core {
 			InputManager.LateUpdate();
 		}
 
-		void OnPostRender() {
-			if (OutputsManager.Active == null) {
-				return;
-			}
-
-			OutputsManager.RenderImage(
-				GetComponent<Camera>().targetTexture, 
-				GetComponent<Camera>().targetTexture
-			);
-		}
-
-		void OnGUI() {
-			if(OutputsManager != null) {
-				OutputsManager.RenderGui(null);
-			}
-		}
-
 		public void SetOutput(Outputs o) {
 			Output = o;
 			switch (o) {
@@ -141,14 +128,12 @@ namespace Rise.Core {
 					OutputsManager.ActivateOutputMode ("2D");
 				break;
 				case Outputs.Stereoscopic:
-					Screen.SetResolution(1920, 1080, true);
-					Manager.GetInstance<RSOutput3DSplitted>().splitMode = RSOutput3DSplitted.SplitMode.SideBySide;
+					OutputsManager.ActivateOutputMode ("Splitted");
 					break;
 				case Outputs.Oculus:
-					OutputsManager.ActivateOutputMode ("3D Oculus");
+					OutputsManager.ActivateOutputMode ("Oculus");
 				break;
 				case Outputs.Cardboard:
-					Manager.GetInstance<RSOutput3DSplitted>().splitMode = RSOutput3DSplitted.SplitMode.SideBySide;
 					OutputsManager.ActivateOutputMode ("3D Splitted");
 				break;
 			}

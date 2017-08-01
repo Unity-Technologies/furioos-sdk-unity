@@ -418,7 +418,7 @@ namespace Rise.Core {
 					lastGoneActiveTime = Time.time;
 				}
 				
-				if(defaultTouch.HasGoneInactive){
+				if(defaultTouch.HasGoneInactive) {
 					if(((numClick == 0 && (Time.time - lastGoneActiveTime < clickTime)) || (Time.time - lastGoneInactiveTime < clickTime)) && defaultTouch.Distance < clickDistanceTolerance * dpiFactor){
 						hasBeenClicked = true;
 						numClick++;

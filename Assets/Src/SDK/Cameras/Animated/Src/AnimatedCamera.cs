@@ -3,11 +3,10 @@ using System.Collections;
 using System;
 using Rise.Core;
 
-namespace Rise.Features.MovingMode {
+namespace Rise.SDK.Cameras {
 	[System.Serializable]
 	[RequireComponent (typeof(Camera))]
 	public class Animated : RSCamera {
-		
 		public GameObject animatedGameObject;
 		public string clipName = "Take 001";
 		public float startTime = 0;

@@ -27,9 +27,9 @@ namespace Rise.Core {
 
 		public virtual void RenderGui(RenderTexture guiTexture) {}
 
-		public virtual void AttachToMovingMode(RSCamera movingMode) {}
+		public virtual void UpdateCamera(RSCamera camera) {}
 
-		public virtual void DetachFromMovingMode() {}
+		public virtual void DetachFromCamera() {}
 
 		void OnEnable() {
 			if(OnPreactivate != null) {

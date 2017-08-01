@@ -53,8 +53,5 @@
   <ItemGroup>
     <Compile Include="..\..\Assets\Src\Core\**\*.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\..\Assets\Src\Core\**\*.cs" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

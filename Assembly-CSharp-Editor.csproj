@@ -59,10 +59,11 @@
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\TextPicEditor.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\uGUITools.cs" />
      <Compile Include="Assets\Addons\unity-ui-extensions\Editor\UIExtensionsMenuOptions.cs" />
-     <Compile Include="Assets\Src\SDK\Editor\Model Builder\Classes\RSMBMaterial.cs" />
-     <Compile Include="Assets\Src\SDK\Editor\Model Builder\Classes\RSMBMesh.cs" />
-     <Compile Include="Assets\Src\SDK\Editor\Model Builder\Classes\RSMBModel.cs" />
-     <Compile Include="Assets\Src\SDK\Editor\Model Builder\RSModelBuilder.cs" />
+     <Compile Include="Assets\Src\SDK\Editor\Input\RSInputAxisBuilder.cs" />
+     <Compile Include="Assets\Src\SDK\Editor\Model\Classes\RSMBMaterial.cs" />
+     <Compile Include="Assets\Src\SDK\Editor\Model\Classes\RSMBMesh.cs" />
+     <Compile Include="Assets\Src\SDK\Editor\Model\Classes\RSMBModel.cs" />
+     <Compile Include="Assets\Src\SDK\Editor\Model\RSModelBuilder.cs" />
      <Compile Include="Assets\Src\SDK\Editor\Tools\ExrLightmapToPng.cs" />
      <Compile Include="Assets\Src\SDK\Editor\Tools\Flipper.cs" />
      <Compile Include="Assets\Src\SDK\Editor\Tools\RenderIntoCubemap.cs" />
@@ -495,9 +496,6 @@
  </Reference>
  <Reference Include="rise-core">
  <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/rise-core.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.UI">
- <HintPath>/Users/Mick/rise/rise-unity-client/Assets/Plugins/Rise/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>/Applications/Unity/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

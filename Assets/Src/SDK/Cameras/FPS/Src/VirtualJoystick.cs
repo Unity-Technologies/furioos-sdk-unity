@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using Rise.Core;
 
-namespace Rise.Features.MovingMode {
+namespace Rise.SDK.Cameras {
 	public class VirtualJoystick : RSBehaviour {
 		public float positionX = 0.16f;
 		public float positionY = 0.8f;

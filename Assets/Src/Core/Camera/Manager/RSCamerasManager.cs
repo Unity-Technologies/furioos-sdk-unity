@@ -4,11 +4,10 @@ using System.Collections.Generic;
 
 namespace Rise.Core {
 	public class RSCamerasManager : RSManagerModule {
-
-		private RSCamera activeMovingMode;
+		private RSCamera activeCamera;
 		
-		public delegate void MovingModeChangedEventHandler(RSCamera movingMode);
-		public event MovingModeChangedEventHandler CameraChanged;
+		public delegate void CameraChangedEventHandler(RSCamera camera);
+		public event CameraChangedEventHandler CameraChanged;
 
 
 		public List<RSCamera> GetAvailableCameras() {	
@@ -17,103 +16,104 @@ namespace Rise.Core {
 
 		public RSCamera Active {
 			get {
-				return activeMovingMode;
+				return activeCamera;
 			}
 			protected set{
-				if(activeMovingMode != (activeMovingMode=value) && CameraChanged!=null){
-					CameraChanged(activeMovingMode);
+				if(activeCamera != (activeCamera = value) && CameraChanged != null){
+					CameraChanged(activeCamera);
 				}
 			}
 		}
 		
 		public string ActiveId {
 			get {
-				return Active!=null ? Active.id : "";
+				return Active != null ? Active.id : "";
 			}
 		}
 		
 		public GameObject ActiveCameraGameObject {
 			get {
-				RSCamera amm = Active;
-				return amm!=null ? amm.GetCameraGameObject() : null;
+				RSCamera camera = Active;
+				return camera != null ? camera.GetCameraGameObject() : null;
 			}
 		}
 		
 		public Camera ActiveCamera {
 			get {
 				GameObject cgo = ActiveCameraGameObject;
-				return cgo!=null ? cgo.GetComponent<Camera>() : null;
+				return cgo != null ? cgo.GetComponent<Camera>() : null;
 			}
 		}
 
 		public void Start() {
-			List<RSCamera> movingModes = GetAvailableCameras();
+			List<RSCamera> cameras = GetAvailableCameras();
 
-			for(int i=0;i<movingModes.Count;i++) {
-				RSCamera mm = movingModes[i];
+			for(int i = 0; i < cameras.Count; i++) {
+				RSCamera c = cameras[i];
 
-				mm.OnPreactivate += OnCameraPreactivate;
-				mm.OnActivated += OnCameraActivated;
+				c.OnPreactivate += OnCameraPreactivate;
+				c.OnActivated += OnCameraActivated;
 
-				if(mm.IsActivated) {
-					mm.Desactivate();
+				if(c.IsActivated) {
+					c.Desactivate();
 				}
 
-				if(i==0) {
-					mm.Activate();
+				if(i == 0) {
+					c.Activate();
 				}
 
-				mm.OnDesactivated += OnCameraDesactivated;
+				c.OnDesactivated += OnCameraDesactivated;
 			}
 		}
 
-		void OnCameraPreactivate (RSCamera movingMode) {
-			foreach(RSCamera mm in GetAvailableCameras()) {
-				if(mm!=movingMode && mm.IsActivated) {
-					mm.Desactivate();
+		void OnCameraPreactivate (RSCamera camera) {
+			foreach(RSCamera c in GetAvailableCameras()) {
+				if(c != camera && c.IsActivated) {
+					c.Desactivate();
 				}
 			}
 		}
 			
-		void OnCameraActivated (RSCamera movingMode) {
-			Active = movingMode;
-			if(OutputModesManager.Active != null) {
-				OutputModesManager.Active.AttachToMovingMode(movingMode);
+		void OnCameraActivated (RSCamera camera) {
+			Active = camera;
+
+			if(OutputsManager.Active != null) {
+				OutputsManager.Active.UpdateCamera(camera);
 			}
 
 			if(CameraChanged != null) {
-				CameraChanged(movingMode);
+				CameraChanged(camera);
 			}
 		}
 
-		void OnCameraDesactivated (RSCamera movingMode) {
-			if (OutputModesManager == null)
+		void OnCameraDesactivated (RSCamera camera) {
+			if (OutputsManager == null)
 				return;
 
-			if(Active == movingMode){
-				if(OutputModesManager.Active != null) {
-					OutputModesManager.Active.DetachFromMovingMode();
+			if(Active == camera){
+				if(OutputsManager.Active != null) {
+					OutputsManager.Active.DetachFromCamera();
 				}
 				Active = null;
 			}
 		}
 
-		public RSCamera ActivateMovingMode(string id) {
-			RSCamera newMovingMode = Manager.GetInstance<RSCamera>(id);
+		public RSCamera ActivateCamera(string id) {
+			RSCamera camera = Manager.GetInstance<RSCamera>(id);
 			
-			if(newMovingMode != null) {
-				newMovingMode.Activate();
+			if(camera != null) {
+				camera.Activate();
 			}
 			
-			return newMovingMode;
+			return camera;
 		}
 		
-		public void DesactivateAllMovingModes() {
-			List<RSCamera> movingModes = Manager.GetAllInstances<RSCamera>();
+		public void DesactivateAllCameras() {
+			List<RSCamera> cameras = Manager.GetAllInstances<RSCamera>();
 
-			foreach(RSCamera mm in movingModes) {
-				if(mm.IsActivated) {
-					mm.Desactivate();
+			foreach(RSCamera c in cameras) {
+				if(c.IsActivated) {
+					c.Desactivate();
 				}
 			}
 		}

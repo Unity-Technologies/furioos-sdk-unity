@@ -131,9 +131,6 @@ namespace Rise.SDK.ModelBuilder {
 
 				GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.LightmapStatic);
 				GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.OccluderStatic);
-
-				SerializedObject mr = new SerializedObject(go.GetComponent<MeshRenderer>());
-				SerializedProperty mrls = mr.FindProperty("m_LightmapParameters");
 					
 				int materialLength = mesh.Materials.Length;
 				RSMBMaterial[] materialsDefintion = new RSMBMaterial[materialLength];

@@ -14,12 +14,10 @@ namespace Rise.Core {
 		public event OnRenderSizeChangedHandler OnRenderSizeChanged;
 		public event OutputChangedEventHandler OutputChanged;
 
-
 		public List<RSOutput> GetAvailableOutputs() {	
 			return Manager.GetAllInstances<RSOutput>();
 		}
-		
-		
+
 		public RSOutput Active {
 			get {
 				return activeOutput;
@@ -72,8 +70,8 @@ namespace Rise.Core {
 		void OnOutputActivated (RSOutput outputMode) {
 			Manager.SetSetting("OutputModeType",outputMode.GetType());
 
-			if(MovingModesManager.Active != null) {
-				outputMode.AttachToMovingMode(MovingModesManager.Active);
+			if(CamerasManager.Active != null) {
+				outputMode.UpdateCamera(CamerasManager.Active);
 			}
 
 			Active = outputMode;
@@ -81,7 +79,7 @@ namespace Rise.Core {
 		}
 
 		void OnOutputModeDesactivated (RSOutput outputMode) {
-			outputMode.DetachFromMovingMode();
+			outputMode.DetachFromCamera();
 
 			if(Active == outputMode) {
 				Active = null;
@@ -89,11 +87,13 @@ namespace Rise.Core {
 		}
 		
 		public int RenderWidth {
-			get; private set;
+			get; 
+			private set;
 		}
 		
 		public int RenderHeight {
-			get; private set;
+			get; 
+			private set;
 		}
 
 
@@ -102,12 +102,12 @@ namespace Rise.Core {
 			sizeChanged |= (RenderWidth != (RenderWidth = (destination == null) ? Screen.width : destination.width));				
 			sizeChanged |= (RenderHeight != (RenderHeight = (destination == null) ? Screen.height : destination.height));
 			if(sizeChanged){
-				if(OnRenderSizeChanged!=null) {
+				if(OnRenderSizeChanged != null) {
 					OnRenderSizeChanged(RenderWidth, RenderHeight);
 				}
 			}
 
-			if(Active!=null && !clearDisplay) {
+			if(Active != null && !clearDisplay) {
 				Active.RenderImage(source, destination);
 			}
 			else {

@@ -3,19 +3,15 @@ using System.Collections;
 using System;
 using Rise.Core;
 
-namespace Rise.Features.MovingMode {
+namespace Rise.SDK.Cameras {
 	[RequireComponent (typeof(Camera))]
 	public class OrbitalCamera : RSCameraPanTilt {
 		public Transform target;
-		
-		
+
 		public bool canZoom = true;
 		public float minDistance = 30;
 		public float startDistance = 100;
 		public float maxDistance = 200;
-
-		public float distanceCorrectionLimit = 5.0f;
-		public bool distanceCorrection = true;
 
 		private float distance = -1;
 
@@ -32,24 +28,22 @@ namespace Rise.Features.MovingMode {
 				return distance;
 			}
 			set {
-				if(distance!=value) {
+				if(distance != value) {
 					distance = value;
 					distance = Mathf.Clamp (distance, minDistance, maxDistance);
-					distanceModified=true;
+					distanceModified = true;
 				}
 			}
 		}
-		
-		
+
 		void Start() {
 			Distance = startDistance;
 			distanceModified = true;
 			StartPanTilt();
 		}
 
-		void Update ()
-		{
-			if(InputManager!=null) {
+		void Update() {
+			if(InputManager != null) {
 				float deltaPan = 0;
 				float deltaTilt = 0;
 				float deltaRoll = 0;
@@ -69,11 +63,15 @@ namespace Rise.Features.MovingMode {
 					Distance /= InputManager.DeltaZoom;	
 				}
 				
-				if(PanModified  || TiltModified || RollModified  || distanceModified) {
+				if(PanModified || TiltModified || RollModified || distanceModified) {
 					Vector3 targetPosition;
 					
-					if(target!=null)targetPosition = target.position;
-					else targetPosition = new Vector3(0,0,0);
+					if(target != null) {
+						targetPosition = target.position;
+					}
+					else {
+						targetPosition = new Vector3(0, 0, 0);
+					}
 					
 					Quaternion rotation = Quaternion.Euler(-Tilt, FinalPan, Roll);
 					Vector3 position = rotation * new Vector3(0.0f, 0.0f, -Distance) + targetPosition;
@@ -85,10 +83,6 @@ namespace Rise.Features.MovingMode {
 				UpdatePanEnd();
 				UpdateTiltEnd();
 				UpdateRollEnd();
-			}
-
-			if (distanceCorrection) {
-				CorrectDistance();
 			}
 		}
 
@@ -103,22 +97,6 @@ namespace Rise.Features.MovingMode {
 			this.distance = zoomLevel;
 		}
 
-		private void CorrectDistance() {
-			RaycastHit forwardHit;
-			RaycastHit backHit;
-
-			Vector3 forward = transform.TransformDirection(Vector3.forward);
-			Vector3 back = transform.TransformDirection(Vector3.back);
-			
-			if (Physics.Raycast (transform.position, forward, out forwardHit, distanceCorrectionLimit)) {
-				//Debug.Log (forwardHit.point);
-			}
-
-			if (Physics.Raycast (transform.position, back, out backHit, distanceCorrectionLimit)) {
-				//Debug.Log (backHit.point);
-			}
-		}
-
 		public void Reset() {
 			target = savedTarget;
 			distance = savedDistance;
@@ -131,13 +109,13 @@ namespace Rise.Features.MovingMode {
 			base.Activate ();
 			transform.gameObject.SetActive(true);
 			
-			if(resetOnActivate){
+			if(resetOnActivate) {
 				Distance = startDistance;
 			}
 		}
 		
-		public override void Desactivate () {
-			base.Desactivate ();
+		public override void Desactivate() {
+			base.Desactivate();
 			transform.gameObject.SetActive(false);
 		}
 
@@ -147,14 +125,14 @@ namespace Rise.Features.MovingMode {
 			Tilt = startTilt;
 			Roll = startRoll;
 
-			base.PreActivate ();
+			base.PreActivate();
 
-			this.Update ();
+			this.Update();
 		}
 		
-		void OnGUI () {
-			if(showDebugInfo){
-				GUI.Label (new Rect (100, 100, 300, 100), string.Format("Orbital Camera {0}\nPan : {1}\nTilt : {2}\nRoll : {3}\nDistance : {4}",id, Pan, Tilt, Roll, Distance));
+		void OnGUI() {
+			if(showDebugInfo) {
+				GUI.Label(new Rect(100, 100, 300, 100), string.Format("Orbital Camera {0}\n Pan : {1}\n Tilt : {2}\n Roll : {3}\n Distance : {4}", id, Pan, Tilt, Roll, Distance));
 			}
 		}
 	}
