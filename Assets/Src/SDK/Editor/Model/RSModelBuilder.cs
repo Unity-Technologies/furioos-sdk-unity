@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Rise.SDK.ModelBuilder {
-	public class RSModelBuilder : AssetPostprocessor {
+	public class RSModelBuilder {
 		private const string materialFolderName = "Materials";
 		private const string substanceMatFolderName = "Substances";
 		private const string standardMatFolderName = "Standards";
@@ -30,14 +30,16 @@ namespace Rise.SDK.ModelBuilder {
 
 		private static RSMBModel modelDefinition;
 
+		private static Shader standardShader;
+		/*
 		void OnPreprocessModel() {
 			ModelImporter modelImporter = (ModelImporter)assetImporter;
 			modelImporter.importMaterials = false;
 		}
-
+		*/
 		[MenuItem("Rise SDK/Model/Build")]
 		public static void BuildEntry() {
-			try {
+			//try {
 				Build();
 
 				basePath = "";
@@ -51,11 +53,11 @@ namespace Rise.SDK.ModelBuilder {
 				handledMaterials = new Dictionary<int, Material>();
 				
 				modelDefinition = null;
-			}
+			/*}
 			catch(System.Exception e) {
 				Debug.LogError(e.Message);
 				EditorUtility.ClearProgressBar();
-			}
+			}*/
 		}
 
 		public static void Build() {
@@ -98,6 +100,8 @@ namespace Rise.SDK.ModelBuilder {
 			if(!Directory.Exists(standardFolderPath)) {
 				AssetDatabase.CreateFolder(materialsFolderPath, standardMatFolderName);
 			}
+
+			standardShader = Shader.Find("Standard");
 				
 			EditorUtility.DisplayProgressBar(
 				"Model builder", 
@@ -110,6 +114,10 @@ namespace Rise.SDK.ModelBuilder {
 			TextAsset jsonFile = AssetDatabase.LoadAssetAtPath<TextAsset>(jsonFilePath);
 
 			modelDefinition = JsonConvert.DeserializeObject<RSMBModel>(jsonFile.text);
+			if(modelDefinition == null) {
+				Debug.LogError("[ModelBuilder] > Can't read json file. (Maybe corrupted)");
+				return;
+			}
 
 			GameObject instantiedModel = (GameObject)PrefabUtility.InstantiatePrefab(model);
 			PrefabUtility.DisconnectPrefabInstance(instantiedModel);
@@ -133,7 +141,7 @@ namespace Rise.SDK.ModelBuilder {
 				GameObjectUtility.SetStaticEditorFlags(go, StaticEditorFlags.OccluderStatic);
 					
 				int materialLength = mesh.Materials.Length;
-				RSMBMaterial[] materialsDefintion = new RSMBMaterial[materialLength];
+				RSMBMaterial[] materialsDefinition = new RSMBMaterial[materialLength];
 				for(int i = 0; i < materialLength; i++) {
 					int materialId = mesh.Materials[i];
 					RSMBMaterial materialDefinition = modelDefinition.Materials.SingleOrDefault(m => m.Id == materialId);
@@ -142,10 +150,10 @@ namespace Rise.SDK.ModelBuilder {
 						continue;
 					}
 
-					materialsDefintion[i] = materialDefinition;
+					materialsDefinition[i] = materialDefinition;
 				}
 
-				HandleMaterials(go, materialsDefintion);
+				HandleMaterials(go, materialsDefinition);
 			}
 
 			EditorUtility.DisplayProgressBar(
@@ -231,6 +239,7 @@ namespace Rise.SDK.ModelBuilder {
 			substanceIpt.SetPlatformTextureSettings(substanceMtl, "iPhone", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
 			substanceIpt.SetPlatformTextureSettings(substanceMtl, "WebGL", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
 			substanceIpt.SetPlatformTextureSettings(substanceMtl, "Windows Store Apps", 1024, 1024, 0, (int)ProceduralLoadingBehavior.BakeAndDiscard);
+			substanceIpt.SaveAndReimport();
 
 			ProceduralPropertyDescription[] propertiesDescription = substanceMtl.GetProceduralPropertyDescriptions();
 			foreach(ProceduralPropertyDescription propertyDescription in propertiesDescription) {
@@ -326,20 +335,17 @@ namespace Rise.SDK.ModelBuilder {
 
 		private static Material HandleStandardMaterial(RSMBMaterial materialDefinition, bool isSelfillum = false) {
 			string materialName = materialDefinition.Name + "_" + materialDefinition.Id;
-
-			Material stdMaterial = new Material(Shader.Find("Standard"));
+			Material stdMaterial = null;
+			Texture2D diffuseTexture = null;
+			Texture2D bumpTexture = null;
+			Color diffuseColor = Color.white;
 
 			if(materialDefinition.Parameters == null || materialDefinition.Parameters.Count == 0) {
-				return stdMaterial;
+				return new Material(standardShader);
 			}
 
 			if(materialDefinition.Parameters.ContainsKey("diffuseColor")) {
-				Color diffuseColor = HandleStandardColor(materialDefinition.Parameters["diffuseColor"]);
-				stdMaterial.color = diffuseColor;
-
-				if(diffuseColor.a < 1) {
-					stdMaterial.SetFloat("_Mode", 3);
-				}
+				diffuseColor = HandleStandardColor(materialDefinition.Parameters["diffuseColor"]);
 			}
 
 			if(materialDefinition.Parameters.ContainsKey("diffuseMap")) {
@@ -349,13 +355,11 @@ namespace Rise.SDK.ModelBuilder {
 				if(File.Exists(texturePath)) {
 					TextureImporter diffuseTextureImpt = (TextureImporter)AssetImporter.GetAtPath(texturePath);
 
-					HandleTexturePlateformSettings(diffuseTextureImpt);
+					diffuseTextureImpt = HandleTexturePlateformSettings(diffuseTextureImpt);
 
 					diffuseTextureImpt.SaveAndReimport();
 
-					Texture2D diffuseTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
-
-					stdMaterial.mainTexture = diffuseTexture;
+					diffuseTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
 				}
 			}
 
@@ -373,11 +377,19 @@ namespace Rise.SDK.ModelBuilder {
 
 					bumpTextureImpt.SaveAndReimport();
 
-					Texture2D bumpTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
-
-					stdMaterial.SetTexture("_BumpMap", bumpTexture);
+					bumpTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
 				}
 			}
+
+			stdMaterial = new Material(standardShader);
+
+			stdMaterial.color = diffuseColor;
+			if(diffuseColor.a < 1) {
+				stdMaterial.SetFloat("_Mode", 3);
+			}
+
+			stdMaterial.mainTexture = diffuseTexture;
+			stdMaterial.SetTexture("_BumpMap", bumpTexture);
 
 			if(materialDefinition.Parameters.ContainsKey("bumpMapIntensity")) {
 				float bumpMapIntensity = float.Parse(materialDefinition.Parameters["bumpMapIntensity"]);
@@ -403,7 +415,7 @@ namespace Rise.SDK.ModelBuilder {
 					stdMaterial.SetFloat("_EmissionScaleUI", float.Parse(materialDefinition.Parameters["Intensity"]));
 				}
 			}
-
+				
 			AssetDatabase.CreateAsset(stdMaterial, standardFolderPath + directorySeparatorChar + materialName + ".mat");
 
 			return stdMaterial;
@@ -429,7 +441,7 @@ namespace Rise.SDK.ModelBuilder {
 			);
 		}
 
-		private static void HandleTexturePlateformSettings(TextureImporter textureIpt) {
+		private static TextureImporter HandleTexturePlateformSettings(TextureImporter textureIpt) {
 			TextureImporterPlatformSettings[] plateformSettings = new TextureImporterPlatformSettings[5];
 			plateformSettings[0] = new TextureImporterPlatformSettings() {
 				name = "",
@@ -470,6 +482,8 @@ namespace Rise.SDK.ModelBuilder {
 			for(int i = 0; i < plateformSettings.Length; i++) {
 				textureIpt.SetPlatformTextureSettings(plateformSettings[i]);
 			}
+
+			return textureIpt;
 		}
 
 		private static void HandleTextureFolder(string basePath) {

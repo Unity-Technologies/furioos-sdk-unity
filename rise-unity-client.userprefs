@@ -1,13 +1,15 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Src/Viewer/MiniMap/Src/RSMiniMap.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Src/SDK/Editor/Model/RSModelBuilder.cs">
     <Files>
-      <File FileName="Assets/Src/Viewer/MiniMap/Src/RSMiniMap.cs" Line="162" Column="179" />
+      <File FileName="Assets/Dev/export_1/export.json" Line="1" Column="1" />
+      <File FileName="Assets/Src/SDK/Editor/Model/RSModelBuilder.cs" Line="368" Column="35" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint conditionExpression="lookAxis != 0" file="/Users/Mick/rise/rise-unity-client/Assets/Src/Core/Camera/RSCameraPanTilt.cs" line="184" column="1" />
+      <Breakpoint file="/Users/Mick/rise/rise-unity-client/Assets/Src/SDK/Editor/Model/RSModelBuilder.cs" line="358" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
