@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Rise.SDK.ModelBuilder {
-	public class RSModelBuilder {
+	public class RSModelBuilder : AssetPostprocessor {
 		private const string materialFolderName = "Materials";
 		private const string substanceMatFolderName = "Substances";
 		private const string standardMatFolderName = "Standards";
@@ -31,15 +31,15 @@ namespace Rise.SDK.ModelBuilder {
 		private static RSMBModel modelDefinition;
 
 		private static Shader standardShader;
-		/*
+
 		void OnPreprocessModel() {
 			ModelImporter modelImporter = (ModelImporter)assetImporter;
 			modelImporter.importMaterials = false;
 		}
-		*/
+
 		[MenuItem("Rise SDK/Model/Build")]
 		public static void BuildEntry() {
-			//try {
+			try {
 				Build();
 
 				basePath = "";
@@ -53,11 +53,11 @@ namespace Rise.SDK.ModelBuilder {
 				handledMaterials = new Dictionary<int, Material>();
 				
 				modelDefinition = null;
-			/*}
+			}
 			catch(System.Exception e) {
 				Debug.LogError(e.Message);
 				EditorUtility.ClearProgressBar();
-			}*/
+			}
 		}
 
 		public static void Build() {
@@ -116,6 +116,7 @@ namespace Rise.SDK.ModelBuilder {
 			modelDefinition = JsonConvert.DeserializeObject<RSMBModel>(jsonFile.text);
 			if(modelDefinition == null) {
 				Debug.LogError("[ModelBuilder] > Can't read json file. (Maybe corrupted)");
+				EditorUtility.ClearProgressBar();
 				return;
 			}
 
@@ -127,11 +128,13 @@ namespace Rise.SDK.ModelBuilder {
 			handledMaterials = new Dictionary<int, Material>();
 
 			foreach(RSMBMesh mesh in modelDefinition.Meshes) {
-				GameObject go = instantiedTransforms.SingleOrDefault(it => it.name == mesh.Name).gameObject;
+				Transform transform = instantiedTransforms.SingleOrDefault(it => it.name == mesh.Name);
 
-				if(go == null) {
+				if(transform == null) {
 					continue;
 				}
+
+				GameObject go = transform.gameObject;
 
 				if(go.GetComponent<MeshRenderer>() == null) {
 					continue;
@@ -337,6 +340,7 @@ namespace Rise.SDK.ModelBuilder {
 			string materialName = materialDefinition.Name + "_" + materialDefinition.Id;
 			Material stdMaterial = null;
 			Texture2D diffuseTexture = null;
+			float[] diffuseTilingOffset = new float[4]{1, 1, 1, 1};
 			Texture2D bumpTexture = null;
 			Color diffuseColor = Color.white;
 
@@ -360,6 +364,13 @@ namespace Rise.SDK.ModelBuilder {
 					diffuseTextureImpt.SaveAndReimport();
 
 					diffuseTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+				}
+			}
+
+			if(materialDefinition.Parameters.ContainsKey("diffuseTilingOffset")) {
+				string[] tilingOffset = materialDefinition.Parameters ["diffuseTilingOffset"].Split(',');
+				for (int i = 0; i < tilingOffset.Length; i++) {
+					diffuseTilingOffset [i] = float.Parse(tilingOffset [i]);
 				}
 			}
 
@@ -389,6 +400,9 @@ namespace Rise.SDK.ModelBuilder {
 			}
 
 			stdMaterial.mainTexture = diffuseTexture;
+			stdMaterial.SetTextureScale ("_MainTex", new Vector2 (diffuseTilingOffset [0], diffuseTilingOffset [1]));
+			stdMaterial.SetTextureOffset ("_MainTex", new Vector2 (diffuseTilingOffset [2], diffuseTilingOffset [3]));
+
 			stdMaterial.SetTexture("_BumpMap", bumpTexture);
 
 			if(materialDefinition.Parameters.ContainsKey("bumpMapIntensity")) {
@@ -447,7 +461,8 @@ namespace Rise.SDK.ModelBuilder {
 				name = "",
 				maxTextureSize = 2048,
 				textureCompression = TextureImporterCompression.CompressedHQ,
-				format = TextureImporterFormat.Automatic,
+				crunchedCompression = true,
+				compressionQuality = 100,
 				overridden = true
 			};
 
@@ -455,28 +470,36 @@ namespace Rise.SDK.ModelBuilder {
 				name = "Standalone",
 				maxTextureSize = 2048,
 				textureCompression = TextureImporterCompression.CompressedHQ,
-				format = TextureImporterFormat.Automatic
+				crunchedCompression = true,
+				compressionQuality = 100,
+				overridden = true
 			};
 
 			plateformSettings[2] = new TextureImporterPlatformSettings() {
 				name = "iPhone",
 				maxTextureSize = 1024,
 				textureCompression = TextureImporterCompression.CompressedLQ,
-				format = TextureImporterFormat.Automatic
+				crunchedCompression = true,
+				compressionQuality = 100,
+				overridden = true
 			};
 
 			plateformSettings[3] = new TextureImporterPlatformSettings() {
 				name = "Android",
 				maxTextureSize = 1024,
 				textureCompression = TextureImporterCompression.CompressedLQ,
-				format = TextureImporterFormat.Automatic
+				crunchedCompression = true,
+				compressionQuality = 100,
+				overridden = true
 			};
 
 			plateformSettings[4] = new TextureImporterPlatformSettings() {
 				name = "WebGL",
 				maxTextureSize = 1024,
 				textureCompression = TextureImporterCompression.CompressedLQ,
-				format = TextureImporterFormat.Automatic
+				crunchedCompression = true,
+				compressionQuality = 100,
+				overridden = true
 			};
 					
 			for(int i = 0; i < plateformSettings.Length; i++) {
