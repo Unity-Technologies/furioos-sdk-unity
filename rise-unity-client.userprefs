@@ -1,16 +1,25 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\SDK\Editor\Model\RSModelBuilder.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Src\App\Controllers\CategoryController.cs">
     <Files>
-      <File FileName="Assets\Src\SDK\Editor\Model\RSModelBuilder.cs" Line="130" Column="1" />
-      <File FileName="Assets\Src\App\Controllers\AppController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Src\SDK\Editor\Model\RSModelBuilder.cs" Line="499" Column="66" />
+      <File FileName="Assets\Src\Core\Manager\RSManager.cs" Line="87" Column="41" />
+      <File FileName="Assets\Src\App\Controllers\AppController.cs" Line="4" Column="17" />
+      <File FileName="Assets\Src\App\Controllers\CategoryController.cs" Line="41" Column="7" />
+      <File FileName="Assets\Src\Core\Network\RSWebRequestManager.cs" Line="42" Column="41" />
+      <File FileName="Assets\Src\Core\Behaviour\RSBehaviour.cs" Line="64" Column="1" />
+      <File FileName="Assets\Src\Core\Output\Manager\RSOutputManager.cs" Line="132" Column="3" />
+      <File FileName="Assets\Src\Core\Behaviour\RSUniqueBehaviour.cs" Line="5" Column="2" />
+      <File FileName="Assets\Src\App\Models\Category.cs" Line="37" Column="11" />
+      <File FileName="Assets\Src\SDK\MiniMap\Src\RSMiniMap.cs" Line="42" Column="1" />
+      <File FileName="Assets\Src\Core\Manager\RSPlugins.cs" Line="110" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint conditionExpression="lookAxis != 0" file="/Users/Mick/rise/rise-unity-client/Assets/Src/Core/Camera/RSCameraPanTilt.cs" line="184" column="1" />
       <Breakpoint file="/Users/Mick/rise/rise-unity-client/Assets/Src/SDK/Editor/Model/RSModelBuilder.cs" line="358" column="1" />
-      <Breakpoint file="D:\Projects\Rise\rise-unity-client\Assets\Src\SDK\Editor\Model\RSModelBuilder.cs" line="130" column="1" />
+      <Breakpoint file="D:\Projects\Rise\rise-unity-client\Assets\Src\App\Controllers\CategoryController.cs" line="27" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

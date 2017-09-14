@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Rise.Features.DataModel {
+using Rise.App.ViewModels;
+
+namespace Rise.App.Models {
 	[System.Serializable]
 	public class Project {
 		[SerializeField]
@@ -59,5 +62,35 @@ namespace Rise.Features.DataModel {
 				organisationID = value;
 			}
 		}
-	}
+
+        private ProjectViewModel _projectViewModel;
+        public ProjectViewModel ProjectViewModel {
+            get {
+                return _projectViewModel;
+            }
+            set {
+                _projectViewModel = value;
+            }
+        }
+
+        private ProjectMenuItemViewModel _projectMenuItemViewModel;
+        public ProjectMenuItemViewModel ProjectMenuItemViewModel {
+            get {
+                return _projectMenuItemViewModel;
+            }
+            set {
+                _projectMenuItemViewModel = value;
+            }
+        }
+
+        private ProjectDetailViewModel _projectDetailViewModel;
+        public ProjectDetailViewModel ProjectDetailViewModel {
+            get {
+                return _projectDetailViewModel;
+            }
+            set {
+                _projectDetailViewModel = value;
+            }
+        }
+    }
 }

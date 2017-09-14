@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-namespace Rise.Features.DataModel {
+using Rise.App.ViewModels;
+
+namespace Rise.App.Models {
 	[System.Serializable]
 	public class Category {
 		[SerializeField]
-		private string _id;
+		private string id;
 		public string Id {
 			get {
-				return _id;
+				return id;
 			}
 			set {
-				_id = value;
+				id = value;
 			}
 		}
 
@@ -28,13 +31,13 @@ namespace Rise.Features.DataModel {
 		}
 
 		[SerializeField]
-		private string parentID;
-		public string ParentID {
+		private string parent;
+		public string Parent {
 			get {
-				return parentID;
+				return parent;
 			}
 			set {
-				parentID = value;
+				parent = value;
 			}
 		}
 
@@ -48,5 +51,25 @@ namespace Rise.Features.DataModel {
 				organisationID = value;
 			}
 		}
+
+        private bool _isFolder = false;
+        public bool IsFolder {
+            get {
+                return _isFolder;
+            }
+            set {
+                _isFolder = value;
+            }
+        }
+
+        private CategoryViewModel _viewModel;
+        public CategoryViewModel ViewModel {
+            get {
+                return _viewModel;
+            }
+            set {
+                _viewModel = value;
+            }
+        }
 	}
 }

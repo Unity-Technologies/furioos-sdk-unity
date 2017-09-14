@@ -16,6 +16,7 @@ namespace UnityEngine.UI.Extensions
             _isVertical = false;
             _childAnchorPoint = new Vector2(0, 0.5f);
             _currentPage = StartingScreen;
+            panelDimensions = gameObject.GetComponent<RectTransform>().rect;
             UpdateLayout();
         }
 
@@ -37,6 +38,7 @@ namespace UnityEngine.UI.Extensions
                 _screensContainer.localPosition = Vector3.Lerp(_screensContainer.localPosition, _lerp_target, transitionSpeed * Time.deltaTime);
                 if (Vector3.Distance(_screensContainer.localPosition, _lerp_target) < 0.1f)
                 {
+                    _screensContainer.localPosition = _lerp_target;
                     _lerp = false;
                     EndScreenChange();
                 }
@@ -71,7 +73,6 @@ namespace UnityEngine.UI.Extensions
 
             int _offset = 0;
             float _dimension = 0;
-            Rect panelDimensions = gameObject.GetComponent<RectTransform>().rect;
             float currentXPosition = 0;
             var pageStepValue = _childSize = (int)panelDimensions.width * ((PageStep == 0) ? 3 : PageStep);
 
@@ -87,7 +88,7 @@ namespace UnityEngine.UI.Extensions
 
             _dimension = currentXPosition + _offset * -1;
 
-            _screensContainer.GetComponent<RectTransform>().offsetMax = new Vector2(_dimension, 0f);
+            _screensContainer.offsetMax = new Vector2(_dimension, 0f);
         }
 
         /// <summary>
@@ -108,6 +109,7 @@ namespace UnityEngine.UI.Extensions
         {
             _scroll_rect.horizontalNormalizedPosition = 0;
             GO.transform.SetParent(_screensContainer, WorldPositionStays);
+            InitialiseChildObjectsFromScene();
             DistributePages();
             if (MaskArea) UpdateVisible();
 
@@ -118,9 +120,21 @@ namespace UnityEngine.UI.Extensions
         /// Remove a new child to this Scroll Snap and recalculate it's children 
         /// *Note, this is an index address (0-x)
         /// </summary>
-        /// <param name="index"></param>
-        /// <param name="ChildRemoved"></param>
+        /// <param name="index">Index element of child to remove</param>
+        /// <param name="ChildRemoved">Resulting removed GO</param>
         public void RemoveChild(int index, out GameObject ChildRemoved)
+        {
+            RemoveChild(index, false, out ChildRemoved);
+        }
+
+        /// <summary>
+        /// Remove a new child to this Scroll Snap and recalculate it's children 
+        /// *Note, this is an index address (0-x)
+        /// </summary>
+        /// <param name="index">Index element of child to remove</param>
+        /// <param name="WorldPositionStays">If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before</param>
+        /// <param name="ChildRemoved">Resulting removed GO</param>
+        public void RemoveChild(int index, bool WorldPositionStays, out GameObject ChildRemoved)
         {
             ChildRemoved = null;
             if (index < 0 || index > _screensContainer.childCount)
@@ -130,9 +144,9 @@ namespace UnityEngine.UI.Extensions
             _scroll_rect.horizontalNormalizedPosition = 0;
 
             Transform child = _screensContainer.transform.GetChild(index);
-            child.SetParent(null);
+            child.SetParent(null, WorldPositionStays);
             ChildRemoved = child.gameObject;
-
+            InitialiseChildObjectsFromScene();
             DistributePages();
             if (MaskArea) UpdateVisible();
 
@@ -147,8 +161,18 @@ namespace UnityEngine.UI.Extensions
         /// <summary>
         /// Remove all children from this ScrollSnap
         /// </summary>
-        /// <param name="ChildrenRemoved"></param>
+        /// <param name="ChildrenRemoved">Array of child GO's removed</param>
         public void RemoveAllChildren(out GameObject[] ChildrenRemoved)
+        {
+            RemoveAllChildren(false, out ChildrenRemoved);
+        }
+
+        /// <summary>
+        /// Remove all children from this ScrollSnap
+        /// </summary>
+        /// <param name="WorldPositionStays">If true, the parent-relative position, scale and rotation are modified such that the object keeps the same world space position, rotation and scale as before</param>
+        /// <param name="ChildrenRemoved">Array of child GO's removed</param>
+        public void RemoveAllChildren(bool WorldPositionStays, out GameObject[] ChildrenRemoved)
         {
             var _screenCount = _screensContainer.childCount;
             ChildrenRemoved = new GameObject[_screenCount];
@@ -156,7 +180,7 @@ namespace UnityEngine.UI.Extensions
             for (int i = _screenCount - 1; i >= 0; i--)
             {
                 ChildrenRemoved[i] = _screensContainer.GetChild(i).gameObject;
-                ChildrenRemoved[i].transform.SetParent(null);
+                ChildrenRemoved[i].transform.SetParent(null, WorldPositionStays);
             }
 
             _scroll_rect.horizontalNormalizedPosition = 0;
@@ -170,6 +194,7 @@ namespace UnityEngine.UI.Extensions
         {
             _scrollStartPosition = _screensContainer.localPosition.x;
             _scroll_rect.horizontalNormalizedPosition = (float)(_currentPage) / (_screens - 1);
+            OnCurrentScreenChange(_currentPage);
         }
 
         /// <summary>
@@ -181,7 +206,7 @@ namespace UnityEngine.UI.Extensions
             DistributePages();
             if (MaskArea) UpdateVisible();
             SetScrollContainerPosition();
-            ChangeBulletsInfo(_currentPage);
+            OnCurrentScreenChange(_currentPage);
         }
 
         private void OnRectTransformDimensionsChange()
@@ -190,6 +215,16 @@ namespace UnityEngine.UI.Extensions
             {
                 UpdateLayout();
             }
+        }
+
+        private void OnEnable()
+        {
+            InitialiseChildObjectsFromScene();
+            DistributePages();
+            if (MaskArea) UpdateVisible();
+
+            if (JumpOnEnable || !RestartOnEnable) SetScrollContainerPosition();
+            if (RestartOnEnable) GoToScreen(StartingScreen);
         }
 
         #region Interfaces
@@ -203,29 +238,21 @@ namespace UnityEngine.UI.Extensions
 
             if (_scroll_rect.horizontal)
             {
-                if (UseFastSwipe)
+                var distance = Vector3.Distance(_startPosition, _screensContainer.localPosition);
+                if (UseFastSwipe && distance < panelDimensions.width && distance >= FastSwipeThreshold)
                 {
-                    //If using fastswipe - then a swipe does page next / previous
-                    if ((_scroll_rect.velocity.x > 0 &&_scroll_rect.velocity.x > FastSwipeThreshold) ||
-                        _scroll_rect.velocity.x < 0 && _scroll_rect.velocity.x < -FastSwipeThreshold)
+                    _scroll_rect.velocity = Vector3.zero;
+                    if (_startPosition.x - _screensContainer.localPosition.x > 0)
                     {
-                        _scroll_rect.velocity = Vector3.zero;
-                        if (_startPosition.x - _screensContainer.localPosition.x > 0)
-                        {
-                            NextScreen();
-                        }
-                        else
-                        {
-                            PreviousScreen();
-                        }
+                        NextScreen();
                     }
                     else
                     {
-                        ScrollToClosestElement();
+                        PreviousScreen();
                     }
                 }
             }
         }
-         #endregion
+        #endregion
     }
 }

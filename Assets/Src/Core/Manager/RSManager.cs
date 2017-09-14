@@ -20,22 +20,6 @@ namespace Rise.Core {
 		public string baseUrl = "";
 		public bool standalone = false;
 
-		public delegate void OutputHasChanged(Outputs mode);
-		public static event OutputHasChanged onOutputChange;
-		private static Outputs ouput = Outputs.None;
-		public static Outputs Output {
-			set {
-				ouput = value;
-
-				if(onOutputChange != null) {
-					onOutputChange(ouput);
-				}
-			}
-			get {
-				return ouput;
-			}
-		}
-
 		public delegate void DeviceOrientationTypeHasChanged(UseDeviceOrientationType deviceOrientationType);
 		public static event DeviceOrientationTypeHasChanged onDeviceOrientationTypeChange;
 		private static UseDeviceOrientationType _deviceOrientationType = UseDeviceOrientationType.None;
@@ -114,6 +98,8 @@ namespace Rise.Core {
 		}
 
 		void Update() {
+			base.Update ();
+
 			InputManager.Update();
 		}
 		
@@ -122,7 +108,6 @@ namespace Rise.Core {
 		}
 
 		public void SetOutput(Outputs o) {
-			Output = o;
 			switch (o) {
 				case Outputs.TwoD:
 					OutputsManager.ActivateOutputMode ("2D");

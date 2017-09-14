@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Rise.Features.DataModel {
+namespace Rise.App.Models {
 	[System.Serializable]
 	public class Organisation {
 		[SerializeField]

@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace UnityEngine.UI.Extensions
 {
-	/// <summary>
-	///  Extension to the UI class which creates a dropdown list 
-	/// </summary>
-	[RequireComponent(typeof(RectTransform))]
+    /// <summary>
+    ///  Extension to the UI class which creates a dropdown list 
+    /// </summary>
+    [RequireComponent(typeof(RectTransform))]
 	[AddComponentMenu("UI/Extensions/Dropdown List")]
 	public class DropDownList : MonoBehaviour
 	{
@@ -17,7 +17,6 @@ namespace UnityEngine.UI.Extensions
 		public DropDownListItem SelectedItem { get; private set; } //outside world gets to get this, not set it
 
 		public List<DropDownListItem> Items;
-		public System.Action<int> OnSelectionChanged; // fires when selection is changed;
         public bool OverrideHighlighted = true;
 
 		//private bool isInitialized = false;
@@ -56,7 +55,7 @@ namespace UnityEngine.UI.Extensions
 		}
 
 		//    private int scrollOffset; //offset of the selected item
-		private int _selectedIndex = 0;
+		private int _selectedIndex = -1;
 
 
 		[SerializeField]
@@ -71,9 +70,22 @@ namespace UnityEngine.UI.Extensions
 			}
 		}
 
+		public bool SelectFirstItemOnStart = false;
+
+		[System.Serializable]
+		public class SelectionChangedEvent :  UnityEngine.Events.UnityEvent<int> {
+		}
+		// fires when item is changed;
+		public SelectionChangedEvent OnSelectionChanged;
+
+
 		public void Start()
 		{
 			Initialize();
+			if (SelectFirstItemOnStart && Items.Count > 0) {
+				ToggleDropdownPanel (false);
+				OnItemClicked (0);
+			}
 		}
 
 		private bool Initialize()
@@ -195,8 +207,8 @@ namespace UnityEngine.UI.Extensions
 
 		private void OnItemClicked(int indx)
 		{
-			Debug.Log("item " + indx + " clicked");
-			if (indx != _selectedIndex && OnSelectionChanged != null) OnSelectionChanged(indx);
+			//Debug.Log("item " + indx + " clicked");
+			if (indx != _selectedIndex && OnSelectionChanged != null) OnSelectionChanged.Invoke(indx);
 
 			_selectedIndex = indx;
 			ToggleDropdownPanel(true);

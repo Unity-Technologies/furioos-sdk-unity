@@ -6,6 +6,12 @@ using System.Linq;
 
 namespace UnityEngine.UI.Extensions
 {
+    public enum AutoCompleteSearchType
+    {
+        ArraySort,
+        Linq
+    }
+
     [RequireComponent(typeof(RectTransform))]
     [AddComponentMenu("UI/Extensions/AutoComplete ComboBox")]
     public class AutoCompleteComboBox : MonoBehaviour
@@ -15,8 +21,6 @@ namespace UnityEngine.UI.Extensions
 
         public List<string> AvailableOptions;
 
-        public System.Action<int> OnSelectionChanged; // fires when selection is changed;
-
         //private bool isInitialized = false;
         private bool _isPanelActive = false;
         private bool _hasDrawnOnce = false;
@@ -24,6 +28,7 @@ namespace UnityEngine.UI.Extensions
         private InputField _mainInput;
         private RectTransform _inputRT;
 
+		//private Button _arrow_Button;
 
         private RectTransform _rectTransform;
 
@@ -73,11 +78,62 @@ namespace UnityEngine.UI.Extensions
                 RedrawPanel();
             }
         }
-        
+
+		public bool SelectFirstItemOnStart = false;
+
+		[SerializeField]
+        [Tooltip("Change input text color based on matching items")]
+        private bool _ChangeInputTextColorBasedOnMatchingItems = false;
+		public bool InputColorMatching{
+			get { return _ChangeInputTextColorBasedOnMatchingItems; }
+			set 
+			{
+				_ChangeInputTextColorBasedOnMatchingItems = value;
+				if (_ChangeInputTextColorBasedOnMatchingItems) {
+					SetInputTextColor ();
+				}
+			}
+		}
+
+		//TODO design as foldout for Inspector
+		public Color ValidSelectionTextColor = Color.green;
+		public Color MatchingItemsRemainingTextColor = Color.black;
+		public Color NoItemsRemainingTextColor = Color.red;
+
+        public AutoCompleteSearchType autocompleteSearchType = AutoCompleteSearchType.Linq;
+
+        private bool _selectionIsValid = false;
+
+		[System.Serializable]
+		public class SelectionChangedEvent :  UnityEngine.Events.UnityEvent<string, bool> {
+		}
+
+        [System.Serializable]
+		public class SelectionTextChangedEvent :  UnityEngine.Events.UnityEvent<string> {
+		}
+
+		[System.Serializable]
+		public class SelectionValidityChangedEvent :  UnityEngine.Events.UnityEvent<bool> {
+		}
+
+		// fires when input text is changed;
+		public SelectionTextChangedEvent OnSelectionTextChanged;
+		// fires when when an Item gets selected / deselected (including when items are added/removed once this is possible)
+		public SelectionValidityChangedEvent OnSelectionValidityChanged;
+		// fires in both cases
+		public SelectionChangedEvent OnSelectionChanged;
+
         public void Awake()
         {
             Initialize();
         }
+		public void Start()
+		{
+			if (SelectFirstItemOnStart && AvailableOptions.Count > 0) {
+				ToggleDropdownPanel (false);
+				OnItemClicked (AvailableOptions [0]);
+			}
+		}
 
         private bool Initialize()
         {
@@ -87,6 +143,8 @@ namespace UnityEngine.UI.Extensions
                 _rectTransform = GetComponent<RectTransform>();
                 _inputRT = _rectTransform.Find("InputField").GetComponent<RectTransform>();
                 _mainInput = _inputRT.GetComponent<InputField>();
+
+				//_arrow_Button = _rectTransform.FindChild ("ArrowBtn").GetComponent<Button> ();
 
                 _overlayRT = _rectTransform.Find("Overlay").GetComponent<RectTransform>();
                 _overlayRT.gameObject.SetActive(false);
@@ -119,7 +177,7 @@ namespace UnityEngine.UI.Extensions
             panelObjects = new Dictionary<string, GameObject>();
 
             _prunedPanelItems = new List<string>();
-            _panelItems = AvailableOptions.ToList();
+            _panelItems = new List<string>();
 
             RebuildPanel();
             //RedrawPanel(); - causes an initialisation failure in U5
@@ -162,15 +220,15 @@ namespace UnityEngine.UI.Extensions
         {
             //panel starts with all options
             _panelItems.Clear();
+            _prunedPanelItems.Clear();
+            panelObjects.Clear();
+
             foreach (string option in AvailableOptions)
             {
                 _panelItems.Add(option.ToLower());
             }
-            _panelItems.Sort();
 
-            _prunedPanelItems.Clear();
             List<GameObject> itemObjs = new List<GameObject>(panelObjects.Values);
-            panelObjects.Clear();
 
             int indx = 0;
             while (itemObjs.Count < AvailableOptions.Count)
@@ -200,6 +258,7 @@ namespace UnityEngine.UI.Extensions
                     panelObjects[_panelItems[i]] = itemObjs[i];
                 }
             }
+			SetInputTextColor ();
         }
 
         /// <summary>
@@ -298,7 +357,31 @@ namespace UnityEngine.UI.Extensions
             {
                 ToggleDropdownPanel(false);
             }
+
+			bool validity_changed = (_panelItems.Contains (Text) != _selectionIsValid);
+			_selectionIsValid = _panelItems.Contains (Text);
+			OnSelectionChanged.Invoke (Text, _selectionIsValid);
+			OnSelectionTextChanged.Invoke (Text);
+			if(validity_changed){
+				OnSelectionValidityChanged.Invoke (_selectionIsValid);
+			}
+
+			SetInputTextColor ();
         }
+
+		private void SetInputTextColor(){
+			if (InputColorMatching) {
+				if (_selectionIsValid) {
+					_mainInput.textComponent.color = ValidSelectionTextColor;
+				} else if (_panelItems.Count > 0) {
+					_mainInput.textComponent.color = MatchingItemsRemainingTextColor;
+				} else {
+					_mainInput.textComponent.color = NoItemsRemainingTextColor;
+				}
+			}
+		}
+
+
 
         /// <summary>
         /// Toggle the drop down list
@@ -321,23 +404,60 @@ namespace UnityEngine.UI.Extensions
 
         private void PruneItems(string currText)
         {
-            List<string> notToPrune = _panelItems.Where(x => x.ToLower().Contains(currText.ToLower())).ToList();
-            List<string> toPrune = _panelItems.Except(notToPrune).ToList();
+            if (autocompleteSearchType == AutoCompleteSearchType.Linq)
+            {
+                PruneItemsLinq(currText);
+            }
+            else
+            {
+                PruneItemsArray(currText);
+            }
+        }
+
+        private void PruneItemsLinq(string currText)
+        {
+            currText = currText.ToLower();
+            var toPrune = _panelItems.Where(x => !x.Contains(currText)).ToArray();
             foreach (string key in toPrune)
             {
-                //            Debug.Log("pruning key " + key);
                 panelObjects[key].SetActive(false);
                 _panelItems.Remove(key);
                 _prunedPanelItems.Add(key);
             }
 
-            List<string> toAddBack = _prunedPanelItems.Where(x => x.ToLower().Contains(currText)).ToList();
+            var toAddBack = _prunedPanelItems.Where(x => x.Contains(currText)).ToArray();
             foreach (string key in toAddBack)
             {
-                //            Debug.Log("adding back key " + key);
                 panelObjects[key].SetActive(true);
                 _panelItems.Add(key);
                 _prunedPanelItems.Remove(key);
+            }
+        }
+
+        //Updated to not use Linq
+        private void PruneItemsArray(string currText)
+        {
+            string _currText = currText.ToLower();
+
+            for (int i = _panelItems.Count - 1; i >= 0; i--)
+            {
+                string _item = _panelItems[i];
+                if (!_item.Contains(_currText))
+                {
+                    panelObjects[_panelItems[i]].SetActive(false);
+                    _panelItems.RemoveAt(i);
+                    _prunedPanelItems.Add(_item);
+                }
+            }
+            for (int i = _prunedPanelItems.Count - 1; i >= 0; i--)
+            {
+                string _item = _prunedPanelItems[i];
+                if (_item.Contains(_currText))
+                {
+                    panelObjects[_prunedPanelItems[i]].SetActive(true);
+                    _prunedPanelItems.RemoveAt(i);
+                    _panelItems.Add(_item);
+                }
             }
         }
     }

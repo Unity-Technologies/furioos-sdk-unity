@@ -236,7 +236,7 @@
      <Compile Include="Assets\Src\Core\Manager\RSPlugins.cs" />
      <Compile Include="Assets\Src\Core\Math\Matrix.cs" />
      <Compile Include="Assets\Src\Core\Math\Matrix3DTools.cs" />
-     <Compile Include="Assets\Src\Core\Network\RSWebRequest.cs" />
+     <Compile Include="Assets\Src\Core\Network\RSWebRequestManager.cs" />
      <Compile Include="Assets\Src\Core\Output\Manager\RSOutputManager.cs" />
      <Compile Include="Assets\Src\Core\Output\RSOutput.cs" />
      <Compile Include="Assets\Src\Core\Output\RSOutput2D.cs" />

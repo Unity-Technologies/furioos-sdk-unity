@@ -6,6 +6,33 @@ using Rise.UI;
 
 namespace Rise.Core {
 	public abstract class RSBehaviour : MonoBehaviour {
+		protected float lastTimeInternetReachabilityChecked = 0;
+		public delegate void InternetReachabilityHasChanged(bool internetReachability);
+		public static event InternetReachabilityHasChanged onInternetReachabilityChange;
+		protected static bool internetReachable = true;
+		protected static NetworkReachability InternetReachability {
+			set {
+				if (value == NetworkReachability.NotReachable) {
+					if (internetReachable) {
+						internetReachable = false;
+
+						if (onInternetReachabilityChange != null) {
+							onInternetReachabilityChange (internetReachable);
+						}
+					}
+				} 
+				else {
+					if (!internetReachable) {
+						internetReachable = true;
+
+						if (onInternetReachabilityChange != null) {
+							onInternetReachabilityChange (internetReachable);
+						}
+					}
+				}
+			}
+		}
+
 		public string id;
 
 		public virtual RSManager Manager {
@@ -32,6 +59,12 @@ namespace Rise.Core {
 			}
 		}
 
+		public virtual RSWebRequestManager WebRequestManager {
+			get {
+				return Manager.GetInstance<RSWebRequestManager>();
+			}
+		}
+
 		public virtual bool IsUnique {
 			get {
 				return false;
@@ -45,7 +78,15 @@ namespace Rise.Core {
 		}
 
 		void Awake() { 
+			CheckInternetReachability();
+
 			Init();
+		}
+
+		protected virtual void Update() {
+			if (Time.time - lastTimeInternetReachabilityChecked > 10.0) {
+				CheckInternetReachability ();
+			}
 		}
 		
 		protected virtual void Init() {
@@ -58,6 +99,12 @@ namespace Rise.Core {
 			}
 
 			Manager.Register(this);
+		}
+			
+		private void CheckInternetReachability() {
+			InternetReachability = Application.internetReachability;
+
+			lastTimeInternetReachabilityChecked = Time.time;
 		}
 
 		private void CreateTemporaryManager() {

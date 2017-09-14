@@ -25,6 +25,9 @@ namespace UnityEngine.UI.Extensions
         private bool clearImages = false;
 		private Object thisLock = new Object();
 
+
+
+
         /// <summary>
         /// Vertex Index
         /// </summary>
@@ -38,6 +41,16 @@ namespace UnityEngine.UI.Extensions
 
         private string fixedString;
 
+        [SerializeField]
+        [Tooltip("Allow click events to be received by parents, (default) blocks")]
+        private bool m_ClickParents;
+
+        public bool AllowClickParents
+        {
+            get { return m_ClickParents; }
+            set { m_ClickParents = value; }
+        }
+
         public override void SetVerticesDirty()
         {
             base.SetVerticesDirty();
@@ -49,6 +62,13 @@ namespace UnityEngine.UI.Extensions
         {
             base.OnValidate();
             UpdateQuadImage();
+            for (int i = 0; i < inspectorIconList.Length; i++)
+            {
+                if (inspectorIconList[i].scale == Vector2.zero)
+                {
+                    inspectorIconList[i].scale = Vector2.one;
+                }
+            }
         }
 #endif
 
@@ -62,11 +82,12 @@ namespace UnityEngine.UI.Extensions
         {
             public string name;
             public Sprite sprite;
+            public Vector2 offset;
+            public Vector2 scale;
         }
         public IconName[] inspectorIconList;
 
-        private Dictionary<string, Sprite> iconList = new Dictionary<string, Sprite>();
-
+        [Tooltip("Global scaling factor for all images")]
         public float ImageScalingFactor = 1;
 
         // Write the name or hex value of the hyperlink color
@@ -77,6 +98,7 @@ namespace UnityEngine.UI.Extensions
         public Vector2 imageOffset = Vector2.zero;
 
         private Button button;
+        private Selectable highlightselectable;
 
         //Commented out as private and not used.. Yet?
         //private bool selected = false;
@@ -89,22 +111,28 @@ namespace UnityEngine.UI.Extensions
         private string previousText = "";
         public bool isCreating_m_HrefInfos = true;
 
-        /**
-        * Unity Inspector cant display Dictionary vars,
-        * so we use this little hack to setup the iconList
-        */
+
         new void Start()
         {
-            button = GetComponent<Button>();
-            if (inspectorIconList != null && inspectorIconList.Length > 0)
+            button = GetComponentInParent<Button>();
+            if (button != null)
             {
-                foreach (IconName icon in inspectorIconList)
+                CanvasGroup cg;
+                cg = GetComponent<CanvasGroup>();
+                if (cg == null)
                 {
-                    // Debug.Log(icon.sprite.name);
-                    iconList.Add(icon.name, icon.sprite);
+                    cg = gameObject.AddComponent<CanvasGroup>();
                 }
+                cg.blocksRaycasts = false;
+                highlightselectable = cg.GetComponent<Selectable>();
             }
+            else
+            {
+                highlightselectable = GetComponent<Selectable>();
+            }
+
             Reset_m_HrefInfos ();
+            base.Start();
         }
 
         protected void UpdateQuadImage()
@@ -145,11 +173,10 @@ namespace UnityEngine.UI.Extensions
                 }
 
                 var spriteName = match.Groups[1].Value;
-                //var size = float.Parse(match.Groups[2].Value);
                 var img = m_ImagesPool[m_ImagesVertexIndex.Count - 1];
+                Vector2 imgoffset = Vector2.zero;
                 if (img.sprite == null || img.sprite.name != spriteName)
                 {
-                    // img.sprite = Resources.Load<Sprite>(spriteName);
                     if (inspectorIconList != null && inspectorIconList.Length > 0)
                     {
                         foreach (IconName icon in inspectorIconList)
@@ -157,16 +184,17 @@ namespace UnityEngine.UI.Extensions
                             if (icon.name == spriteName)
                             {
                                 img.sprite = icon.sprite;
+                                img.rectTransform.sizeDelta = new Vector2(fontSize * ImageScalingFactor * icon.scale.x, fontSize * ImageScalingFactor * icon.scale.y);
+                                imgoffset = icon.offset;
                                 break;
                             }
                         }
                     }
                 }
-                img.rectTransform.sizeDelta = new Vector2(fontSize * ImageScalingFactor, fontSize * ImageScalingFactor);
                 img.enabled = true;
                 if (positions.Count == m_ImagesPool.Count)
                 {
-                    img.rectTransform.anchoredPosition = positions[m_ImagesVertexIndex.Count - 1];
+                    img.rectTransform.anchoredPosition = positions[m_ImagesVertexIndex.Count - 1] += imgoffset;
                 }
             }
 
@@ -379,9 +407,9 @@ namespace UnityEngine.UI.Extensions
             {
                 foreach (Image img in m_ImagesPool)
                 {
-                    if (button != null && button.isActiveAndEnabled)
+                    if (highlightselectable != null && highlightselectable.isActiveAndEnabled)
                     {
-                        img.color = button.colors.highlightedColor;
+                        img.color = highlightselectable.colors.highlightedColor;
                     }
                 }
             }
@@ -396,9 +424,9 @@ namespace UnityEngine.UI.Extensions
             {
                 foreach (Image img in m_ImagesPool)
                 {
-                    if (button != null && button.isActiveAndEnabled)
+                    if (highlightselectable != null && highlightselectable.isActiveAndEnabled)
                     {
-                        img.color = button.colors.normalColor;
+                        img.color = highlightselectable.colors.normalColor;
                     }
                     else
                     {
@@ -415,13 +443,15 @@ namespace UnityEngine.UI.Extensions
             {
                 foreach (Image img in m_ImagesPool)
                 {
-                    if (button != null && button.isActiveAndEnabled)
+                    if (highlightselectable != null && highlightselectable.isActiveAndEnabled)
                     {
-                        img.color = button.colors.highlightedColor;
+                        img.color = highlightselectable.colors.highlightedColor;
                     }
                 }
             }
         }
+
+
 
         /// <summary>
         /// Hyperlinks Info
