@@ -75,22 +75,24 @@ namespace Rise.App.Controllers {
 
                 CleanDetail();
             };
+
+            AppController.OnBackButtonPressed += BackButtonPressed;
         }
 
         public Project GetById(string id) {
             return _projects.SingleOrDefault(p => p.Id == id);
         }
 
-        public void Select(string id) {
-            Project project = GetById(id);
-
+        public void Select(string id, bool build = true) {
             _selectedProjectId = id;
 
             if(OnSelectedProjectChange != null) {
                 OnSelectedProjectChange(_selectedProjectId);
             }
 
-            BuildDetail();
+            if(build) {
+                BuildDetail();
+            }
         }
 
         private void GetAll() {
@@ -211,9 +213,6 @@ namespace Rise.App.Controllers {
         // Detail
 
         private void BuildDetail() {
-            //Clean
-            CleanDetail();
-
             //Build
             Project project = GetById(_selectedProjectId);
             GameObject entryGo = Instantiate<GameObject>(detailView);
@@ -232,6 +231,21 @@ namespace Rise.App.Controllers {
         private void CleanDetail() {
             foreach(Transform child in detailContainer) {
                 Destroy(child.gameObject);
+            }
+        }
+
+        private void BackButtonPressed() {
+            Project project = GetById(_selectedProjectId);
+
+            if(string.IsNullOrEmpty(project.ParentID)) {
+                CleanDetail();
+
+                Select(null, false);
+            }
+            else {
+                Destroy(project.ProjectDetailViewModel.gameObject);
+
+                Select(project.ParentID, false);
             }
         }
     }
