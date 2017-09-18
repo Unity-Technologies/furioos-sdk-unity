@@ -17,15 +17,25 @@ namespace Rise.App.Controllers {
         public const string PROJECT_METHOD = "projects";
         public const string DATA_METHOD = "datas";
 
-        private static string _persistentDataPath;
-        public static string PersistentDataPath {
+        private static string _persistentListDataPath;
+        public static string PersistentListDataPath {
             get {
-                return _persistentDataPath;
+				return _persistentListDataPath;
             }
             set {
-                _persistentDataPath = value;
+				_persistentListDataPath = value;
             }
         }
+
+		private static string _persistentDetailDataPath;
+		public static string PersistentDetailDataPath {
+			get {
+				return _persistentDetailDataPath;
+			}
+			set {
+				_persistentDetailDataPath = value;
+			}
+		}
 
         public delegate void SelectedProjectHasChanged(string id);
         public static event SelectedProjectHasChanged OnSelectedProjectChange;
@@ -91,24 +101,24 @@ namespace Rise.App.Controllers {
             }
 
             if(build) {
-                BuildDetail();
+				GetDetail(id);
             }
         }
 
         private void GetAll() {
-            _persistentDataPath = CategoryController.PersistentDataPath + _selectedCategoryId + "/" + "Projects/";
+            _persistentListDataPath = CategoryController.PersistentDataPath + _selectedCategoryId + "/";
             string fileName = "projects.json";
-            string fullPath = _persistentDataPath + fileName;
+			string fullPath = _persistentListDataPath + fileName;
 
-            string uri = CategoryController.CATEGORY_METHOD + "/" + _selectedCategoryId + "/" + PROJECT_METHOD;
+			if(!Directory.Exists(_persistentListDataPath)) {
+				Directory.CreateDirectory(_persistentListDataPath);
+			}
 
-            if(internetReachable) {
+			if(internetReachable) {
+				string uri = CategoryController.CATEGORY_METHOD + "/" + _selectedCategoryId + "/" + PROJECT_METHOD;
+
                 WebRequestManager.Get<Project>(uri, delegate (List<Project> result, string rawResult) {
                     _projects = result;
-
-                    if(!Directory.Exists(_persistentDataPath)) {
-                        Directory.CreateDirectory(_persistentDataPath);
-                    }
 
                     using(FileStream st = File.Create(fullPath)) {
                         byte[] data = new UTF8Encoding(true).GetBytes(rawResult);
@@ -136,6 +146,86 @@ namespace Rise.App.Controllers {
                 BuildList();
             }
         }
+
+		private void GetDetail(string id) {
+			_persistentDetailDataPath = AppController.PersistentDataPath + "/" + "Projects/" + id + "/";
+
+			string fileName = "project.json";
+			string fullPath = _persistentDetailDataPath + fileName;
+			Project project = GetById(id);
+
+			if(!Directory.Exists(_persistentDetailDataPath)) {
+				Directory.CreateDirectory(_persistentDetailDataPath);
+			}
+
+			if(internetReachable) {
+				string uri = (!string.IsNullOrEmpty(project.CategoryID)) ? 
+					CategoryController.CATEGORY_METHOD + "/" + _selectedCategoryId + "/" + PROJECT_METHOD + "/" + id 
+					: 
+					PROJECT_METHOD + "/" + id;
+
+				WebRequestManager.Get<Project> (uri, delegate(List<Project> result, string rawResult) {
+					if(result.Count == 0) {
+						return;
+					}
+
+					Project projectFull = result[0];
+
+					using(FileStream st = File.Create(fullPath)) {
+						byte[] data = new UTF8Encoding(true).GetBytes(rawResult);
+						st.Write(data, 0, data.Length);
+					}
+
+					int index = _projects.IndexOf(project);
+					_projects[index] = projectFull;
+
+
+					if(_projects[index].SubProjects != null) {
+						foreach(Project subProject in _projects[index].SubProjects) {
+							Project existingSubProject = _projects.SingleOrDefault(p => p.Id == subProject.Id);
+
+							if(existingSubProject != null) {
+								continue;
+							}
+
+							_projects.Add(subProject);
+						}
+					}
+
+					BuildDetail();
+				});
+			}
+			else {
+				if(File.Exists(fullPath)) {
+					string json = "";
+
+					using(StreamReader sr = new StreamReader(fullPath)) {
+						json = sr.ReadToEnd();
+					}
+
+					JsonWrapper<List<Project>> wrapper = JsonUtility.FromJson<JsonWrapper<List<Project>>>(
+						json
+					);
+
+					int index = _projects.IndexOf(project);
+					_projects[index] = wrapper.values[0];
+
+					if(_projects[index].SubProjects != null) {
+						foreach(Project subProject in _projects[index].SubProjects) {
+							Project existingSubProject = _projects.SingleOrDefault(p => p.Id == subProject.Id);
+
+							if(existingSubProject != null) {
+								continue;
+							}
+
+							_projects.Add(subProject);
+						}
+					}
+				}
+
+				BuildDetail();
+			}
+		}
 
         // List
 
@@ -222,6 +312,25 @@ namespace Rise.App.Controllers {
             entryGo.transform.SetParent(detailContainer, false);
 
             project.ProjectDetailViewModel.name.text = project.Name;
+
+			if (project.SubProjects != null) {
+				for (int i = 0; i < project.SubProjects.Length; i++) {
+					Project subProject = project.SubProjects [i];
+
+					GameObject projectDetailSubProjectView = project.ProjectDetailViewModel.subProjectPrefab;
+
+					GameObject entrySubProjectGo = Instantiate<GameObject> (projectDetailSubProjectView);
+
+					entrySubProjectGo.transform.SetParent (project.ProjectDetailViewModel.subProjectContent, false);
+
+					ProjectDetailSubProjectViewModel subProjectViewModel = entrySubProjectGo.GetComponentInChildren<ProjectDetailSubProjectViewModel> ();
+					subProjectViewModel.name.text = subProject.Name;
+
+					subProjectViewModel.view.onClick.AddListener (delegate {
+						Select(subProject.Id);
+					});
+				}
+			}
         }
 
         private void RebuildDetail() {
@@ -237,7 +346,7 @@ namespace Rise.App.Controllers {
         private void BackButtonPressed() {
             Project project = GetById(_selectedProjectId);
 
-            if(string.IsNullOrEmpty(project.ParentID)) {
+			if(string.IsNullOrEmpty(project.ParentID)) {
                 CleanDetail();
 
                 Select(null, false);

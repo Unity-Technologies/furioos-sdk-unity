@@ -95,15 +95,17 @@ namespace Rise.App.Controllers {
         private void GetAll() {
             _persistentDataPath = AppController.PersistentDataPath + "Categories/";
             string fileName = "categories.json";
-            string fullPath = _persistentDataPath + fileName;
+			string fullPath = _persistentDataPath + fileName;
+
+			if(!Directory.Exists(_persistentDataPath)) {
+				Directory.CreateDirectory(_persistentDataPath);
+			}
 
             if (internetReachable) {
-				WebRequestManager.Get<Category> (CATEGORY_METHOD, delegate(List<Category> result, string rawResult) {
-					_categories = result;
+				string uri = CATEGORY_METHOD;
 
-					if(!Directory.Exists(_persistentDataPath)) {
-						Directory.CreateDirectory(_persistentDataPath);
-					}
+				WebRequestManager.Get<Category> (uri, delegate(List<Category> result, string rawResult) {
+					_categories = result;
 
 					using(FileStream st = File.Create(fullPath)) {
 						byte[] data = new UTF8Encoding(true).GetBytes(rawResult);

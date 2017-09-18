@@ -9,13 +9,13 @@ namespace Rise.App.Models {
 	[System.Serializable]
 	public class Project {
 		[SerializeField]
-		private string _id;
+		private string id;
 		public string Id {
 			get {
-				return _id;
+				return id;
 			}
 			set {
-				_id = value;
+				id = value;
 			}
 		}
 
@@ -62,6 +62,19 @@ namespace Rise.App.Models {
 				organisationID = value;
 			}
 		}
+
+		[SerializeField]
+		private Project[] subProjects;
+		public Project[] SubProjects {
+			get {
+				return subProjects;
+			}
+			set {
+				subProjects = value;
+			}
+		}
+
+		//View models
 
         private ProjectViewModel _projectViewModel;
         public ProjectViewModel ProjectViewModel {
