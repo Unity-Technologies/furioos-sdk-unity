@@ -242,15 +242,15 @@
      <Compile Include="Assets\Src\App\Controllers\CategoryController.cs" />
      <Compile Include="Assets\Src\App\Controllers\ProjectController.cs" />
      <Compile Include="Assets\Src\App\Models\Category.cs" />
-     <Compile Include="Assets\Src\App\Models\Data.cs" />
+     <Compile Include="Assets\Src\App\Models\Media.cs" />
      <Compile Include="Assets\Src\App\Models\Organisation.cs" />
      <Compile Include="Assets\Src\App\Models\Package.cs" />
      <Compile Include="Assets\Src\App\Models\Project.cs" />
      <Compile Include="Assets\Src\App\ViewModels\CategoryViewModel.cs" />
-     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailDataViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectDetailMediaIndicatorViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectDetailMediaPreviewViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectDetailSubProjectViewModel.cs" />
+     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailTextViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectDetailViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectMenuItemViewModel.cs" />
      <Compile Include="Assets\Src\App\ViewModels\ProjectViewModel.cs" />
@@ -680,11 +680,8 @@
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Reflect-Mask-Cutout-DS.shader" />
      <None Include="Assets\Shaders\Light Independent\Textured\Transparent\LI-Texture-Alpha-Lightmap-Cutout-DS.shader" />
      <None Include="Assets\Addons\unity-ui-extensions\Shaders\UI Particle MultiplyDouble.shader" />
- <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
@@ -692,11 +689,14 @@
  <Reference Include="nunit.framework">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.Timeline">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>

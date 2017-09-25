@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Rise.App.ViewModels {
-    public class ProjectDetailDataViewModel : MonoBehaviour {
+    public class ProjectDetailTextViewModel : MonoBehaviour {
 	    public Text label;
 	    public Text value;
     }

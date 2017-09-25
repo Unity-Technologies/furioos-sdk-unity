@@ -313,29 +313,112 @@ namespace Rise.App.Controllers {
 
             project.ProjectDetailViewModel.name.text = project.Name;
 
-			if (project.SubProjects != null) {
-				for (int i = 0; i < project.SubProjects.Length; i++) {
+			if(project.SubProjects != null) {
+				int subProjectLength = project.SubProjects.Length;
+
+				if(subProjectLength == 0) {
+					project.ProjectDetailViewModel.subProjectContainer.SetActive(false);
+				}
+
+				for (int i = 0; i < subProjectLength; i++) {
 					Project subProject = project.SubProjects [i];
 
 					GameObject projectDetailSubProjectView = project.ProjectDetailViewModel.subProjectPrefab;
 
-					GameObject entrySubProjectGo = Instantiate<GameObject> (projectDetailSubProjectView);
+					GameObject entrySubProjectGo = Instantiate<GameObject>(projectDetailSubProjectView);
 
-					entrySubProjectGo.transform.SetParent (project.ProjectDetailViewModel.subProjectContent, false);
+					entrySubProjectGo.transform.SetParent(project.ProjectDetailViewModel.subProjectContent, false);
 
-					ProjectDetailSubProjectViewModel subProjectViewModel = entrySubProjectGo.GetComponentInChildren<ProjectDetailSubProjectViewModel> ();
+					ProjectDetailSubProjectViewModel subProjectViewModel = entrySubProjectGo.GetComponentInChildren<ProjectDetailSubProjectViewModel>();
 					subProjectViewModel.name.text = subProject.Name;
 
-					subProjectViewModel.view.onClick.AddListener (delegate {
+					subProjectViewModel.view.onClick.AddListener(delegate {
 						Select(subProject.Id);
 					});
 				}
 			}
+
+			if(project.Medias != null) {
+				Media[] scenes = project.Medias.Where (m => m.Type == Media.MediaType.SCENE).ToArray();
+				Media[] images = project.Medias.Where (m => m.Type == Media.MediaType.IMAGE).ToArray();
+				Media[] videos = project.Medias.Where (m => m.Type == Media.MediaType.VIDEO).ToArray();
+				Media[] documents = project.Medias.Where (m => m.Type == Media.MediaType.DOCUMENT).ToArray();
+				Media[] texts = project.Medias.Where(m => m.Type == Media.MediaType.TEXT).ToArray();
+
+				if(texts != null) {
+					int textLength = texts.Length;
+
+					if(textLength == 0) {
+						project.ProjectDetailViewModel.textContainer.SetActive(false);
+					}
+
+					for(int i = 0; i < textLength; i++) {
+						Media text = texts [i];
+
+						GameObject projectDetailTextView = project.ProjectDetailViewModel.textView;
+
+						GameObject entryTextViewGO = Instantiate<GameObject>(projectDetailTextView);
+
+						entryTextViewGO.transform.SetParent (project.ProjectDetailViewModel.textContent, false);
+
+						ProjectDetailTextViewModel textViewModel = entryTextViewGO.GetComponentInChildren<ProjectDetailTextViewModel>();
+						textViewModel.label.text = text.Key;
+						textViewModel.value.text = text.Value;
+					}
+				}
+
+				BuildDetailScenes(project, scenes);
+				BuildDetailImages(project, images);
+				BuildDetailVideos(project, videos);
+				BuildDetailDocuments(project, documents);
+			}
         }
 
-        private void RebuildDetail() {
+		private void BuildDetailScenes(Project project, Media[] scenes) {
+			int sceneLength = scenes.Length;
 
-        }
+			if(sceneLength == 0) {
+				project.ProjectDetailViewModel.scenePreviewTab.SetActive(false);
+				project.ProjectDetailViewModel.scenePreviewContainer.SetActive(false);
+
+				return;
+			}
+		}
+
+		private void BuildDetailImages(Project project, Media[] images) {
+			int imageLength = images.Length;
+
+			if(imageLength == 0) {
+				project.ProjectDetailViewModel.imagePreviewTab.SetActive(false);
+				project.ProjectDetailViewModel.imagePreviewContainer.SetActive(false);
+
+				return;
+			}
+		}
+
+		private void BuildDetailVideos(Project project, Media[] videos) {
+			int videoLength = videos.Length;
+
+			if(videoLength == 0) {
+				project.ProjectDetailViewModel.videoPreviewTab.SetActive(false);
+				project.ProjectDetailViewModel.videoPreviewContainer.SetActive(false);
+
+				return;
+			}
+		}
+
+		private void BuildDetailDocuments(Project project, Media[] documents) {
+			int documentLength = documents.Length;
+
+			if(documentLength == 0) {
+				project.ProjectDetailViewModel.documentPreviewTab.SetActive(false);
+				project.ProjectDetailViewModel.documentPreviewContainer.SetActive(false);
+
+				return;
+			}
+		}
+			
+        private void RebuildDetail() {}
 
         private void CleanDetail() {
             foreach(Transform child in detailContainer) {

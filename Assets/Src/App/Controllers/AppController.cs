@@ -28,6 +28,27 @@ namespace Rise.App.Controllers {
         public Button backButton;
 
         //Model
+		public string _apiKey;
+		public string ApiKey {
+			get {
+				return _apiKey;
+			}
+		}
+
+		public string _apiSecret;
+		public string ApiSecret {
+			get {
+				return _apiSecret;
+			}
+		}
+
+		public string _baseUrl;
+		public string BaseUrl {
+			get {
+				return _baseUrl;
+			}
+		}
+
         public string _organisationId;
 	    public string OrganisationId {
 		    get { 
@@ -36,6 +57,8 @@ namespace Rise.App.Controllers {
 	    }
 
         public void Start() {
+			WebRequestManager.Configure (_apiKey, _apiSecret, _baseUrl + "organisations/" + _organisationId + "/");
+
             CategoryController.OnSelectedCategoryChange += delegate(string id) {
                 backButton.gameObject.SetActive(false);
             };

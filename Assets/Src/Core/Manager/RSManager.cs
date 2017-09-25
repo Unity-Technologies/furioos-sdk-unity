@@ -17,7 +17,6 @@ namespace Rise.Core {
 
 	[System.Serializable]
 	public class RSManager : RSPlugins {
-		public string baseUrl = "";
 		public bool standalone = false;
 
 		public delegate void DeviceOrientationTypeHasChanged(UseDeviceOrientationType deviceOrientationType);

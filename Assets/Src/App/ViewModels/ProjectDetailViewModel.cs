@@ -22,20 +22,52 @@ namespace Rise.App.ViewModels {
 	    public GameObject subProjectPrefab;
 
 	    [Space(5)]
-	    public GameObject dataContainer;
-	    public RectTransform dataContent;
-	    public GameObject dataPrefab;
+	    public GameObject textContainer;
+	    public RectTransform textContent;
+	    public GameObject textView;
 
 	    [Space(10)]
 
 	    [Header("Medias")]
 	    [Space(1)]
 
-	    public RectTransform mediaPreviewContent;
-	    public GameObject mediaPreviewPrefab;
+		public GameObject scenePreviewTab;
+		public GameObject scenePreviewContainer;
+	    public RectTransform scenePreviewsContent;
+	    public GameObject scenePreviewView;
 
 	    [Space(5)]
-	    public RectTransform mediaIndicatorContent;
-	    public GameObject mediaIndicatorPrefab;
+	    public RectTransform sceneIndicatorsContent;
+	    public GameObject sceneIndicatorView;
+
+		[Space(5)]
+		public GameObject imagePreviewTab;
+		public GameObject imagePreviewContainer;
+		public RectTransform imagePreviewsContent;
+		public GameObject imagePreviewView;
+
+		[Space(5)]
+		public RectTransform imageIndicatorsContent;
+		public GameObject imageIndicatorView;
+
+		[Space(5)]
+		public GameObject videoPreviewTab;
+		public GameObject videoPreviewContainer;
+		public RectTransform videoPreviewsContent;
+		public GameObject videoPreviewView;
+
+		[Space(5)]
+		public RectTransform videoIndicatorsContent;
+		public GameObject videoIndicatorView;
+
+		[Space(5)]
+		public GameObject documentPreviewTab;
+		public GameObject documentPreviewContainer;
+		public RectTransform documentPreviewsContent;
+		public GameObject documentPreviewView;
+
+		[Space(5)]
+		public RectTransform documentIndicatorsContent;
+		public GameObject documentIndicatorView;
     }
 }

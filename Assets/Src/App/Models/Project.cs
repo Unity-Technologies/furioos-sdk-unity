@@ -74,6 +74,17 @@ namespace Rise.App.Models {
 			}
 		}
 
+		[SerializeField]
+		private Media[] medias;
+		public Media[] Medias {
+			get {
+				return medias;
+			}
+			set {
+				medias = value;
+			}
+		}
+
 		//View models
 
         private ProjectViewModel _projectViewModel;
