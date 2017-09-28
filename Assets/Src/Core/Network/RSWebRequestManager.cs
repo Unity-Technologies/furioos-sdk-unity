@@ -19,35 +19,93 @@ namespace Rise.Core {
 			_encodedApiKey = "BASIC " + System.Convert.ToBase64String(apiBytes);
 		}
 
-		public delegate void ResponseCallBack<T>(T result, string rawResult);
+		public delegate void GetResponseCallBack<T>(T result, string rawResult);
+        public delegate void DownloadProgressCallBack(float progress);
+        public delegate void DownloadResponseCallBack(byte[] rawResult);
+        public delegate void DownloadAssetBundleResponseCallBack(AssetBundle bundle);
 
-		public void Get<T>(string method, ResponseCallBack<List<T>> callback) {
+        public void Get<T>(string method, GetResponseCallBack<List<T>> callback) {
 			StartCoroutine(AsyncGet<T> (_baseUrl + method, callback));
 		}
 
-		private IEnumerator AsyncGet<T>(string uri, ResponseCallBack<List<T>> callback) {
-			UnityWebRequest www = UnityWebRequest.Get(uri);
+		private IEnumerator AsyncGet<T>(string uri, GetResponseCallBack<List<T>> callback) {
+            using(UnityWebRequest www = UnityWebRequest.Get(uri)) {
 
-			www.SetRequestHeader ("Authorization", _encodedApiKey);
+                www.SetRequestHeader("Authorization", _encodedApiKey);
 
-			yield return www.Send();
+			    yield return www.Send();
 
-			if (www.isNetworkError) {
-				Debug.LogError(www.error);
-			}
-            else {
-				Debug.Log("[RSWebRequestManager] > Request to " + uri + " OK");
-			}
+			    if (www.isNetworkError) {
+				    Debug.LogError(www.error);
+			    }
+                else {
+				    Debug.Log("[RSWebRequestManager] > Request to " + uri + " done...");
+			    }
 
-			string wrappedJson = "{ \"values\":" + www.downloadHandler.text + "}";
+			    string wrappedJson = "{ \"values\":" + www.downloadHandler.text + "}";
 
-			JsonWrapper<List<T>> wrapper = JsonUtility.FromJson<JsonWrapper<List<T>>> (
-				wrappedJson
-			);
+			    JsonWrapper<List<T>> wrapper = JsonUtility.FromJson<JsonWrapper<List<T>>> (
+				    wrappedJson
+			    );
 
-			callback(wrapper.values, wrappedJson);
+			    callback(wrapper.values, wrappedJson);
+            }
 		}
 
 		public void Post() {}
-	}
+
+        public void Download(string uri, DownloadResponseCallBack callback, DownloadProgressCallBack progressCallback = null) {
+            StartCoroutine(AsyncDownload(uri, callback, progressCallback));
+        }
+
+        private IEnumerator AsyncDownload(string uri, DownloadResponseCallBack callback, DownloadProgressCallBack progressCallback = null) {
+            using(UnityWebRequest www = UnityWebRequest.Get(uri)) {
+                AsyncOperation aop = www.Send();
+
+                while(!aop.isDone) {
+                    if(progressCallback != null) {
+                        progressCallback(aop.progress);
+                    }
+
+                    yield return new WaitForEndOfFrame();
+                }
+
+                if(www.isNetworkError) {
+                    Debug.LogError(www.error);
+                }
+                else {
+                    Debug.Log("[RSWebRequestManager] > Download " + uri + " done...");
+                }
+
+                callback(www.downloadHandler.data);
+            }
+        }
+
+        public void DownloadAssetBundle(string uri, DownloadAssetBundleResponseCallBack callback, DownloadProgressCallBack progressCallback = null) {
+            StartCoroutine(AsyncDownloadAssetBundle(uri, callback, progressCallback));
+        }
+
+        private IEnumerator AsyncDownloadAssetBundle(string uri, DownloadAssetBundleResponseCallBack callback, DownloadProgressCallBack progressCallback = null) {
+            using(UnityWebRequest www = UnityWebRequest.GetAssetBundle(uri)) {
+                AsyncOperation aop = www.Send();
+
+                while(!aop.isDone) {
+                    if(progressCallback != null) {
+                        progressCallback(aop.progress);
+                    }
+
+                    yield return new WaitForEndOfFrame();
+                }
+
+                if(www.isNetworkError) {
+                    Debug.LogError(www.error);
+                }
+                else {
+                    Debug.Log("[RSWebRequestManager] > Download Asset Bundle " + uri + " done...");
+                }
+
+                callback(((DownloadHandlerAssetBundle)www.downloadHandler).assetBundle);
+            }
+        }
+    }
 }

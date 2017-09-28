@@ -6,10 +6,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Rise.Core;
+using Rise.App.ViewModels;
 
 
 namespace Rise.App.Controllers {
     public class AppController : RSBehaviour {
+        private static AppController _instance;
+
         private static string _persistentDataPath;
         public static string PersistentDataPath {
             get {
@@ -20,15 +23,23 @@ namespace Rise.App.Controllers {
             }
         }
 
+        private static GameObject LoadingView {
+            get {
+                return _instance.loadingView;
+            }
+        }
+
         public delegate void BackButtonPressed();
         public static event BackButtonPressed OnBackButtonPressed;
 
 
         //View
+        public GameObject loadingView;
+
         public Button backButton;
 
         //Model
-		public string _apiKey;
+        public string _apiKey;
 		public string ApiKey {
 			get {
 				return _apiKey;
@@ -56,6 +67,23 @@ namespace Rise.App.Controllers {
 		    }
 	    }
 
+        public static LoadingViewModel CreateLoading(GameObject container, bool isOpaque = false, bool isAutoFill = false) {
+            GameObject loading = Instantiate<GameObject>(AppController.LoadingView);
+            loading.transform.SetParent(container.transform, false);
+
+            LoadingViewModel loadingViewModel = loading.GetComponentInChildren<LoadingViewModel>();
+
+            if(isOpaque) {
+                loadingViewModel.Opaque();
+            }
+
+            if(isAutoFill) {
+                loadingViewModel.AutoFill();
+            }
+
+            return loadingViewModel;
+        }
+
         public void Start() {
 			WebRequestManager.Configure (_apiKey, _apiSecret, _baseUrl + "organisations/" + _organisationId + "/");
 
@@ -72,6 +100,8 @@ namespace Rise.App.Controllers {
             //First launch
             BuildCacheArchitecture();
             Build();
+
+            _instance = this;
         }
 
         private void BuildCacheArchitecture() {
@@ -89,6 +119,10 @@ namespace Rise.App.Controllers {
                     OnBackButtonPressed();
                 }
             });
+        }
+
+        public void LoadScene(AssetBundle bundle) {
+
         }
     }
 }

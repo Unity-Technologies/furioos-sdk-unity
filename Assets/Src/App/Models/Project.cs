@@ -30,7 +30,29 @@ namespace Rise.App.Models {
 			}
 		}
 
-		[SerializeField]
+        [SerializeField]
+        private string description;
+        public string Description {
+            get {
+                return description;
+            }
+            set {
+                description = value;
+            }
+        }
+
+        [SerializeField]
+        private Media thumbnail;
+        public Media Thumbnail {
+            get {
+                return thumbnail;
+            }
+            set {
+                thumbnail = value;
+            }
+        }
+
+        [SerializeField]
 		private string parentID;
 		public string ParentID {
 			get {

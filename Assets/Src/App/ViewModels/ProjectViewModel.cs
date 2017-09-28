@@ -8,6 +8,7 @@ namespace Rise.App.ViewModels {
     public class ProjectViewModel : MonoBehaviour {
 	    public new Text name;
 	    public RawImage image;
+        public AspectRatioFitter aspectRatioFitter;
 	    public Button view;
     }
 }

@@ -71,19 +71,23 @@ namespace Rise.App.Models {
 		}
 
 		[SerializeField]
-		private string publicUrl;
-		public string PublicUrl {
+		private string publicURL;
+		public string PublicURL {
 			get {
-				return publicUrl;
+				return publicURL;
 			}
 			set {
-				publicUrl = value;
+                publicURL = value;
 			}
 		}
 
 		public void OnBeforeSerialize() {}
 
 		public void OnAfterDeserialize() {
+            if(string.IsNullOrEmpty(type)) {
+                return;
+            }
+
 			_type = (MediaType)System.Enum.Parse(typeof(MediaType), type);
 		}
 	}
