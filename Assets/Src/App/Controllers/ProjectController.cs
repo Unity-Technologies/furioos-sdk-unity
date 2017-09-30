@@ -18,6 +18,7 @@ namespace Rise.App.Controllers {
         public const string MEDIA_METHOD = "medias";
 
         public delegate void HandleImageCallback(Texture2D image);
+        public delegate void HandleVideoCallback(string path);
 
         private static string _persistentListDataPath;
         public static string PersistentListDataPath {
@@ -424,7 +425,7 @@ namespace Rise.App.Controllers {
 
 				//BuildScenes(project, scenes);
                 BuildImages(project, images);
-                //BuildVideos(project, videos);
+                BuildVideos(project, videos);
                 //BuildDocuments(project, documents);
 			}
         }
@@ -459,6 +460,9 @@ namespace Rise.App.Controllers {
 
                 mediaPreviewView.transform.SetParent(project.ProjectDetailViewModel.imagePreviewsContent, false);
                 mediaPreviewIndicatorView.transform.SetParent(project.ProjectDetailViewModel.imageIndicatorsContent, false);
+
+                mediaPreviewViewModel.title.text = images[i].Name;
+                mediaPreviewViewModel.titleImageIcon.SetActive(true);
 
                 if(string.IsNullOrEmpty(images[i].PublicURL)) {
                     continue;
@@ -522,7 +526,7 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void HandleVideos(Project project, Media[] videos) {
+        private void BuildVideos(Project project, Media[] videos) {
 			int videoLength = videos.Length;
 
 			if(videoLength == 0) {
@@ -531,9 +535,73 @@ namespace Rise.App.Controllers {
 
 				return;
 			}
-		}
 
-		private void HandleDocuments(Project project, Media[] documents) {
+            for(int i = 0; i < videoLength; i++) {
+                GameObject mediaPreviewView = Instantiate<GameObject>(project.ProjectDetailViewModel.imagePreviewView);
+                GameObject mediaPreviewIndicatorView = Instantiate<GameObject>(project.ProjectDetailViewModel.imageIndicatorView);
+
+                ProjectDetailMediaPreviewViewModel mediaPreviewViewModel = mediaPreviewView.GetComponentInChildren<ProjectDetailMediaPreviewViewModel>();
+                ProjectDetailMediaIndicatorViewModel mediaPreviewIndicatorViewModel = mediaPreviewIndicatorView.GetComponentInChildren<ProjectDetailMediaIndicatorViewModel>();
+
+                mediaPreviewView.transform.SetParent(project.ProjectDetailViewModel.videoPreviewsContent, false);
+                mediaPreviewIndicatorView.transform.SetParent(project.ProjectDetailViewModel.videoIndicatorsContent, false);
+
+                mediaPreviewViewModel.title.text = videos[i].Name;
+                mediaPreviewViewModel.videoIcon.SetActive(true);
+                mediaPreviewViewModel.titleVideoIcon.SetActive(true);
+
+                if(string.IsNullOrEmpty(videos[i].PublicURL)) {
+                    continue;
+                }
+
+                LoadingViewModel lvmp = AppController.CreateLoading(mediaPreviewViewModel.gameObject);
+                LoadingViewModel lvmpi = AppController.CreateLoading(mediaPreviewIndicatorViewModel.gameObject);
+
+                HandleVideo(videos[i],
+                    delegate (string path) {
+                        mediaPreviewViewModel.view.onClick.AddListener(() => {
+                            VideoPlayerController.Play(path);
+                        });
+
+                        lvmp.Destroy();
+                        lvmpi.Destroy();
+                    },
+                    delegate (float progress) {
+                        lvmp.progress.fillAmount = progress;
+                        lvmpi.progress.fillAmount = progress;
+                    }
+                );
+            }
+        }
+
+        private void HandleVideo(Media videoData, HandleVideoCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback) {
+            if(string.IsNullOrEmpty(videoData.PublicURL)) {
+                return;
+            }
+
+            System.Uri uri = new System.Uri(videoData.PublicURL);
+            string filename = Path.GetFileName(uri.AbsolutePath);
+
+            string videoPersistentPath = _persistentMediasDataPath + filename;
+
+            if(File.Exists(videoPersistentPath)) {
+                callback(videoPersistentPath);
+            }
+            else {
+                if(internetReachable) {
+                    WebRequestManager.Download(videoData.PublicURL, delegate (byte[] rawResult) {
+                        File.WriteAllBytes(videoPersistentPath, rawResult);
+
+                        callback(videoPersistentPath);
+                    },
+                    delegate (float progress) {
+                        progressCallback(progress);
+                    });
+                }
+            }
+        }
+
+        private void HandleDocuments(Project project, Media[] documents) {
 			int documentLength = documents.Length;
 
 			if(documentLength == 0) {

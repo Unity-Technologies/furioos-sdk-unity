@@ -83,6 +83,8 @@ namespace Rise.App.Controllers {
                     OnSelectedCategoryChange(_selectedCategoryId);
                 }
 
+                AppController.HideMenu();
+
                 return;
             }
             else {

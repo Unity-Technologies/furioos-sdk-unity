@@ -10,7 +10,13 @@ namespace Rise.App.ViewModels {
 	    public RawImage image;
         public AspectRatioFitter aspectRatioFitter;
         public Text title;
+
 	    public GameObject videoIcon;
 	    public GameObject threeDIcon;
+
+        public GameObject titleVideoIcon;
+        public GameObject titleThreeDIcon;
+        public GameObject titleImageIcon;
+        public GameObject titleDocumentIcon;
     }
 }

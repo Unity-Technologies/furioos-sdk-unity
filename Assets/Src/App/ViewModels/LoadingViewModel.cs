@@ -22,7 +22,7 @@ namespace Rise.App.ViewModels {
         }
 
         public void AutoFill() {
-            LeanTween.value(gameObject, 0.0f, 1.0f, 0.8f).setOnUpdate((float value) => {
+            LeanTween.value(gameObject, 0.0f, 1.0f, 1.0f).setOnUpdate((float value) => {
                 progress.fillAmount = value;
             }).setLoopPingPong();
         }

@@ -4,6 +4,7 @@ using System.IO;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 using Rise.Core;
 using Rise.App.ViewModels;
@@ -37,6 +38,7 @@ namespace Rise.App.Controllers {
         public GameObject loadingView;
 
         public Button backButton;
+        public Toggle toggleMenu;
 
         //Model
         public string _apiKey;
@@ -82,6 +84,14 @@ namespace Rise.App.Controllers {
             }
 
             return loadingViewModel;
+        }
+
+        public static void HideMenu() {
+            if(_instance == null) {
+                return;
+            }
+
+            _instance.toggleMenu.isOn = false;
         }
 
         public void Start() {

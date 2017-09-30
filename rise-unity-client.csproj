@@ -289,6 +289,7 @@
     <Compile Include="Assets\Src\App\Controllers\AppController.cs" />
     <Compile Include="Assets\Src\App\Controllers\CategoryController.cs" />
     <Compile Include="Assets\Src\App\Controllers\ProjectController.cs" />
+    <Compile Include="Assets\Src\App\Controllers\VideoPlayerController.cs" />
     <Compile Include="Assets\Src\App\Models\Category.cs" />
     <Compile Include="Assets\Src\App\Models\Media.cs" />
     <Compile Include="Assets\Src\App\Models\Organisation.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="Assets\Src\App\ViewModels\ProjectDetailViewModel.cs" />
     <Compile Include="Assets\Src\App\ViewModels\ProjectMenuItemViewModel.cs" />
     <Compile Include="Assets\Src\App\ViewModels\ProjectViewModel.cs" />
+    <Compile Include="Assets\Src\App\ViewModels\VideoPlayerViewModel.cs" />
     <Compile Include="Assets\Src\Core\Behaviour\RSBehaviour.cs" />
     <Compile Include="Assets\Src\Core\Behaviour\RSUniqueBehaviour.cs" />
     <Compile Include="Assets\Src\Core\Camera\Manager\RSCamerasManager.cs" />

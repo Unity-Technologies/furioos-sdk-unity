@@ -15,9 +15,20 @@ namespace Rise.App.Models {
 			set {
 				id = value;
 			}
-		}
+        }
 
-		[SerializeField]
+        [SerializeField]
+        private string name;
+        public string Name {
+            get {
+                return name;
+            }
+            set {
+                name = value;
+            }
+        }
+
+        [SerializeField]
 		private string projectID;
 		public string ProjectID {
 			get {
