@@ -18,7 +18,7 @@ namespace Rise.App.Controllers {
         public const string MEDIA_METHOD = "medias";
 
         public delegate void HandleImageCallback(Texture2D image);
-        public delegate void HandleVideoCallback(string path);
+        public delegate void HandleMediaCallback(string path);
 
         private static string _persistentListDataPath;
         public static string PersistentListDataPath {
@@ -169,7 +169,7 @@ namespace Rise.App.Controllers {
         }
 
 		private void GetDetail(string id) {
-			_persistentDetailDataPath = AppController.PersistentDataPath + "/" + "Projects/" + id + "/";
+			_persistentDetailDataPath = AppController.PersistentDataPath + "Projects/" + id + "/";
 
 			string fileName = "project.json";
 			string fullPath = _persistentDetailDataPath + fileName;
@@ -423,14 +423,14 @@ namespace Rise.App.Controllers {
 					}
 				}
 
-				//BuildScenes(project, scenes);
+				BuildScenes(project, scenes);
                 BuildImages(project, images);
                 BuildVideos(project, videos);
                 //BuildDocuments(project, documents);
 			}
         }
 
-		private void HandleScenes(Project project, Media[] scenes) {
+		private void BuildScenes(Project project, Media[] scenes) {
 			int sceneLength = scenes.Length;
 
 			if(sceneLength == 0) {
@@ -439,7 +439,68 @@ namespace Rise.App.Controllers {
 
 				return;
 			}
-		}
+
+            if(sceneLength == 0) {
+                project.ProjectDetailViewModel.imagePreviewTab.SetActive(false);
+                project.ProjectDetailViewModel.imagePreviewContainer.SetActive(false);
+
+                return;
+            }
+
+            for(int i = 0; i < sceneLength; i++) {
+                GameObject mediaPreviewView = Instantiate<GameObject>(project.ProjectDetailViewModel.imagePreviewView);
+                GameObject mediaPreviewIndicatorView = Instantiate<GameObject>(project.ProjectDetailViewModel.imageIndicatorView);
+
+                ProjectDetailMediaPreviewViewModel mediaPreviewViewModel = mediaPreviewView.GetComponentInChildren<ProjectDetailMediaPreviewViewModel>();
+                ProjectDetailMediaIndicatorViewModel mediaPreviewIndicatorViewModel = mediaPreviewIndicatorView.GetComponentInChildren<ProjectDetailMediaIndicatorViewModel>();
+
+                mediaPreviewView.transform.SetParent(project.ProjectDetailViewModel.scenePreviewsContent, false);
+                mediaPreviewIndicatorView.transform.SetParent(project.ProjectDetailViewModel.sceneIndicatorsContent, false);
+
+                mediaPreviewViewModel.title.text = scenes[i].Name;
+                mediaPreviewViewModel.threeDIcon.SetActive(true);
+                mediaPreviewViewModel.titleThreeDIcon.SetActive(true);
+
+                if(string.IsNullOrEmpty(scenes[i].PublicURL)) {
+                    continue;
+                }
+
+                if(scenes[i].ThumbnailID != null) {
+                    Media thumbnail = project.Medias.SingleOrDefault(m => m.Id == scenes[i].ThumbnailID);
+
+                    if(thumbnail != null) {
+                        HandleImage(thumbnail,
+                            delegate (Texture2D image) {
+                                float ratio = (float)image.width / (float)image.height;
+                                mediaPreviewViewModel.image.texture = image;
+                                mediaPreviewViewModel.aspectRatioFitter.aspectRatio = ratio;
+
+                                mediaPreviewIndicatorViewModel.image.texture = image;
+                                mediaPreviewIndicatorViewModel.aspectRatioFitter.aspectRatio = ratio;
+                            }
+                        );
+                    }
+                }
+
+                LoadingViewModel lvmp = AppController.CreateLoading(mediaPreviewViewModel.gameObject);
+                LoadingViewModel lvmpi = AppController.CreateLoading(mediaPreviewIndicatorViewModel.gameObject);
+
+                HandleMedia(scenes[i],
+                    delegate (string path) {
+                        mediaPreviewViewModel.view.onClick.AddListener(() => {
+                            SceneViewerController.LoadScene(path);
+                        });
+
+                        lvmp.Destroy();
+                        lvmpi.Destroy();
+                    },
+                    delegate (float progress) {
+                        lvmp.progress.fillAmount = progress;
+                        lvmpi.progress.fillAmount = progress;
+                    }
+                );
+            }
+        }
 
         private void BuildImages(Project project, Media[] images) {
             int imageLength = images.Length;
@@ -491,7 +552,7 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void HandleImage(Media imageData, HandleImageCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback) {
+        private void HandleImage(Media imageData, HandleImageCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback = null) {
             if(string.IsNullOrEmpty(imageData.PublicURL)) {
                 return;
             }
@@ -520,7 +581,9 @@ namespace Rise.App.Controllers {
                         callback(img);
                     },
                     delegate(float progress) {
-                        progressCallback(progress);
+                        if(progressCallback != null) {
+                            progressCallback(progress);
+                        }
                     });
                 }
             }
@@ -554,10 +617,27 @@ namespace Rise.App.Controllers {
                     continue;
                 }
 
+                if(videos[i].ThumbnailID != null) {
+                    Media thumbnail = project.Medias.SingleOrDefault(m => m.Id == videos[i].ThumbnailID);
+
+                    if(thumbnail != null) {
+                        HandleImage(thumbnail,
+                            delegate (Texture2D image) {
+                                float ratio = (float)image.width / (float)image.height;
+                                mediaPreviewViewModel.image.texture = image;
+                                mediaPreviewViewModel.aspectRatioFitter.aspectRatio = ratio;
+
+                                mediaPreviewIndicatorViewModel.image.texture = image;
+                                mediaPreviewIndicatorViewModel.aspectRatioFitter.aspectRatio = ratio;
+                            }
+                        );
+                    }
+                }
+
                 LoadingViewModel lvmp = AppController.CreateLoading(mediaPreviewViewModel.gameObject);
                 LoadingViewModel lvmpi = AppController.CreateLoading(mediaPreviewIndicatorViewModel.gameObject);
 
-                HandleVideo(videos[i],
+                HandleMedia(videos[i],
                     delegate (string path) {
                         mediaPreviewViewModel.view.onClick.AddListener(() => {
                             VideoPlayerController.Play(path);
@@ -574,33 +654,6 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void HandleVideo(Media videoData, HandleVideoCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback) {
-            if(string.IsNullOrEmpty(videoData.PublicURL)) {
-                return;
-            }
-
-            System.Uri uri = new System.Uri(videoData.PublicURL);
-            string filename = Path.GetFileName(uri.AbsolutePath);
-
-            string videoPersistentPath = _persistentMediasDataPath + filename;
-
-            if(File.Exists(videoPersistentPath)) {
-                callback(videoPersistentPath);
-            }
-            else {
-                if(internetReachable) {
-                    WebRequestManager.Download(videoData.PublicURL, delegate (byte[] rawResult) {
-                        File.WriteAllBytes(videoPersistentPath, rawResult);
-
-                        callback(videoPersistentPath);
-                    },
-                    delegate (float progress) {
-                        progressCallback(progress);
-                    });
-                }
-            }
-        }
-
         private void HandleDocuments(Project project, Media[] documents) {
 			int documentLength = documents.Length;
 
@@ -610,8 +663,35 @@ namespace Rise.App.Controllers {
 
 				return;
 			}
-		}
-			
+        }
+
+        private void HandleMedia(Media mediaData, HandleMediaCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback) {
+            if(string.IsNullOrEmpty(mediaData.PublicURL)) {
+                return;
+            }
+
+            System.Uri uri = new System.Uri(mediaData.PublicURL);
+            string filename = Path.GetFileName(uri.AbsolutePath);
+
+            string mediaPersistentPath = _persistentMediasDataPath + filename;
+
+            if(File.Exists(mediaPersistentPath)) {
+                callback(mediaPersistentPath);
+            }
+            else {
+                if(internetReachable) {
+                    WebRequestManager.Download(mediaData.PublicURL, delegate (byte[] rawResult) {
+                        File.WriteAllBytes(mediaPersistentPath, rawResult);
+
+                        callback(mediaPersistentPath);
+                    },
+                    delegate (float progress) {
+                        progressCallback(progress);
+                    });
+                }
+            }
+        }
+
         private void RebuildDetail() {}
 
         private void CleanDetail() {

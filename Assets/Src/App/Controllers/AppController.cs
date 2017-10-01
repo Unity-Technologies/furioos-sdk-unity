@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.SceneManagement;
 
 using Rise.Core;
 using Rise.App.ViewModels;
@@ -35,6 +36,8 @@ namespace Rise.App.Controllers {
 
 
         //View
+        public GameObject app;
+
         public GameObject loadingView;
 
         public Button backButton;
@@ -94,8 +97,18 @@ namespace Rise.App.Controllers {
             _instance.toggleMenu.isOn = false;
         }
 
+        public static void SetActiveApp(bool active) {
+            if(_instance == null) {
+                return;
+            }
+
+            _instance.app.SetActive(active);
+        }
+
         public void Start() {
 			WebRequestManager.Configure (_apiKey, _apiSecret, _baseUrl + "organisations/" + _organisationId + "/");
+
+            Debug.Log("[AppController] > Persistent data path : " + Application.persistentDataPath);
 
             CategoryController.OnSelectedCategoryChange += delegate(string id) {
                 backButton.gameObject.SetActive(false);
@@ -129,10 +142,6 @@ namespace Rise.App.Controllers {
                     OnBackButtonPressed();
                 }
             });
-        }
-
-        public void LoadScene(AssetBundle bundle) {
-
         }
     }
 }

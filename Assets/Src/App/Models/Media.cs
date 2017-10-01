@@ -44,7 +44,8 @@ namespace Rise.App.Models {
 			IMAGE,
 			VIDEO,
 			DOCUMENT,
-			TEXT
+			TEXT,
+            THUMBNAIL
 		}
 
 		[SerializeField]
@@ -80,6 +81,17 @@ namespace Rise.App.Models {
 				this.value = value;
 			}
 		}
+
+        [SerializeField]
+        private string thumbnailID;
+        public string ThumbnailID {
+            get {
+                return thumbnailID;
+            }
+            set {
+                thumbnailID = value;
+            }
+        }
 
 		[SerializeField]
 		private string publicURL;
