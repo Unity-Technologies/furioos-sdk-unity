@@ -15,5 +15,9 @@ namespace Rise.App.ViewModels {
         public GameObject pause;
 
         public Slider progress;
+
+        void OnDestroy() {
+            DestroyImmediate(image.texture, true);
+        }
     }
 }

@@ -29,27 +29,30 @@ namespace Rise.Core {
 		}
 
 		private IEnumerator AsyncGet<T>(string uri, GetResponseCallBack<List<T>> callback) {
-            using(UnityWebRequest www = UnityWebRequest.Get(uri)) {
+            UnityWebRequest www = UnityWebRequest.Get(uri);
 
-                www.SetRequestHeader("Authorization", _encodedApiKey);
+            www.SetRequestHeader("Authorization", _encodedApiKey);
 
-			    yield return www.Send();
+			yield return www.Send();
 
-			    if (www.isNetworkError) {
-				    Debug.LogError(www.error);
-			    }
-                else {
-				    Debug.Log("[RSWebRequestManager] > Request to " + uri + " done...");
-			    }
+			if (www.isNetworkError) {
+				Debug.LogError(www.error);
+			}
+            else {
+				Debug.Log("[RSWebRequestManager] > Request to " + uri + " done...");
+			}
 
-			    string wrappedJson = "{ \"values\":" + www.downloadHandler.text + "}";
+			string wrappedJson = "{ \"values\":" + www.downloadHandler.text + "}";
 
-			    JsonWrapper<List<T>> wrapper = JsonUtility.FromJson<JsonWrapper<List<T>>> (
-				    wrappedJson
-			    );
+			JsonWrapper<List<T>> wrapper = JsonUtility.FromJson<JsonWrapper<List<T>>> (
+				wrappedJson
+			);
 
-			    callback(wrapper.values, wrappedJson);
-            }
+			callback(wrapper.values, wrappedJson);
+
+            wrapper = null;
+            wrappedJson = null;
+            www = null;
 		}
 
 		public void Post() {}
@@ -59,26 +62,27 @@ namespace Rise.Core {
         }
 
         private IEnumerator AsyncDownload(string uri, DownloadResponseCallBack callback, DownloadProgressCallBack progressCallback = null) {
-            using(UnityWebRequest www = UnityWebRequest.Get(uri)) {
-                AsyncOperation aop = www.Send();
+            UnityWebRequest www = UnityWebRequest.Get(uri);
+            AsyncOperation aop = www.Send();
 
-                while(!aop.isDone) {
-                    if(progressCallback != null) {
-                        progressCallback(aop.progress);
-                    }
-
-                    yield return new WaitForEndOfFrame();
+            while(!aop.isDone) {
+                if(progressCallback != null) {
+                    progressCallback(aop.progress);
                 }
 
-                if(www.isNetworkError) {
-                    Debug.LogError(www.error);
-                }
-                else {
-                    Debug.Log("[RSWebRequestManager] > Download " + uri + " done...");
-                }
-
-                callback(www.downloadHandler.data);
+                yield return new WaitForEndOfFrame();
             }
+
+            if(www.isNetworkError) {
+                Debug.LogError(www.error);
+            }
+            else {
+                Debug.Log("[RSWebRequestManager] > Download " + uri + " done...");
+            }
+
+            callback(www.downloadHandler.data);
+            
+            www = null;
         }
 
         public void DownloadAssetBundle(string uri, DownloadAssetBundleResponseCallBack callback, DownloadProgressCallBack progressCallback = null) {
@@ -86,26 +90,27 @@ namespace Rise.Core {
         }
 
         private IEnumerator AsyncDownloadAssetBundle(string uri, DownloadAssetBundleResponseCallBack callback, DownloadProgressCallBack progressCallback = null) {
-            using(UnityWebRequest www = UnityWebRequest.GetAssetBundle(uri)) {
-                AsyncOperation aop = www.Send();
+            UnityWebRequest www = UnityWebRequest.GetAssetBundle(uri);
+            AsyncOperation aop = www.Send();
 
-                while(!aop.isDone) {
-                    if(progressCallback != null) {
-                        progressCallback(aop.progress);
-                    }
-
-                    yield return new WaitForEndOfFrame();
+            while(!aop.isDone) {
+                if(progressCallback != null) {
+                    progressCallback(aop.progress);
                 }
 
-                if(www.isNetworkError) {
-                    Debug.LogError(www.error);
-                }
-                else {
-                    Debug.Log("[RSWebRequestManager] > Download Asset Bundle " + uri + " done...");
-                }
-
-                callback(((DownloadHandlerAssetBundle)www.downloadHandler).assetBundle);
+                yield return new WaitForEndOfFrame();
             }
+
+            if(www.isNetworkError) {
+                Debug.LogError(www.error);
+            }
+            else {
+                Debug.Log("[RSWebRequestManager] > Download Asset Bundle " + uri + " done...");
+            }
+
+            callback(((DownloadHandlerAssetBundle)www.downloadHandler).assetBundle);
+            
+            www = null;
         }
     }
 }

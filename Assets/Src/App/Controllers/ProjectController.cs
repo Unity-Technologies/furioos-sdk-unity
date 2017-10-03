@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Text;
-
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UI.Extensions;
-
-using Rise.Core;
-using Rise.App.Models;
+﻿using Rise.App.Models;
 using Rise.App.ViewModels;
+using Rise.Core;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 namespace Rise.App.Controllers {
     public class ProjectController : RSBehaviour {
@@ -18,7 +15,7 @@ namespace Rise.App.Controllers {
         public const string MEDIA_METHOD = "medias";
 
         public delegate void HandleImageCallback(Texture2D image);
-        public delegate void HandleMediaCallback(string path);
+        public delegate void HandleAssetCallback(string path);
 
         private static string _persistentListDataPath;
         public static string PersistentListDataPath {
@@ -40,13 +37,13 @@ namespace Rise.App.Controllers {
 			}
 		}
 
-        private static string _persistentMediasDataPath;
-        public static string PersistentMediasDataPath {
+        private static string _persistentAssetDataPath;
+        public static string PersistentAssetDataPath {
             get {
-                return _persistentMediasDataPath;
+                return _persistentAssetDataPath;
             }
             set {
-                _persistentMediasDataPath = value;
+                _persistentAssetDataPath = value;
             }
         }
 
@@ -109,6 +106,16 @@ namespace Rise.App.Controllers {
         }
 
         public void Select(string id, bool build = true) {
+            if(id == null) {
+                CategoryController categoryController = Manager.GetInstance<CategoryController>();
+                Category category = categoryController.GetById(categoryController.SelectedCategoryId);
+                AppController.SetTitle(category.Name);
+            }
+            else {
+                Project project = GetById(id);
+                AppController.SetTitle(project.Name);
+            }
+
             _selectedProjectId = id;
 
             if(OnSelectedProjectChange != null) {
@@ -361,7 +368,22 @@ namespace Rise.App.Controllers {
 
             entryGo.transform.SetParent(detailContainer, false);
 
-            project.ProjectDetailViewModel.name.text = project.Name;
+            if(project.Thumbnail != null) {
+                if(!string.IsNullOrEmpty(project.Thumbnail.PublicURL)) {
+                    HandleImage(project.Thumbnail,
+                        (Texture2D image) => {
+                            float ratio = (float)image.width / (float)image.height;
+                            project.ProjectDetailViewModel.thumbnail.texture = image;
+                            project.ProjectDetailViewModel.thumbnailAspectRatio.aspectRatio = ratio;
+                        }
+                    );
+                }
+            }
+
+            if(string.IsNullOrEmpty(project.Description)) {
+                project.ProjectDetailViewModel.descriptionContainer.SetActive(false);
+            }
+            project.ProjectDetailViewModel.description.text = project.Description;
 
 			if(project.SubProjects != null) {
 				int subProjectLength = project.SubProjects.Length;
@@ -388,18 +410,18 @@ namespace Rise.App.Controllers {
 				}
 			}
 
-			if(project.Medias != null) {
-                _persistentMediasDataPath = _persistentDetailDataPath + "Medias/";
+			if(project.Assets != null) {
+                _persistentAssetDataPath = _persistentDetailDataPath + "Medias/";
 
-                if(!Directory.Exists(_persistentMediasDataPath)) {
-                    Directory.CreateDirectory(_persistentMediasDataPath);
+                if(!Directory.Exists(_persistentAssetDataPath)) {
+                    Directory.CreateDirectory(_persistentAssetDataPath);
                 }
 
-				Media[] scenes = project.Medias.Where (m => m.Type == Media.MediaType.SCENE).ToArray();
-				Media[] images = project.Medias.Where (m => m.Type == Media.MediaType.IMAGE).ToArray();
-				Media[] videos = project.Medias.Where (m => m.Type == Media.MediaType.VIDEO).ToArray();
-				Media[] documents = project.Medias.Where (m => m.Type == Media.MediaType.DOCUMENT).ToArray();
-				Media[] texts = project.Medias.Where(m => m.Type == Media.MediaType.TEXT).ToArray();
+				Asset[] scenes = project.Assets.Where (m => m.Type == Asset.AssetType.SCENE).ToArray();
+				Asset[] images = project.Assets.Where (m => m.Type == Asset.AssetType.IMAGE).ToArray();
+				Asset[] videos = project.Assets.Where (m => m.Type == Asset.AssetType.VIDEO).ToArray();
+				Asset[] documents = project.Assets.Where (m => m.Type == Asset.AssetType.DOCUMENT).ToArray();
+				Asset[] texts = project.Assets.Where(m => m.Type == Asset.AssetType.TEXT).ToArray();
 
 				if(texts != null) {
 					int textLength = texts.Length;
@@ -409,7 +431,7 @@ namespace Rise.App.Controllers {
 					}
 
 					for(int i = 0; i < textLength; i++) {
-						Media text = texts [i];
+						Asset text = texts [i];
 
 						GameObject projectDetailTextView = project.ProjectDetailViewModel.textView;
 
@@ -426,11 +448,11 @@ namespace Rise.App.Controllers {
 				BuildScenes(project, scenes);
                 BuildImages(project, images);
                 BuildVideos(project, videos);
-                //BuildDocuments(project, documents);
+                BuildDocuments(project, documents);
 			}
         }
 
-		private void BuildScenes(Project project, Media[] scenes) {
+		private void BuildScenes(Project project, Asset[] scenes) {
 			int sceneLength = scenes.Length;
 
 			if(sceneLength == 0) {
@@ -466,7 +488,7 @@ namespace Rise.App.Controllers {
                 }
 
                 if(scenes[i].ThumbnailID != null) {
-                    Media thumbnail = project.Medias.SingleOrDefault(m => m.Id == scenes[i].ThumbnailID);
+                    Asset thumbnail = project.Assets.SingleOrDefault(m => m.Id == scenes[i].ThumbnailID);
 
                     if(thumbnail != null) {
                         HandleImage(thumbnail,
@@ -485,7 +507,7 @@ namespace Rise.App.Controllers {
                 LoadingViewModel lvmp = AppController.CreateLoading(mediaPreviewViewModel.gameObject);
                 LoadingViewModel lvmpi = AppController.CreateLoading(mediaPreviewIndicatorViewModel.gameObject);
 
-                HandleMedia(scenes[i],
+                HandleAsset(scenes[i],
                     delegate (string path) {
                         mediaPreviewViewModel.view.onClick.AddListener(() => {
                             SceneViewerController.LoadScene(path);
@@ -502,7 +524,7 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void BuildImages(Project project, Media[] images) {
+        private void BuildImages(Project project, Asset[] images) {
             int imageLength = images.Length;
 
             if(imageLength == 0) {
@@ -552,7 +574,7 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void HandleImage(Media imageData, HandleImageCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback = null) {
+        private void HandleImage(Asset imageData, HandleImageCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback = null) {
             if(string.IsNullOrEmpty(imageData.PublicURL)) {
                 return;
             }
@@ -560,7 +582,7 @@ namespace Rise.App.Controllers {
             System.Uri uri = new System.Uri(imageData.PublicURL);
             string filename = Path.GetFileName(uri.AbsolutePath);
 
-            string imagePersistentPath = _persistentMediasDataPath + filename;
+            string imagePersistentPath = _persistentAssetDataPath + filename;
 
             if(File.Exists(imagePersistentPath)) {
                 byte[] rawImage = File.ReadAllBytes(imagePersistentPath);
@@ -589,7 +611,7 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void BuildVideos(Project project, Media[] videos) {
+        private void BuildVideos(Project project, Asset[] videos) {
 			int videoLength = videos.Length;
 
 			if(videoLength == 0) {
@@ -618,7 +640,7 @@ namespace Rise.App.Controllers {
                 }
 
                 if(videos[i].ThumbnailID != null) {
-                    Media thumbnail = project.Medias.SingleOrDefault(m => m.Id == videos[i].ThumbnailID);
+                    Asset thumbnail = project.Assets.SingleOrDefault(m => m.Id == videos[i].ThumbnailID);
 
                     if(thumbnail != null) {
                         HandleImage(thumbnail,
@@ -637,7 +659,7 @@ namespace Rise.App.Controllers {
                 LoadingViewModel lvmp = AppController.CreateLoading(mediaPreviewViewModel.gameObject);
                 LoadingViewModel lvmpi = AppController.CreateLoading(mediaPreviewIndicatorViewModel.gameObject);
 
-                HandleMedia(videos[i],
+                HandleAsset(videos[i],
                     delegate (string path) {
                         mediaPreviewViewModel.view.onClick.AddListener(() => {
                             VideoPlayerController.Play(path);
@@ -654,7 +676,7 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void HandleDocuments(Project project, Media[] documents) {
+        private void BuildDocuments(Project project, Asset[] documents) {
 			int documentLength = documents.Length;
 
 			if(documentLength == 0) {
@@ -665,22 +687,22 @@ namespace Rise.App.Controllers {
 			}
         }
 
-        private void HandleMedia(Media mediaData, HandleMediaCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback) {
-            if(string.IsNullOrEmpty(mediaData.PublicURL)) {
+        private void HandleAsset(Asset assetData, HandleAssetCallback callback, RSWebRequestManager.DownloadProgressCallBack progressCallback) {
+            if(string.IsNullOrEmpty(assetData.PublicURL)) {
                 return;
             }
 
-            System.Uri uri = new System.Uri(mediaData.PublicURL);
+            System.Uri uri = new System.Uri(assetData.PublicURL);
             string filename = Path.GetFileName(uri.AbsolutePath);
 
-            string mediaPersistentPath = _persistentMediasDataPath + filename;
+            string mediaPersistentPath = _persistentAssetDataPath + filename;
 
             if(File.Exists(mediaPersistentPath)) {
                 callback(mediaPersistentPath);
             }
             else {
                 if(internetReachable) {
-                    WebRequestManager.Download(mediaData.PublicURL, delegate (byte[] rawResult) {
+                    WebRequestManager.Download(assetData.PublicURL, delegate (byte[] rawResult) {
                         File.WriteAllBytes(mediaPersistentPath, rawResult);
 
                         callback(mediaPersistentPath);
@@ -709,9 +731,13 @@ namespace Rise.App.Controllers {
                 Select(null, false);
             }
             else {
+                Destroy(project.ProjectDetailViewModel);
+
                 Destroy(project.ProjectDetailViewModel.gameObject);
 
                 Select(project.ParentID, false);
+
+                Manager.FreeMemory();
             }
         }
     }

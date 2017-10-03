@@ -28,7 +28,6 @@ namespace Rise.App.Controllers {
         public delegate void SelectedCategoryChanged(string id);
         public static event SelectedCategoryChanged OnSelectedCategoryChange;
 
-
         //View
         public Text title;
         public Button backButton;
@@ -38,6 +37,11 @@ namespace Rise.App.Controllers {
 
         private string _parentCategoryId;
         private string _selectedCategoryId;
+        public string SelectedCategoryId {
+            get {
+                return _selectedCategoryId;
+            }
+        }
 
         //Model
 		private List<Category> _categories;
@@ -83,6 +87,7 @@ namespace Rise.App.Controllers {
                     OnSelectedCategoryChange(_selectedCategoryId);
                 }
 
+                AppController.SetTitle(category.Name);
                 AppController.HideMenu();
 
                 return;

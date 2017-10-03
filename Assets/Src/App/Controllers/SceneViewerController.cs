@@ -14,10 +14,12 @@ namespace Rise.App.Controllers {
     public class SceneViewerController : RSBehaviour {
         public delegate void HandleProgressSceneCallback(float progress);
         public delegate void HandleDoneLoadSceneCallback();
+        public delegate void HandleDoneUnloadSceneCallback();
 
         private static SceneViewerController _instance;
 
         private string _currentScene;
+        private AssetBundle _currentBundle;
 
         //View
         public GameObject viewer;
@@ -62,12 +64,12 @@ namespace Rise.App.Controllers {
             AssetBundleCreateRequest abcr = AssetBundle.LoadFromFileAsync(path);
             yield return abcr;
 
-            AssetBundle bundle = abcr.assetBundle;
-            if(bundle == null) {
+            _currentBundle = abcr.assetBundle;
+            if(_currentBundle == null) {
                 yield break;
             }
 
-            _currentScene = bundle.GetAllScenePaths()[0];
+            _currentScene = _currentBundle.GetAllScenePaths()[0];
             AsyncOperation aop = SceneManager.LoadSceneAsync(_currentScene, LoadSceneMode.Additive);
 
             while(!aop.isDone) {
@@ -78,7 +80,39 @@ namespace Rise.App.Controllers {
                 yield return new WaitForEndOfFrame();
             }
 
-            bundle.Unload(false);
+            if(doneCallback != null) {
+                doneCallback();
+            }
+        }
+
+        public void UnloadCurrentScene() {
+            LoadingViewModel loading = AppController.CreateLoading(viewer, true);
+
+            StartCoroutine(AsyncUnloadCurrentScene(
+                (float progress) => {
+                    loading.progress.fillAmount = progress;
+                },
+                () => {
+                    loading.Destroy();
+
+                    AppController.SetActiveApp(true);
+                    SetActiveViewer(false);
+                }
+            ));
+        }
+
+        private IEnumerator AsyncUnloadCurrentScene(HandleProgressSceneCallback progressCallback = null, HandleDoneLoadSceneCallback doneCallback = null) {
+            AsyncOperation aop = SceneManager.UnloadSceneAsync(_currentScene);
+
+            while(!aop.isDone) {
+                if(progressCallback != null) {
+                    progressCallback(aop.progress);
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            _currentBundle.Unload(true);
 
             if(doneCallback != null) {
                 doneCallback();

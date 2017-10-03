@@ -18,5 +18,9 @@ namespace Rise.App.ViewModels {
         public GameObject titleThreeDIcon;
         public GameObject titleImageIcon;
         public GameObject titleDocumentIcon;
+
+        void OnDestroy() {
+            DestroyImmediate(image.texture, true);
+        }
     }
 }

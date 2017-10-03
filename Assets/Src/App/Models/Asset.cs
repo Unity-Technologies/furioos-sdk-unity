@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Rise.App.Models {
 	[System.Serializable]
-	public class Media : ISerializationCallbackReceiver {
+	public class Asset : ISerializationCallbackReceiver {
 		[SerializeField]
 		private string id;
 		public string Id {
@@ -39,7 +39,7 @@ namespace Rise.App.Models {
 			}
 		}
 			
-		public enum MediaType {
+		public enum AssetType {
 			SCENE,
 			IMAGE,
 			VIDEO,
@@ -50,8 +50,8 @@ namespace Rise.App.Models {
 
 		[SerializeField]
 		private string type;
-		private MediaType _type;
-		public MediaType Type {
+		private AssetType _type;
+		public AssetType Type {
 			get {
 				return _type;
 			}
@@ -104,14 +104,39 @@ namespace Rise.App.Models {
 			}
 		}
 
-		public void OnBeforeSerialize() {}
+        public enum AssetPlateform {
+            ALL,
+            DESKTOP,
+            MOBILE,
+            WINDOWS,
+            MAC,
+            ANDROID,
+            IOS,
+            WEBGL
+        }
+
+        [SerializeField]
+        private string plateform;
+        private AssetPlateform _plateform;
+        public AssetPlateform Plateform {
+            get {
+                return _plateform;
+            }
+            set {
+                _plateform = value;
+            }
+        }
+
+        public void OnBeforeSerialize() {}
 
 		public void OnAfterDeserialize() {
-            if(string.IsNullOrEmpty(type)) {
-                return;
+            if(!string.IsNullOrEmpty(type)) {
+                _type = (AssetType)System.Enum.Parse(typeof(AssetType), type);
             }
 
-			_type = (MediaType)System.Enum.Parse(typeof(MediaType), type);
-		}
+            if(!string.IsNullOrEmpty(plateform)) {
+                _plateform = (AssetPlateform)System.Enum.Parse(typeof(AssetPlateform), plateform);
+            }
+        }
 	}
 }

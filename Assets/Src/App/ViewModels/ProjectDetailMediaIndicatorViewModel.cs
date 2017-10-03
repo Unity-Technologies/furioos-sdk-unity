@@ -11,5 +11,10 @@ namespace Rise.App.ViewModels {
         public AspectRatioFitter aspectRatioFitter;
 	    public GameObject videoIcon;
 	    public GameObject threeDIcon;
+
+        void OnDestroy() {
+            DestroyImmediate(image.texture, true);
+            Destroy(image);
+        }
     }
 }

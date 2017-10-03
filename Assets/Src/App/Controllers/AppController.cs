@@ -42,6 +42,7 @@ namespace Rise.App.Controllers {
 
         public Button backButton;
         public Toggle toggleMenu;
+        public Text title;
 
         //Model
         public string _apiKey;
@@ -71,6 +72,14 @@ namespace Rise.App.Controllers {
 			    return _organisationId; 
 		    }
 	    }
+
+        public static void SetTitle(string title) {
+            if(_instance == null) {
+                return;
+            }
+        
+            _instance.title.text = (string.IsNullOrEmpty(title)) ? "Home" : title;
+        }
 
         public static LoadingViewModel CreateLoading(GameObject container, bool isOpaque = false, bool isAutoFill = false) {
             GameObject loading = Instantiate<GameObject>(AppController.LoadingView);

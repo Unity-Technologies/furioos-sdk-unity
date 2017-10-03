@@ -9,8 +9,8 @@ namespace Rise.App.ViewModels {
 	    [Header("Details")]
 	    [Space(1)]
 
-	    public GameObject nameContainer;
-	    public new Text name;
+        public RawImage thumbnail;
+        public AspectRatioFitter thumbnailAspectRatio;
 
 	    [Space(5)]
 	    public GameObject descriptionContainer;
@@ -28,7 +28,7 @@ namespace Rise.App.ViewModels {
 
 	    [Space(10)]
 
-	    [Header("Medias")]
+	    [Header("Assets")]
 	    [Space(1)]
 
 		public GameObject scenePreviewTab;
@@ -69,5 +69,9 @@ namespace Rise.App.ViewModels {
 		[Space(5)]
 		public RectTransform documentIndicatorsContent;
 		public GameObject documentIndicatorView;
+
+        void OnDestroy() {
+            DestroyImmediate(thumbnail.texture, true);
+        }
     }
 }

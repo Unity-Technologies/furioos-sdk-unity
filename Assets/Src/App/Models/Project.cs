@@ -42,8 +42,8 @@ namespace Rise.App.Models {
         }
 
         [SerializeField]
-        private Media thumbnail;
-        public Media Thumbnail {
+        private Asset thumbnail;
+        public Asset Thumbnail {
             get {
                 return thumbnail;
             }
@@ -97,13 +97,13 @@ namespace Rise.App.Models {
 		}
 
 		[SerializeField]
-		private Media[] medias;
-		public Media[] Medias {
+		private Asset[] assets;
+		public Asset[] Assets {
 			get {
-				return medias;
+				return assets;
 			}
 			set {
-				medias = value;
+				assets = value;
 			}
 		}
 

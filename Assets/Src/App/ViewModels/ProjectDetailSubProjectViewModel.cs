@@ -10,5 +10,14 @@ namespace Rise.App.ViewModels {
 	    public new Text name;
 	    public RawImage image;
 	    public Button view;
+
+        void OnDestroy() {
+            Destroy(name);
+
+            DestroyImmediate(image.texture, true);
+            Destroy(image);
+
+            Destroy(view);
+        }
     }
 }

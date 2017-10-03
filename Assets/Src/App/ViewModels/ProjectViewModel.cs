@@ -10,5 +10,16 @@ namespace Rise.App.ViewModels {
 	    public RawImage image;
         public AspectRatioFitter aspectRatioFitter;
 	    public Button view;
+
+        void OnDestroy() {
+            Destroy(name);
+
+            DestroyImmediate(image.texture, true);
+            Destroy(image);
+
+            Destroy(aspectRatioFitter);
+
+            Destroy(view);
+        }
     }
 }

@@ -336,8 +336,8 @@
     <Compile Include="Assets\Src\App\Controllers\ProjectController.cs" />
     <Compile Include="Assets\Src\App\Controllers\SceneViewerController.cs" />
     <Compile Include="Assets\Src\App\Controllers\VideoPlayerController.cs" />
+    <Compile Include="Assets\Src\App\Models\Asset.cs" />
     <Compile Include="Assets\Src\App\Models\Category.cs" />
-    <Compile Include="Assets\Src\App\Models\Media.cs" />
     <Compile Include="Assets\Src\App\Models\Organisation.cs" />
     <Compile Include="Assets\Src\App\Models\Package.cs" />
     <Compile Include="Assets\Src\App\Models\Project.cs" />
