@@ -9,9 +9,12 @@ using UnityEngine.SceneManagement;
 
 using Rise.Core;
 using Rise.App.ViewModels;
+using Rise.Viewer.Loaders;
 
 namespace Rise.App.Controllers {
     public class SceneViewerController : RSBehaviour {
+        public const string VIEWER_GLTF = "Viewer_GLTF";
+
         public delegate void HandleProgressSceneCallback(float progress);
         public delegate void HandleDoneLoadSceneCallback();
         public delegate void HandleDoneUnloadSceneCallback();
@@ -20,6 +23,9 @@ namespace Rise.App.Controllers {
 
         private string _currentScene;
         private AssetBundle _currentBundle;
+
+        //GLTF
+        public GameObject glft;
 
         //View
         public GameObject viewer;
@@ -32,7 +38,7 @@ namespace Rise.App.Controllers {
             AppController.SetActiveApp(false);
             SetActiveViewer(true);
 
-            _instance.StartLoadScene(path);
+            _instance.HandleScene(path);
         }
 
         public static void SetActiveViewer(bool active) {
@@ -47,20 +53,40 @@ namespace Rise.App.Controllers {
             _instance = this;
         }
 
-        public void StartLoadScene(string path) {
+        public void HandleScene(string path) {
             LoadingViewModel loading = AppController.CreateLoading(viewer, true);
 
-            StartCoroutine(_instance.AsyncLoadScene(path,
-                (float progress) => {
-                    loading.progress.fillAmount = progress;
-                },
-                () => {
-                    loading.Destroy();
-                }
-            ));
+            string extension = Path.GetExtension(path);
+
+            switch(extension) {
+                case ".glb":
+                    StartCoroutine(_instance.AsyncLoadGLTF(path,
+                        (float progress) => {
+                            loading.progress.fillAmount = progress;
+                        },
+                        () => {
+                            loading.Destroy();
+                        }
+                    ));
+                break;
+                case ".zip":
+                    break;
+                default:
+                    StartCoroutine(_instance.AsyncLoadAssetBundleScene(path,
+                        (float progress) => {
+                            loading.progress.fillAmount = progress;
+                        },
+                        () => {
+                            loading.Destroy();
+                        }
+                    ));
+                break;
+            }
+
+            
         }
 
-        private IEnumerator AsyncLoadScene(string path, HandleProgressSceneCallback progressCallback = null, HandleDoneLoadSceneCallback doneCallback = null) {
+        private IEnumerator AsyncLoadAssetBundleScene(string path, HandleProgressSceneCallback progressCallback = null, HandleDoneLoadSceneCallback doneCallback = null) {
             AssetBundleCreateRequest abcr = AssetBundle.LoadFromFileAsync(path);
             yield return abcr;
 
@@ -79,6 +105,38 @@ namespace Rise.App.Controllers {
 
                 yield return new WaitForEndOfFrame();
             }
+
+            /*
+            SceneManager.SetActiveScene(
+                SceneManager.GetSceneByName(_currentScene)  
+            );
+            */
+
+            if(doneCallback != null) {
+                doneCallback();
+            }
+        }
+
+        private IEnumerator AsyncLoadGLTF(string path, HandleProgressSceneCallback progressCallback = null, HandleDoneLoadSceneCallback doneCallback = null) {
+            _currentScene = VIEWER_GLTF;
+            AsyncOperation aop = SceneManager.LoadSceneAsync(_currentScene, LoadSceneMode.Additive);
+
+            while(!aop.isDone) {
+                if(progressCallback != null) {
+                    progressCallback(aop.progress);
+                }
+
+                yield return new WaitForEndOfFrame();
+            }
+
+            /*
+            SceneManager.SetActiveScene(
+                SceneManager.GetSceneByName(_currentScene)
+            );
+            */
+
+            GLTFLoader loader = GameObject.Find("GLTF").GetComponentInChildren<GLTFLoader>();
+            loader.Load(path);
 
             if(doneCallback != null) {
                 doneCallback();
@@ -112,7 +170,9 @@ namespace Rise.App.Controllers {
                 yield return new WaitForEndOfFrame();
             }
 
-            _currentBundle.Unload(true);
+            if(_currentBundle != null) {
+                _currentBundle.Unload(true);
+            }
 
             if(doneCallback != null) {
                 doneCallback();

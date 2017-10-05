@@ -204,8 +204,7 @@ namespace Rise.Core {
 			
 			if(Application.platform == RuntimePlatform.OSXEditor ||
 			   Application.platform == RuntimePlatform.OSXPlayer ||
-			   Application.platform == RuntimePlatform.WebGLPlayer ||
-			   Application.platform == RuntimePlatform.OSXDashboardPlayer){
+			   Application.platform == RuntimePlatform.WebGLPlayer){
 				
 				inputBindings["Move X"].SetJoyStick("joystick axis 0");
 				inputBindings["Move Y"].SetJoyStick("joystick axis 1");

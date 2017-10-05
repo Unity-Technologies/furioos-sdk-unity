@@ -12,7 +12,7 @@ using UnityEngine.UI.Extensions;
 namespace Rise.App.Controllers {
     public class ProjectController : RSBehaviour {
         public const string PROJECT_METHOD = "projects";
-        public const string MEDIA_METHOD = "medias";
+        public const string ASSET_METHOD = "assets";
 
         public delegate void HandleImageCallback(Texture2D image);
         public delegate void HandleAssetCallback(string path);
@@ -411,7 +411,7 @@ namespace Rise.App.Controllers {
 			}
 
 			if(project.Assets != null) {
-                _persistentAssetDataPath = _persistentDetailDataPath + "Medias/";
+                _persistentAssetDataPath = _persistentDetailDataPath + "Assets/";
 
                 if(!Directory.Exists(_persistentAssetDataPath)) {
                     Directory.CreateDirectory(_persistentAssetDataPath);

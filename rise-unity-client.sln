@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rise-unity-client", "rise-u
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rise-unity-client.Editor", "rise-unity-client.Editor.csproj", "{B7424CF9-8F52-68B2-C96A-35311E6A8611}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "rise-unity-client.Editor.Plugins", "rise-unity-client.Editor.Plugins.csproj", "{3CC3B586-4BFF-CD7D-BCF3-1DAA7E47B6B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{B7424CF9-8F52-68B2-C96A-35311E6A8611}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7424CF9-8F52-68B2-C96A-35311E6A8611}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7424CF9-8F52-68B2-C96A-35311E6A8611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CC3B586-4BFF-CD7D-BCF3-1DAA7E47B6B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CC3B586-4BFF-CD7D-BCF3-1DAA7E47B6B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CC3B586-4BFF-CD7D-BCF3-1DAA7E47B6B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CC3B586-4BFF-CD7D-BCF3-1DAA7E47B6B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
