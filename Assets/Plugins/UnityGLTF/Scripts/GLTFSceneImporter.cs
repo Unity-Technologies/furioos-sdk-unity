@@ -98,7 +98,7 @@ namespace UnityGLTF
 
 				yield return www.Send();
 
-				if (www.responseCode >= 400 || www.responseCode == 0)
+				if (www.responseCode >= 400)
 				{
 					throw new WebRequestException(www);
 				}

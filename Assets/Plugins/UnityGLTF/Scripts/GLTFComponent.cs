@@ -37,7 +37,7 @@ namespace UnityGLTF {
 				loader = new GLTFSceneImporter(
 					Url,
 					gameObject.transform
-					);
+				);
 			}
 
 			loader.SetShaderForMaterialType(GLTFSceneImporter.MaterialType.PbrMetallicRoughness, GLTFStandard);

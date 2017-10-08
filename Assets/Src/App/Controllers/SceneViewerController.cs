@@ -106,11 +106,11 @@ namespace Rise.App.Controllers {
                 yield return new WaitForEndOfFrame();
             }
 
-            /*
+            yield return new WaitForEndOfFrame();
+
             SceneManager.SetActiveScene(
-                SceneManager.GetSceneByName(_currentScene)  
+                SceneManager.GetSceneByName(_currentScene)
             );
-            */
 
             if(doneCallback != null) {
                 doneCallback();
@@ -129,11 +129,11 @@ namespace Rise.App.Controllers {
                 yield return new WaitForEndOfFrame();
             }
 
-            /*
+            yield return new WaitForEndOfFrame();
+            
             SceneManager.SetActiveScene(
                 SceneManager.GetSceneByName(_currentScene)
             );
-            */
 
             GLTFLoader loader = GameObject.Find("GLTF").GetComponentInChildren<GLTFLoader>();
             loader.Load(path);
