@@ -8,6 +8,7 @@ using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
 using Rise.Core;
+using Rise.SDK.Cameras;
 using Rise.App.ViewModels;
 using Rise.Viewer.Loaders;
 
@@ -29,6 +30,12 @@ namespace Rise.App.Controllers {
 
         //View
         public GameObject viewer;
+
+        public Text title;
+        public Toggle fpsCameraToggle;
+        public Toggle orbitalCameraToggle;
+        public Toggle pointOfInterestToggle;
+        public Button screenshotButton;
 
         public static void LoadScene(string path) {
             if(_instance == null) {
@@ -53,6 +60,22 @@ namespace Rise.App.Controllers {
             _instance = this;
         }
 
+        private void ConfigureViewer() {
+            OrbitalCamera[] orbitalCameras = Resources.FindObjectsOfTypeAll<OrbitalCamera>();
+            FPSCamera[] fpsCameras = Resources.FindObjectsOfTypeAll<FPSCamera>();
+
+            if(orbitalCameras.Length == 0) {
+                orbitalCameraToggle.gameObject.SetActive(false);
+            }
+
+            if(fpsCameras.Length == 0) {
+                fpsCameraToggle.gameObject.SetActive(false);
+            }
+
+            string activeId = CamerasManager.ActiveId;
+            Debug.Log(CamerasManager.Active);
+        }
+
         public void HandleScene(string path) {
             LoadingViewModel loading = AppController.CreateLoading(viewer, true);
 
@@ -66,6 +89,7 @@ namespace Rise.App.Controllers {
                         },
                         () => {
                             loading.Destroy();
+                            ConfigureViewer();
                         }
                     ));
                 break;
@@ -78,12 +102,11 @@ namespace Rise.App.Controllers {
                         },
                         () => {
                             loading.Destroy();
+                            ConfigureViewer();
                         }
                     ));
                 break;
             }
-
-            
         }
 
         private IEnumerator AsyncLoadAssetBundleScene(string path, HandleProgressSceneCallback progressCallback = null, HandleDoneLoadSceneCallback doneCallback = null) {
@@ -107,9 +130,9 @@ namespace Rise.App.Controllers {
             }
 
             yield return new WaitForEndOfFrame();
-
+            
             SceneManager.SetActiveScene(
-                SceneManager.GetSceneByName(_currentScene)
+                SceneManager.GetSceneByPath(_currentScene)
             );
 
             if(doneCallback != null) {

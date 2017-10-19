@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -19,7 +19,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <CopyLocal>false</CopyLocal>
-    <OutputPath>..\..\Assets\Plugins\Rise\</OutputPath>
+    <OutputPath>..\..\Assets\RiseSDK\Plugins\Core\</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -54,4 +55,11 @@
     <Compile Include="..\..\Assets\Src\Core\**\*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cd $(TargetDir)
+del UnityEngine.dll
+del UnityEngine.UI.dll
+del UnityEditor.dll
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

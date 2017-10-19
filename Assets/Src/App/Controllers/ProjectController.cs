@@ -86,19 +86,24 @@ namespace Rise.App.Controllers {
             _selectedCategoryId = null;
 
             onInternetReachabilityChange += delegate (bool internetReachability) {
-                if(!string.IsNullOrEmpty(_selectedCategoryId)) {
-                    GetAll();
-                }
+                GetAll(
+                    (_selectedCategoryId == "0") ? true : false
+                );
             };
 
             CategoryController.OnSelectedCategoryChange += delegate(string id) {
                 _selectedCategoryId = id;
-                GetAll();
+
+                GetAll(
+                    (id == "0") ? true : false
+                );
 
                 CleanDetail();
             };
 
             AppController.OnBackButtonPressed += BackButtonPressed;
+
+            GetAll(true);
         }
 
         public Project GetById(string id) {
@@ -109,7 +114,10 @@ namespace Rise.App.Controllers {
             if(id == null) {
                 CategoryController categoryController = Manager.GetInstance<CategoryController>();
                 Category category = categoryController.GetById(categoryController.SelectedCategoryId);
-                AppController.SetTitle(category.Name);
+
+                AppController.SetTitle(
+                    (category != null) ? category.Name : "Home"
+                );
             }
             else {
                 Project project = GetById(id);
@@ -127,8 +135,11 @@ namespace Rise.App.Controllers {
             }
         }
 
-        private void GetAll() {
-            _persistentListDataPath = CategoryController.PersistentDataPath + _selectedCategoryId + "/";
+        private void GetAll(bool isHome = false) {
+            string persistentFolderName = (isHome) ? "home" : _selectedCategoryId;
+
+            _persistentListDataPath = CategoryController.PersistentDataPath + persistentFolderName + "/";
+
             string fileName = "projects.json";
 			string fullPath = _persistentListDataPath + fileName;
 
@@ -139,7 +150,7 @@ namespace Rise.App.Controllers {
             LoadingViewModel loading = AppController.CreateLoading(container, true, true);
 
 			if(internetReachable) {
-				string uri = CategoryController.CATEGORY_METHOD + "/" + _selectedCategoryId + "/" + PROJECT_METHOD;
+				string uri = (isHome) ? PROJECT_METHOD : CategoryController.CATEGORY_METHOD + "/" + _selectedCategoryId + "/" + PROJECT_METHOD;
 
                 WebRequestManager.Get<Project>(uri, delegate (List<Project> result, string rawResult) {
                     _projects = result;
@@ -189,10 +200,7 @@ namespace Rise.App.Controllers {
             LoadingViewModel loading = AppController.CreateLoading(container, true, true);
 
             if(internetReachable) {
-				string uri = (!string.IsNullOrEmpty(project.CategoryID)) ? 
-					CategoryController.CATEGORY_METHOD + "/" + _selectedCategoryId + "/" + PROJECT_METHOD + "/" + id 
-					: 
-					PROJECT_METHOD + "/" + id;
+				string uri = PROJECT_METHOD + "/" + id;
 
 				WebRequestManager.Get<Project> (uri, delegate(List<Project> result, string rawResult) {
 					if(result.Count == 0) {
@@ -321,6 +329,8 @@ namespace Rise.App.Controllers {
                 if(string.IsNullOrEmpty(project.Thumbnail.PublicURL)) {
                     continue;
                 }
+
+                project.ProjectViewModel.image.gameObject.SetActive(true);
 
                 LoadingViewModel loadingViewModel = AppController.CreateLoading(project.ProjectViewModel.gameObject);
                 

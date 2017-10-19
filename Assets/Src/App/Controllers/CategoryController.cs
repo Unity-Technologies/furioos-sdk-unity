@@ -71,9 +71,23 @@ namespace Rise.App.Controllers {
         }
 
         public void Select(string id) {
-            if(id == null) {
+            if(string.IsNullOrEmpty(id)) {
                 _parentCategoryId = id;
                 Rebuild();
+
+                return;
+            }
+
+            if(id == "0") {
+                _selectedCategoryId = id;
+                Rebuild();
+
+                if(OnSelectedCategoryChange != null) {
+                    OnSelectedCategoryChange(id);
+                }
+
+                AppController.SetTitle("Home");
+                AppController.HideMenu();
 
                 return;
             }
