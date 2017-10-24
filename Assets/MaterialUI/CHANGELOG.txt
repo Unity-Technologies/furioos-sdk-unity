@@ -1,0 +1,235 @@
+------ Version 1.1.4 ------
+Recommended Unity version is 5.3.5f1.
+
+-- FEATURES --- 
+- [AppBar] Added MaterialAppBar component to tween app bar colors, and convinience inspector fields for child buttons.
+- [Buttons] Added RefreshRippleMatchColor method to refresh the ripple's color to match the target graphic, at any desired time.
+- [Dialogs] Added CreateDialogDatePicker in DialogManager.
+- [Dialogs] Added localisation methods to DialogDatePicker (SetDayOfWeek + CultureInfo + DateFormatPattern).
+- [DragEventSender] Added options to  have seperate left/right and up/down, or horizontal and vertical.
+- [Extensions] Added InvokeIfNotNull extension method to Func<T>.
+- [MaterialColor] Added method to calculate whether light or dark icons/text are more suitable over a certain color.
+- [MaterialColor] Added ColorDistance and ClosestMatrialColor methods to help with finding relevant MD colors from various colors.
+- [MaterialColor] Added ClosestMaterialColorSet() method to get the closest material color set to a given color.
+- [MaterialColor] Added OffsetShade() method to get a lighter or darker color from the Material palette to a given color.
+- [Ripples] Added ability to match the Ripple color to a Graphic's color (eg. Button icon or text) for easier theming.
+- [Ripples] Added an option to MaterialRipple to explicitly disable ripples, instead of just creating one with a size of 0.
+- [Utils] Added SetBoolValueIfTrue method for easier bool handling in some cases.
+
+-- IMPROVEMENTS --
+- [AnimatedShadow] Improved tweening behaviour.
+- [Dialogs] DialogDatePicker now has a cancel callback.
+- [Dialogs] isModal is now able to be modified at runtime.
+- [Editor] 'Selection Controls' in create menu renamed to 'Toggles'.
+- [InputFields] TextValidator classes can now have a custom error message (for localisation for example).
+- [InputFields] IsSelected method is now public.
+- [Inspector] Added custom foldouts to various MaterialUI components for better organization.
+- [InstantiationHelper] Modified HelpInstantiate method to use int[] instead of enum[], so it's more easily extendable.
+- [MaterialColor] Rewrote the internal color values to be neater, and more easily accessible without extra overhead.
+- [MaterialUIScaler] Added functionality to allow reference resolution orientation change upon screen orientation change.
+- [ProgressIndicators] (Linear) Bar (child) height no longer hardcoded to 4, but now matches the root object's height, allowing for taller/shorter bars.
+- [ProgressIndicator] Added custom inspectors for Circular and Linear indicators.
+- [ProgressIndicators] When calling Show(), the indeterminate animation is now optional.
+- [Ripples] Improved highlight behaviour when background normal color is transparent and not the same color (apart from alpha) as the highlight color.
+- [Ripples] Now use a *much* faster rendering/smoothing method, which should greatly improve mobile performance.
+- [Ripples] Improved behaviour in worldspace mode.
+- [Sliders] animationDuration is greyed out in the inspector if the popup is disabed.
+- [Texts] Rich text disabled by default.
+- [Utils] Added SetBoolValueIfTrue method for easier bool handling in some cases.
+- [VectorImagePickerWindow] Added ability to modify multiple VectorImageData items per pick (For VectorImages, Buttons etc).
+
+-- FIXES --
+- [Buttons] Setting values now works properly when multiple buttons are selected.
+- [Dialogs] Now work in worldspace mode.
+- [Dropdowns] Now work in worldspace mode.
+- [InputFields] Removed a call that was causing issues with OpenGL.
+- [InspectorFields] VectorImage fields now update their respective VectorImage/s when picked in play mode.
+- [InputFields] Animations now use actual animationDuration.
+- [NavDrawer] Now refreshes background size to avoid part of screen not being covered if scaling/orientation changes.
+- [ProgressIndicators] Fixed issue with the 'starts hidden' option and hiding in edit mode.
+- [Sliders] Changes to slider colors will now update the slider's colors in the scene.
+- [Sliders] Added public UpdateColors() method to force the slider to update its colors.
+- [Sliders] Fix issue of a slider input field not displaying 0 if the slider value is 0 (because of using ##.##).
+- [TabViews] Now work in worldspace mode.
+- [VectorImageManager] Updated CommunityMD set download to work with updated source.
+- [VectorImageManager] Updated Octicons set download to work with updated source.
+
+-- NOTES --
+- [Ripples] Now use a *much* faster rendering/smoothing method, which should greatly improve mobile performance. This will eventually make its way to other graphics that must be crisp, but change size often (eg. radiobutton dots, slider handle).
+- As ripples now use a custom material, using other custom materials now won't work.
+- Due to the tweening system (introduced in v1.1.0) working in a different way, EasyTween is still no longer be able to tween values. This functionality will be replaced in v1.2.0.
+
+-- EXAMPLE SCENES UPDATED --
+- [Animation] Improved visuals.
+- [AppBar] Added MaterialAppBar to example scene.
+- [Dialogs] Small fix to the dialog example script (was using the wrong string array).
+- [Dialogs] Show toast instead of printing to console in the prompt dialog example scene.
+- [NavDrawer] EventSystem dragThreshold raised to 10, making it easier to press buttons in the NavDrawer.
+- [NavDrawer] DragEventSender added to NavDrawer buttons, also making them easier to press.
+- [ProgressIndicators] Fixed 'animate' option for SetProgress being flipped.
+
+------ Version 1.1.3 ------
+Recommended Unity version is 5.3.4f1, compatible down to 5.2.0f3.
+
+-- FEATURES --
+- [DragEventSender] Added DragEventSender to help send input events to various objects, depending on the orientation of the drag.
+
+-- IMPROVEMENTS --
+- [Dialogs] Added Dialog Prompt with option to display only one or two fields.
+- [Extensions] Added Transform extension to set the parent and scale.
+- [Snackbar] Added an overload to the Show method to specify the duration.
+- [ToastManager] Added optional parameters to specify on which Canvas to show the toast.
+
+-- FIXES --
+- [Dropdown] Fixed weird positioning when scaled.
+- [MaterialButton] Fixed issue where text would be improperly scaled if a MaterialButton is created in an empty scene.
+- [MaterialSlider] Fixed bug with inputting text with the input field when the slider has a min value.
+- [InputField] Add DirectoryExistsTextValidator and FileExistsTextValidator.
+- [ProgressIndicators] Fixed issue with LinearProgressIndicators and 'Hide on start'.
+- [Ripples] Fixed issues with non screen-overlay canvas modes.
+- [Toast] Now correctly initialise (for when you add the ToastManager in the scene yourself).
+
+-- NOTES --
+- Due to the tweening system (introduced in v1.1.0) working in a different way, EasyTween is still no longer be able to tween values. This functionality will be replaced in v1.2.0.
+
+-- EXAMPLE SCENES UPDATED --
+- [Dialogs] Added example for new prompt dialog.
+- [TabView] Added DragEventSender example to TabView example scene.
+- [VectorImages] Added an example on how to set an icon via code, including from a custom icon font. (See the example scene script).
+
+------ Version 1.1.2 ------
+Recommended Unity version is 5.3.3f1, compatible down to 5.2.0f3.
+
+-- FIXES --
+- [NavDrawer] Now takes scaling into account when being dragged in/out.
+- [NavDrawer] Fixed background size when scaled.
+- [ProgressIndicators] "Start Hidden" now works with Progress Indicators with a label.
+- [TabView] "Only show selected page" feature will check to see if the pages are enabled/disabled before enabling/disabling them.
+
+-- NOTES --
+- Due to the tweening system (introduced in v1.1.0) working in a different way, EasyTween is still no longer be able to tween values. This functionality will be replaced in v1.2.0.
+
+------ Version 1.1.1 ------
+Recommended Unity version is 5.3.3f1, compatible down to 5.2.0f3.
+
+-- IMPROVEMENTS --
+- [Dropdown] Added new verticalPivotType modes: AboveBase, Top, Bottom, BelowBase.
+- [Dropdown] Added optional delay to input after dropdown is shown to help prevent it from accidentally being closed straight away.
+- [Menu] Added option to create empty UI objects with various layout components.
+- [Menu] Added option create horizontal and vertical circle progress indicators with a label.
+- [ProgressIndicators] Added option to start hidden.
+- [TweenManager] Added Generic tween methods.
+- [VectorImageData/ImageData] Added methods to check if the object contains actual image data.
+
+-- FIXES --
+- [Button] preferredWidth now returns the proper value.
+- [Dropdown] Fixed issue where dropdowns with lots of items sometimes wouldn't animate properly.
+- [Dropdown] Fixed issues with verticalPivotType.
+- [Dropdown] When showing, dropdown won't have an icon object for list items that don't have any image data.
+- [Snackbar] Fixed button position on portrait screens.
+- [Tween System] Fixed bug where using Custom Curves wouldn't work.
+
+-- NOTES --
+- Due to the tweening system (introduced in v1.1.0) working in a different way, EasyTween is still no longer be able to tween values. This functionality will be replaced in v1.2.0.
+
+-- APIS UPDATED --
+- MaterialDropdown now has new verticalPivot enums. You may want to double-check that these haven't changed on your dropdowns since the last version.
+
+------ Version 1.1.0 ------
+Recommended Unity version is 5.3.2f1, compatible down to 5.2.2f1.
+
+-- IMPROVEMENTS --
+- [Buttons] Massive performance improvements in both the editor and (especially) at runtime!
+- [Buttons] A bit easier to use, thanks to an inspector redecoration and unneeded method/variable culling.
+- [Components] Almost every component now has a interactable boolean, similar to that on standard uGUI components. (interactable can still be toggled manually on uGUI components for custom 'disabled' behaviour).
+- [DialogAnimator] Added ability to choose slide in/out direction and tween type (you can see an example of how to use that in the Dialog example scene).
+- [Divider] Added ability to create vertical dividers.
+- [Icons] Update MaterialDesign icon set (41 new icons).
+- [InputField] Improved the use of customTextValidator, we now just need to call IsTextValid() instead of ValidateText(text, validationText).
+- [InputField] Added option to only validate text upon first selection of InputField, rather than on Start.
+- [Panel] Added more creation options (go to MaterialUI -> Panel to see them).
+- [Performance] The sprites used by MaterialUI are now packed into a spritesheet for better use of space at runtime.
+- [Performance] Improved shadow behaviour and performance, now each shadow doesn't have its own Update().
+- [Ripple] New 'SetGraphicColor' method correctly sets the graphic's color, regardless of its ripple/highlight settings. Smooth animation to new color is optional.
+- [Ripple] Added property 'rippleColor' to change ripple color and automatically update the highlight color.
+- [Ripple] Added highlight blend amount option (to specify the amount of blend to use when automatic highlight is selected).
+- [SelectionControl] Now has some layout components so it's always nicely aligned in every layout group.
+- [Slider] Added option to make left/right content opacity less, when not interactable.
+- [Tab] Added a simple SetPage method that you can now call from the UnityEvent system in the inspector to change tabs.
+- [Tab] Renamed pageEnabled to interactable.
+- [Tab] Lower disabled Tab opacity.
+- [Tween] Massively improved the Tween engine, which is now way faster! But will break your script if you used the old one.
+- [Tween] Completely rewrote the tweening engine which now uses a new tweening method and pools tweens, resulting in a system which is now orders of magnitude faster! It's also a bit easy to use and keep track of active tweens.
+
+-- FIXES --
+- [Dialog] No longer overrides parentCanvas if it is set manually.
+- [Dialog] Fixed the dialog example scene.
+- [Divider] Now have a min width/height (depending on horizontal or vertical divider) of 1.
+- [Dropdown] Fixed bug where the first expansion of a dropdown would be positioned incorrectly, and sometimes go offscreen.
+- [Dropdown] Fixed issue where Dropdowns created under a LayoutGroup would sometimes have a width of 0.
+- [InputField] No longer rebuilds the canvas every frame when it doesn't need to.
+- [Ripple] Fixed issue where enabling 'auto highlight color' at runtime wouldn't automatically refresh the color.
+- [Screen] Fixed issue where transitioning to the already current screen would break things.
+- [Slider] Fixed behaviour if 'hasPopup' is false.
+- [Slider] Fixed incorrect icon color (it was too dark).
+- [Slider] Fixed issue where Sliders created under a LayoutGroup would sometimes have a width of 0.
+- [Toggles] Fixed issue where RadioButtons would have incorrect labels on Start().
+- [Tween] Removed from 'Add Component' menu as it is not a component to add on any GameObject.
+- [VectorImage] Icons where not updated when changed via the Icon Picker while the Editor is playing.
+
+-- NOTES --
+- Due to the new tweening system working in a different way, EasyTween will no longer be able to tween values. This functionality will be replaced in the next update.
+
+-- APIS UPDATED --
+- The TweenManager and AutoTween classes have been changed dramatically. Check out the 'Animation' example scene to learn more about it.
+
+-- EXAMPLE SCENES UPDATED --
+(You might want to check these out to take a look at some of the above new features)
+- *NEW* Animation (Shows how the Tweening system works)
+- Dialogs (added example on how to change dialog show/hide directions)
+- Inputs (updated example on how to use validation via script)
+
+-- PREFABS UPDATED --
+(* You may need to re-create/re-instantiate these in your project to apply some of the above changes)
+- *Buttons (due to improvements, buttons you already have in your scenes might lose references to some components).
+- Selection Controls (Checkbox, Switch, RadioButton)
+--^ Fixed some color and opacity values for when they are selected or not
+--^ Added some layout components in order to have great alignment in layout groups
+
+------ Version 1.0.1 ------
+Recommended Unity version is 5.3.0, compatible down to 5.2.2f1.
+
+-- IMPROVEMENTS --
+- [Dialogs] 'Destroy on hide' is now optional.
+- [Dialogs] Removed the need to specify the image type when passing an OptionDataList to dialogs (ies. SimpleList).
+- [Dialogs] Can now have a sprite image in the title area.
+- [Dropdowns] Performance when scrolling improved.
+- [InputFields] System for validating text has changed (See Scripts/MaterialUtils/InputFieldValidators for examples).
+- [Ripples] RippleData now has a PropertyDrawer and look nice in the editor if used by other classes.
+- [Tabs] Tab content is now properly vertically positioned.
+- [Tabs] TabPage now has a public property to enable/disable a page.
+- [Tabs] When a page is disabled, the grey panel with 'Tab disabled' is now optional.
+- [Tabs] Deselected tabs now have less opacity (optional setting).
+- [Tabs] Removed 'interactable' property from inspector (use respective TabPage to enable/disable instead).
+- [Tabs] Ability to scroll through tabs is now an optional setting in TabView.
+
+-- FIXES --
+- [Buttons] 'Convert' is now disabled if more than 1 button is selected (as it doesn't work properly).
+- [Dialogs] DialogSimple now correctly shows sprites.
+- [Dropdowns] Fixed crash on Android devices when dropdowns opened.
+- [Ripples] UpdateNormalColor now works properly, and can be reliably used to (smoothly) change a button's color.
+- [ScreenView] Fixed issue where ScreenView would block input events from reaching objects visibly above it (ie. NavDrawer).
+
+-- EXAMPLE SCENES UPDATED --
+(* You might want to check these out to take a look at some of the above new features)
+- Dropdowns
+- *InputFields
+
+-- PREFABS UPDATED --
+(* You may need to re-create/re-instantiate these in your project to apply some of the above changes)
+- None, you're all good!
+
+------ Version 1.0.0 ------
+Recommended Unity version is 5.3.0, compatible down to 5.2.2f1.
+
+Initial release!

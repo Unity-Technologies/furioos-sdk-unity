@@ -690,7 +690,6 @@ namespace Rise.App.Controllers {
 			int documentLength = documents.Length;
 
 			if(documentLength == 0) {
-				project.ProjectDetailViewModel.documentPreviewTab.SetActive(false);
 				project.ProjectDetailViewModel.documentPreviewContainer.SetActive(false);
 
 				return;

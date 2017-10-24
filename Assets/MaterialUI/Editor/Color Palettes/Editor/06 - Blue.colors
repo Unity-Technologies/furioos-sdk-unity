@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 4
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12323, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 06 - Blue
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: Blue 50
+    m_Color: {r: 0.8862745, g: 0.94509804, b: 0.9882353, a: 1}
+  - m_Name: Blue 100
+    m_Color: {r: 0.7294118, g: 0.8666667, b: 0.98039216, a: 1}
+  - m_Name: Blue 200
+    m_Color: {r: 0.56078434, g: 0.7882353, b: 0.972549, a: 1}
+  - m_Name: Blue 300
+    m_Color: {r: 0.39215687, g: 0.7058824, b: 0.9607843, a: 1}
+  - m_Name: Blue 400
+    m_Color: {r: 0.25882354, g: 0.6431373, b: 0.95686275, a: 1}
+  - m_Name: Blue 500
+    m_Color: {r: 0.12941177, g: 0.58431375, b: 0.9490196, a: 1}
+  - m_Name: Blue 600
+    m_Color: {r: 0.11764706, g: 0.5294118, b: 0.89411765, a: 1}
+  - m_Name: Blue 700
+    m_Color: {r: 0.09803922, g: 0.45882353, b: 0.81960785, a: 1}
+  - m_Name: Blue 800
+    m_Color: {r: 0.08235294, g: 0.39607844, b: 0.7490196, a: 1}
+  - m_Name: Blue 900
+    m_Color: {r: 0.050980393, g: 0.2784314, b: 0.627451, a: 1}
+  - m_Name: Blue A100
+    m_Color: {r: 0.5058824, g: 0.6901961, b: 0.99607843, a: 1}
+  - m_Name: Blue A200
+    m_Color: {r: 0.26666668, g: 0.5372549, b: 0.99607843, a: 1}
+  - m_Name: Blue A400
+    m_Color: {r: 0.16078432, g: 0.47058824, b: 0.99607843, a: 1}
+  - m_Name: Blue A700
+    m_Color: {r: 0.16078432, g: 0.38431373, b: 0.99607843, a: 1}

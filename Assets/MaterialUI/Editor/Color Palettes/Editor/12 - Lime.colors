@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 4
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12323, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 12 - Lime
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: Lime 50
+    m_Color: {r: 0.9764706, g: 0.9843137, b: 0.90588236, a: 1}
+  - m_Name: Lime 100
+    m_Color: {r: 0.9411765, g: 0.95686275, b: 0.7647059, a: 1}
+  - m_Name: Lime 200
+    m_Color: {r: 0.9019608, g: 0.93333334, b: 0.6117647, a: 1}
+  - m_Name: Lime 300
+    m_Color: {r: 0.8627451, g: 0.90588236, b: 0.45882353, a: 1}
+  - m_Name: Lime 400
+    m_Color: {r: 0.83137256, g: 0.88235295, b: 0.34117648, a: 1}
+  - m_Name: Lime 500
+    m_Color: {r: 0.8039216, g: 0.8627451, b: 0.22352941, a: 1}
+  - m_Name: Lime 600
+    m_Color: {r: 0.7529412, g: 0.7921569, b: 0.2, a: 1}
+  - m_Name: Lime 700
+    m_Color: {r: 0.6862745, g: 0.7058824, b: 0.16862746, a: 1}
+  - m_Name: Lime 800
+    m_Color: {r: 0.61960787, g: 0.6156863, b: 0.14117648, a: 1}
+  - m_Name: Lime 900
+    m_Color: {r: 0.50980395, g: 0.46666667, b: 0.09019608, a: 1}
+  - m_Name: Lime A100
+    m_Color: {r: 0.95686275, g: 1, b: 0.5058824, a: 1}
+  - m_Name: Lime A200
+    m_Color: {r: 0.93333334, g: 1, b: 0.25490198, a: 1}
+  - m_Name: Lime A400
+    m_Color: {r: 0.7764706, g: 1, b: 0, a: 1}
+  - m_Name: Lime A700
+    m_Color: {r: 0.68235296, g: 0.91764706, b: 0, a: 1}

@@ -40,6 +40,7 @@ namespace Rise.App.Controllers {
 
         public GameObject loadingView;
 
+        public HorizontalLayoutGroup navLayoutGroup;
         public Button backButton;
         public Toggle toggleMenu;
         public Text title;
@@ -121,12 +122,16 @@ namespace Rise.App.Controllers {
 
             CategoryController.OnSelectedCategoryChange += delegate(string id) {
                 backButton.gameObject.SetActive(false);
+
+                navLayoutGroup.CalculateLayoutInputHorizontal();
             };
 
             ProjectController.OnSelectedProjectChange += delegate(string id) {
                 backButton.gameObject.SetActive(
                     (string.IsNullOrEmpty(id)) ? false : true
                 );
+
+                navLayoutGroup.CalculateLayoutInputHorizontal();
             };
 
             //First launch

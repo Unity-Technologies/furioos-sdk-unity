@@ -295,20 +295,23 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\Plugins\JsonNet\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="GLTFSerialization">
       <HintPath>Assets\Addons\UnityGLTF\Plugins\GLTFSerialization.dll</HintPath>
     </Reference>
     <Reference Include="NSubstitute">
       <HintPath>Assets\Addons\UnityGLTF\UnityTestTools\UnitTesting\Editor\NSubstitute\NSubstitute.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Plugins\JsonNet\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="GoogleAR.UnityNative">
       <HintPath>Assets\RiseSDK\Plugins\AR\GoogleARCore\SDK\Plugins\GoogleAR.UnityNative.dll</HintPath>
     </Reference>
     <Reference Include="rise-core">
       <HintPath>Assets\RiseSDK\Plugins\Core\rise-core.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>Assets\MaterialUI\Utils\Editor\UnityZip\Ionic.Zip.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -375,6 +378,64 @@
     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\TextPicEditor.cs" />
     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\uGUITools.cs" />
     <Compile Include="Assets\Addons\unity-ui-extensions\Editor\UIExtensionsMenuOptions.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\CircularProgressIndicatorEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\DragEventSenderEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\EasyTweenEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\LinearProgressIndicatorEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialAppBarEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialBaseEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialButtonEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialCheckboxEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialDropdownEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialInputFieldEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialRadioEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialRippleEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialScreenEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialSliderEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialSwitchEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\MaterialToggleBaseEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\RectTransformSnapEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\ScreenViewEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\ShadowGeneratorEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\TabItemEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\TabPageEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\TabViewEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\TweenManagerEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Custom Inspectors\VectorImageEditor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\PostProcessors\GeneratedShadowPostProcessor.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\PropertyDrawers\ImageDataPropertyDrawer.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\PropertyDrawers\OptionDataListPropertyDrawer.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\PropertyDrawers\RippleDataPropertyDrawer.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\PropertyDrawers\VectorImageDataPropertyDrawer.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\InspectorFields.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\MaterialUIDataTool.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\MaterialUIEditorTools.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\File\Editor\VectorImageFileParserFontastic.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\File\Editor\VectorImageFileParserFontello.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\File\Editor\VectorImageFileParserIcoMoon.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\VectorImageFontParser.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserBrandico.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserCommunityMD.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserFontAwesome.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserFontelico.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserIcoMoon.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserIonicons.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserJustVector.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserKenney.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserMapVectorImages.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserMaterialDesign.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserOcticons.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserOpenIconic.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserOpenWebVectorImages.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserPayment.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserSocialicious.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Parser\Web\VectorImageParserWeatherVectorImages.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Sections\ImportCustomFontSection.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Sections\ImportFontParametersSection.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\Sections\ImportWebFontSection.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\VectorImageManagerWindow.cs" />
+    <Compile Include="Assets\MaterialUI\Editor\Tools\Vector Image Manager\VectorImagePickerWindow.cs" />
+    <Compile Include="Assets\MaterialUI\Utils\Editor\UnityZip\Zip.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Attributes\PostProcessingModelEditorAttribute.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Models\AmbientOcclusionModelEditor.cs" />
     <Compile Include="Assets\PostProcessing\Editor\Models\AntialiasingModelEditor.cs" />
@@ -447,6 +508,11 @@
     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIParticleHidden.shader" />
     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIScreen.shader" />
     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UISoftAdditive.shader" />
+    <None Include="Assets\MaterialUI\CHANGELOG.txt" />
+    <None Include="Assets\MaterialUI\Fonts\Resources\Material Design Icons\LICENSE.txt" />
+    <None Include="Assets\MaterialUI\Fonts\Roboto\NOTICE.txt" />
+    <None Include="Assets\MaterialUI\Materials\SignedDistanceFieldUI.shader" />
+    <None Include="Assets\MaterialUI\README.txt" />
     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />

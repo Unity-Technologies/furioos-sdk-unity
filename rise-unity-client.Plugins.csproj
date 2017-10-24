@@ -226,11 +226,11 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Assets\Plugins\JsonNet\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="GLTFSerialization">
       <HintPath>Assets\Addons\UnityGLTF\Plugins\GLTFSerialization.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\Plugins\JsonNet\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="GoogleAR.UnityNative">
       <HintPath>Assets\RiseSDK\Plugins\AR\GoogleARCore\SDK\Plugins\GoogleAR.UnityNative.dll</HintPath>
@@ -517,6 +517,11 @@
     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIParticleHidden.shader" />
     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UIScreen.shader" />
     <None Include="Assets\Addons\unity-ui-extensions\Shaders\UISoftAdditive.shader" />
+    <None Include="Assets\MaterialUI\CHANGELOG.txt" />
+    <None Include="Assets\MaterialUI\Fonts\Resources\Material Design Icons\LICENSE.txt" />
+    <None Include="Assets\MaterialUI\Fonts\Roboto\NOTICE.txt" />
+    <None Include="Assets\MaterialUI\Materials\SignedDistanceFieldUI.shader" />
+    <None Include="Assets\MaterialUI\README.txt" />
     <None Include="Assets\Plugins\UniRx\ReadMe.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramCompute.compute" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />

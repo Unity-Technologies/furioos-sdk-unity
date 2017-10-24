@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 4
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 1
+  m_Script: {fileID: 12323, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 15 - Orange
+  m_EditorClassIdentifier: 
+  m_Presets:
+  - m_Name: Orange 50
+    m_Color: {r: 1, g: 0.9529412, b: 0.8784314, a: 1}
+  - m_Name: Orange 100
+    m_Color: {r: 1, g: 0.8784314, b: 0.69803923, a: 1}
+  - m_Name: Orange 200
+    m_Color: {r: 1, g: 0.8, b: 0.5019608, a: 1}
+  - m_Name: Orange 300
+    m_Color: {r: 1, g: 0.7176471, b: 0.3019608, a: 1}
+  - m_Name: Orange 400
+    m_Color: {r: 1, g: 0.654902, b: 0.14901961, a: 1}
+  - m_Name: Orange 500
+    m_Color: {r: 1, g: 0.59607846, b: 0, a: 1}
+  - m_Name: Orange 600
+    m_Color: {r: 0.9843137, g: 0.54901963, b: 0, a: 1}
+  - m_Name: Orange 700
+    m_Color: {r: 0.9607843, g: 0.4862745, b: 0, a: 1}
+  - m_Name: Orange 800
+    m_Color: {r: 0.9372549, g: 0.42352942, b: 0, a: 1}
+  - m_Name: Orange 900
+    m_Color: {r: 0.9019608, g: 0.31764707, b: 0, a: 1}
+  - m_Name: Orange A100
+    m_Color: {r: 1, g: 0.81960785, b: 0.5019608, a: 1}
+  - m_Name: Orange A200
+    m_Color: {r: 1, g: 0.67058825, b: 0.2509804, a: 1}
+  - m_Name: Orange A400
+    m_Color: {r: 1, g: 0.5686275, b: 0, a: 1}
+  - m_Name: Orange A700
+    m_Color: {r: 1, g: 0.42745098, b: 0, a: 1}
