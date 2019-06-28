@@ -1,11 +1,12 @@
 ﻿<Properties StartupConfiguration="{16FC830B-BE2E-496F-2046-0A6786A0F7F4}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/FurioosSDK/Core/UI/FSUICamera.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/FurioosSDK/Core/Manager/FSManager.cs">
     <Files>
       <File FileName="Assets/FurioosSDK/Core/Network/FSWebSocketServer.cs" Line="7" Column="28" />
-      <File FileName="Assets/FurioosSDK/Core/Behaviour/RSBehaviour.cs" Line="62" Column="1" />
-      <File FileName="Assets/FurioosSDK/Core/Output/RSOutput3DSplitted.cs" Line="1" Column="1" />
-      <File FileName="Assets/FurioosSDK/Core/Output/RSOutput2D.cs" Line="1" Column="1" />
-      <File FileName="Assets/FurioosSDK/Core/UI/RSUICamera.cs" Line="6" Column="17" />
+      <File FileName="Assets/FurioosSDK/Editor/Input/RSInputAxisBuilder.cs" Line="13" Column="23" />
+      <File FileName="Assets/FurioosSDK/Editor/Tools/ExrLightmapToPng.cs" Line="13" Column="23" />
+      <File FileName="Assets/FurioosSDK/Editor/Tools/RenderIntoCubemap.cs" Line="32" Column="23" />
+      <File FileName="Assets/FurioosSDK/Core/Input/Manager/FSInputManager.cs" Line="8" Column="29" />
+      <File FileName="Assets/FurioosSDK/Core/Manager/FSManager.cs" Line="49" Column="19" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,9 +15,7 @@
             <Node name="Assets" expanded="True">
               <Node name="FurioosSDK" expanded="True">
                 <Node name="Core" expanded="True">
-                  <Node name="Behaviour" expanded="True">
-                    <Node name="FSBehaviour.cs" selected="True" />
-                  </Node>
+                  <Node name="Behaviour" expanded="True" />
                   <Node name="Camera" expanded="True">
                     <Node name="Manager" expanded="True" />
                   </Node>
@@ -32,7 +31,9 @@
                     <Node name="TUIO" expanded="True" />
                   </Node>
                   <Node name="Loader" expanded="True" />
-                  <Node name="Manager" expanded="True" />
+                  <Node name="Manager" expanded="True">
+                    <Node name="FSManager.cs" selected="True" />
+                  </Node>
                   <Node name="Math" expanded="True" />
                   <Node name="Network" expanded="True" />
                   <Node name="Output" expanded="True">
@@ -42,6 +43,7 @@
                   <Node name="UI" expanded="True" />
                 </Node>
                 <Node name="Editor" expanded="True">
+                  <Node name="Input" expanded="True" />
                   <Node name="Tools" expanded="True" />
                 </Node>
               </Node>
@@ -49,19 +51,11 @@
           </Node>
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="furioos-sdk-unity" expanded="True" selected="True" />
-        </State>
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7af53a92-c232-494d-a875-c813fcc06d7d" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a1406d78-1c96-41da-a3da-10b51cbd36ac" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

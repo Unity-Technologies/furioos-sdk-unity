@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Assets\FurioosSDK\Editor\Input\RSInputAxisBuilder.cs" />
     <Compile Include="Assets\FurioosSDK\Editor\Tools\ExrLightmapToPng.cs" />
-    <Compile Include="Assets\FurioosSDK\Editor\Tools\Flipper.cs" />
     <Compile Include="Assets\FurioosSDK\Editor\Tools\RenderIntoCubemap.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -312,6 +311,12 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Plugins/websocket-sharp/websocket-sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Plugins/JsonNet/Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -326,12 +331,6 @@
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Plugins/JsonNet/Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="websocket-sharp">
-      <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Plugins/websocket-sharp/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Hub/Editor/2019.1.8f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

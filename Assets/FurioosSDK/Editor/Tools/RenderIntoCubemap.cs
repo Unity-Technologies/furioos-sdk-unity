@@ -29,7 +29,7 @@ class RenderCubemapWizard : ScriptableWizard {
         DestroyImmediate( go );
     }
     
-	[MenuItem("FurioosSDK SDK/Camera/Render into cubemap")]
+	[MenuItem("FurioosSDK/Camera/Render into cubemap")]
     static void RenderCubemap () {
         ScriptableWizard.DisplayWizard<RenderCubemapWizard>("Render cubemap", "Render!");
     }

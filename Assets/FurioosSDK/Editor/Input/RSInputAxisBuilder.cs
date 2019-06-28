@@ -10,7 +10,7 @@ public class RSInputAxisBuilder {
 	private const string INPUT_TYPE_MOUSE_MOVEMENT = "1";
 	private const string INPUT_TYPE_JOYSTICK_AXIS = "2";
 
-	[MenuItem("FurioosSDK SDK/Input/Build Axis")]
+	[MenuItem("FurioosSDK/Input/Build Axis")]
 	private static void BuildInputManager() {
 		StreamWriter sr = File.CreateText("ProjectSettings" + Path.DirectorySeparatorChar + "InputManager.asset");
 
