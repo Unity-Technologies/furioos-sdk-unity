@@ -1,6 +1,0 @@
-<WorkspaceItem ctype="Workspace">
-  <Items>
-    <Item>../rise-unity-client.sln</Item>
-    <Item>rise-core/rise-sdk.sln</Item>
-  </Items>
-</WorkspaceItem>

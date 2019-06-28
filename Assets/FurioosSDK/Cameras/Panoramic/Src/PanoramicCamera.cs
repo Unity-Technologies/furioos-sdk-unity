@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
-using Rise.Core;
+using FurioosSDK.Core;
 
-namespace Rise.SDK.Cameras {
+namespace FurioosSDK.Cameras {
 	[RequireComponent (typeof(Camera))]
-	public class PanoramicCamera : RSCameraPanTilt {
+	public class PanoramicCamera : FSCameraPanTilt {
 		public virtual void Start(){
 			StartPanTilt();
 			MouseAndFingerControlInverted = true;

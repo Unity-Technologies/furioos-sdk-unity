@@ -4,14 +4,14 @@ using System.Collections;
 
 public class Flipper
 {
-	[MenuItem("Rise SDK/Object/Flip normals and triangles")]
+	[MenuItem("FurioosSDK SDK/Object/Flip normals and triangles")]
 	public static void FlipNormalsAndTriangles()
 	{
 		FlipNormals();
 		FlipTriangles();
 	}
 	
-	[MenuItem("Rise SDK/Object/Flip normals")]
+	[MenuItem("FurioosSDK SDK/Object/Flip normals")]
 	public static void FlipNormals()
 	{
 		GameObject go   = Selection.activeGameObject;
@@ -42,7 +42,7 @@ public class Flipper
 		Debug.Log("Flipped " + msh.normals.Length + " normals.");
 	}
 	
-	[MenuItem("Rise SDK/Object/Flip triangles")]
+	[MenuItem("FurioosSDK SDK/Object/Flip triangles")]
 	public static void FlipTriangles()
 	{
 		GameObject go   = Selection.activeGameObject;

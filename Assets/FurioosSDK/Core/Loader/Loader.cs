@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using Rise.Core;
+using FurioosSDK.Core;
 
-namespace Rise.Features.Loader {
+namespace FurioosSDK.Features.Loader {
 	public class Loader : MonoBehaviour {
 		private bool waitingForLoadingSceneStreaming = false;
 		

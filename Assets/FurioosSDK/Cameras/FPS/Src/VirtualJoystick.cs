@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
-using Rise.Core;
+using FurioosSDK.Core;
 
-namespace Rise.SDK.Cameras {
-	public class VirtualJoystick : RSBehaviour {
+namespace FurioosSDK.Cameras {
+	public class VirtualJoystick : FSBehaviour {
 		public float positionX = 0.16f;
 		public float positionY = 0.8f;
 		public float size = 0.1f;
@@ -17,7 +17,7 @@ namespace Rise.SDK.Cameras {
 		private float screenWidth, screenHeight;
 		private float screenAmplitudeX, screenAmplitudeY;
 		
-		private RSInputManager mouseAndFingerControl;
+		private FSInputManager mouseAndFingerControl;
 		
 		private float displayOffsetX;
 		private float displayOffsetY;
@@ -25,7 +25,7 @@ namespace Rise.SDK.Cameras {
 		private float valX;
 		private float valY;
 		
-		private RSInputTouch touch;
+		private FSInputTouch touch;
 		
 		public float X {
 			get {
@@ -40,7 +40,7 @@ namespace Rise.SDK.Cameras {
 		}
 
 		void Start () {
-			mouseAndFingerControl = RSManager.Manager.InputManager;
+			mouseAndFingerControl = FSManager.Manager.InputManager;
 			
 			joystickRect = new Rect();
 			
@@ -57,7 +57,7 @@ namespace Rise.SDK.Cameras {
 		void Update () {
 			if(mouseAndFingerControl!=null) {
 				if(touch==null){
-					foreach(RSInputTouch testTouch in mouseAndFingerControl.Touches) {
+					foreach(FSInputTouch testTouch in mouseAndFingerControl.Touches) {
 						if(testTouch.HasGoneActive && IsInside(testTouch.Position)) {
 							touch = testTouch;
 							break;

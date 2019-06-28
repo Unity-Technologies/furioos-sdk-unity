@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
-using Rise.Core;
+using FurioosSDK.Core;
 
-namespace Rise.SDK.Cameras {
-	public class FPSCamera : RSCameraCharacter {
+namespace FurioosSDK.Cameras {
+	public class FPSCamera : FSCameraCharacter {
 		public VirtualJoystick moveJoystick;
 		public VirtualJoystick lookJoystick;
 		public GameObject doubleTapDestinationMesh;

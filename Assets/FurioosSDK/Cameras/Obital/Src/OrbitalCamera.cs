@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using Rise.Core;
+using FurioosSDK.Core;
 
-namespace Rise.SDK.Cameras {
+namespace FurioosSDK.Cameras {
 	[RequireComponent (typeof(Camera))]
-	public class OrbitalCamera : RSCameraPanTilt {
+	public class OrbitalCamera : FSCameraPanTilt {
 		public Transform target;
 
 		public bool canZoom = true;

@@ -312,9 +312,6 @@
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/Plugins/JsonNet/Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
@@ -329,6 +326,12 @@
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Library/PackageCache/com.unity.purchasing@2.0.6/Editor/UnityEditor.Purchasing.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Plugins/JsonNet/Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="websocket-sharp">
+      <HintPath>/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Plugins/websocket-sharp/websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>/Applications/Unity/Hub/Editor/2019.1.8f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -686,10 +689,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{61B0D9C1-26DB-6AD6-6FB0-B33C6F7231A3}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{16FC830B-BE2E-496F-2046-0A6786A0F7F4}</Project>
       <Name>Assembly-CSharp</Name>

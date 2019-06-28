@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System;
-using Rise.Core;
+using FurioosSDK.Core;
 
-namespace Rise.SDK.Cameras {
+namespace FurioosSDK.Cameras {
 	[System.Serializable]
 	[RequireComponent (typeof(Camera))]
-	public class Animated : RSCamera {
+	public class Animated : FSCamera {
 		public GameObject animatedGameObject;
 		public string clipName = "Take 001";
 		public float startTime = 0;

@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-using Rise.Core;
-using Rise.SDK.Cameras;
+using FurioosSDK.Core;
+using FurioosSDK.Cameras;
 
-namespace Rise.Features.MiniMap {
+namespace FurioosSDK.Features.MiniMap {
 	[System.Serializable]
-	public class RSMiniMap : RSBehaviour {
+	public class RSMiniMap : FSBehaviour {
 		public enum Mode {
 			mini,
 			full
@@ -131,7 +131,7 @@ namespace Rise.Features.MiniMap {
 			Matrix4x4 mapRotationMatrix = new Matrix4x4();
 			Matrix4x4 translate = new Matrix4x4();
 	        
-			float pan = ((RSCameraPanTilt)CamerasManager.CamerasManager.Active).FinalPan;
+			float pan = ((FSCameraPanTilt)CamerasManager.CamerasManager.Active).FinalPan;
 			Quaternion rotation = Quaternion.Euler(0, 0, pan);
 
 			playerScreenCoordinates = renderCamera.GetComponent<Camera>().WorldToScreenPoint(transform.position);

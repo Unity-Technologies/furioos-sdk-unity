@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Rise.Core;
-using Rise.SDK.Cameras;
+using FurioosSDK.Core;
+using FurioosSDK.Cameras;
 
-namespace Rise.Features.ShowHideObjects {
-	public class ShowHideObjects : RSBehaviour {
+namespace FurioosSDK.Features.ShowHideObjects {
+	public class ShowHideObjects : FSBehaviour {
 		public GameObject[] objects;
 		public string tagName;
 		
-		public List<RSCamera> hideIn;
+		public List<FSCamera> hideIn;
 
 		private GameObject[]taggedObjects;
 
@@ -22,11 +22,11 @@ namespace Rise.Features.ShowHideObjects {
 			ShowHide(CamerasManager.Active);
 		}
 
-		void HandleCameraChanged(RSCamera camera) {
+		void HandleCameraChanged(FSCamera camera) {
 			ShowHide(camera);
 		}
 
-		private void ShowHide(RSCamera camera) {
+		private void ShowHide(FSCamera camera) {
 			bool show = !hideIn.Contains(camera);
 		
 			foreach(GameObject objectToHide in objects){
