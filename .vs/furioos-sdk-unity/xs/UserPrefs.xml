@@ -1,54 +1,17 @@
 ﻿<Properties StartupConfiguration="{16FC830B-BE2E-496F-2046-0A6786A0F7F4}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/FurioosSDK/Core/Manager/FSManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/FurioosSDK/Core/Network/FSWebSocketServer.cs">
     <Files>
-      <File FileName="Assets/FurioosSDK/Core/Network/FSWebSocketServer.cs" Line="7" Column="28" />
-      <File FileName="Assets/FurioosSDK/Editor/Input/RSInputAxisBuilder.cs" Line="13" Column="23" />
-      <File FileName="Assets/FurioosSDK/Editor/Tools/ExrLightmapToPng.cs" Line="13" Column="23" />
-      <File FileName="Assets/FurioosSDK/Editor/Tools/RenderIntoCubemap.cs" Line="32" Column="23" />
-      <File FileName="Assets/FurioosSDK/Core/Input/Manager/FSInputManager.cs" Line="8" Column="29" />
-      <File FileName="Assets/FurioosSDK/Core/Manager/FSManager.cs" Line="49" Column="19" />
+      <File FileName="Assets/FurioosSDK/Core/Network/FSWebSocketServer.cs" Line="12" Column="26" />
+      <File FileName="Assets/FurioosSDK/Editor/Input/RSInputAxisBuilder.cs" Line="92" Column="2" />
+      <File FileName="Assets/FurioosSDK/Editor/Tools/ExrLightmapToPng.cs" Line="136" Column="1" />
+      <File FileName="Assets/FurioosSDK/Editor/Tools/RenderIntoCubemap.cs" Line="36" Column="2" />
+      <File FileName="Assets/FurioosSDK/Core/Input/Manager/FSInputManager.cs" Line="458" Column="2" />
+      <File FileName="Assets/FurioosSDK/Core/Manager/FSManager.cs" Line="143" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="furioos-sdk-unity" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="FurioosSDK" expanded="True">
-                <Node name="Core" expanded="True">
-                  <Node name="Behaviour" expanded="True" />
-                  <Node name="Camera" expanded="True">
-                    <Node name="Manager" expanded="True" />
-                  </Node>
-                  <Node name="Input" expanded="True">
-                    <Node name="Manager" expanded="True" />
-                    <Node name="Modules" expanded="True">
-                      <Node name="Base" expanded="True" />
-                      <Node name="Input Touch Screen" expanded="True" />
-                      <Node name="Input TUIO" expanded="True" />
-                    </Node>
-                  </Node>
-                  <Node name="Libs" expanded="True">
-                    <Node name="TUIO" expanded="True" />
-                  </Node>
-                  <Node name="Loader" expanded="True" />
-                  <Node name="Manager" expanded="True">
-                    <Node name="FSManager.cs" selected="True" />
-                  </Node>
-                  <Node name="Math" expanded="True" />
-                  <Node name="Network" expanded="True" />
-                  <Node name="Output" expanded="True">
-                    <Node name="Manager" expanded="True" />
-                  </Node>
-                  <Node name="Tools" expanded="True" />
-                  <Node name="UI" expanded="True" />
-                </Node>
-                <Node name="Editor" expanded="True">
-                  <Node name="Input" expanded="True" />
-                  <Node name="Tools" expanded="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
+          <Node name="furioos-sdk-unity" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>

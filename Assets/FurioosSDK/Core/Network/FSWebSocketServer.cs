@@ -8,6 +8,8 @@ namespace FurioosSDK.Core {
     public class TestService : WebSocketBehavior {
         protected override void OnMessage(MessageEventArgs e) {
             Debug.Log(e.Data.ToString());
+
+            Send("pong");
         }
     }
 
