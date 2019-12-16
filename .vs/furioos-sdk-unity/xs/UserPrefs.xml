@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{16FC830B-BE2E-496F-2046-0A6786A0F7F4}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Socket.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TestSocket.cs">
     <Files>
-      <File FileName="Assets/Scripts/Socket.cs" Line="29" Column="31" />
-      <File FileName="Assets/FurioosSDK/Core/Network/FSSocket.cs" Line="81" Column="32" />
+      <File FileName="Assets/FurioosSDK/Core/Network/FSSocket.cs" Line="38" Column="16" />
+      <File FileName="Assets/Scripts/TestSocket.cs" Line="28" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +15,7 @@
                 </Node>
               </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Socket.cs" selected="True" />
+                <Node name="TestSocket.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -25,7 +25,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="76b7cab9-c376-4a4d-95d7-a8609eec39bd" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="3f76ccd0-17ee-4aeb-a796-4cf508465802" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Core/Network/FSSocketServer.cs" relfile="Assets/FurioosSDK/Core/Network/FSSocketServer.cs" line="79" column="1" />

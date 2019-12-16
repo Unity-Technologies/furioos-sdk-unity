@@ -1,63 +1,11 @@
 ﻿using System;
-using FurioosSDK.Core;
 using UnityEngine;
 using System.Collections.Generic;
 using WebSocketSharp;
-using WebSocketSharp.Server;
 
 namespace FurioosSDK.Core {
-
-    public class FSSocketBehavior : WebSocketBehavior
-    {
-        public delegate void OnDataHandler(string data, byte[] rawData);
-
-        public static event OnDataHandler OnData;
-
-        public static FSSocketBehavior socket;
-
-        public static void SendData(string data) {
-            socket.Send(data);
-        }
-
-        protected override void OnOpen()
-        {
-            base.OnOpen();
-
-            socket = this;
-        }
-
-        protected override void OnClose(CloseEventArgs e)
-        {
-            base.OnClose(e);
-
-            Debug.Log(e.Reason);
-
-            FSSocket.RestartServer();
-        }
-
-        protected override void OnError(ErrorEventArgs e)
-        {
-            base.OnError(e);
-
-            Debug.Log(e.Message);
-        }
-
-        protected override void OnMessage(MessageEventArgs e)
-        {
-            Action Handler = () =>
-            {
-                OnData?.Invoke(
-                    System.Text.Encoding.UTF8.GetString(e.RawData),
-                    e.RawData
-                );
-            };
-
-           FSSocket.QueueJob(Handler);
-        }
-    }
-
     public class FSSocket : FSBehaviour {
-        static WebSocketServer server;
+        static WebSocket ws;
         static List<Action> jobs;
         static int maxJobsPerFrame = 1000;
 
@@ -68,18 +16,11 @@ namespace FurioosSDK.Core {
         public void Start() {
             jobs = new List<Action>();
 
-            /*
-            server = new WebSocketServer(4321);
-            server.AddWebSocketService<FSSocket>("/sdk");
-            server.Start();
-			Console.ReadKey(true);
-            */
-
             Connect();
         }
 
         public void Connect() {
-            var ws = new WebSocket("ws://localhost:80");
+            ws = new WebSocket("ws://localhost:80");
 
             ws.OnMessage += (sender, e) => {
                 Action Handler = () => {
@@ -95,17 +36,18 @@ namespace FurioosSDK.Core {
 
             ws.OnClose += (sender, e) => {
                 Debug.Log(e.Code);
-                //Connect();
+                ws.ConnectAsync();
             };
 
             ws.OnError += (sender, e) => {
                 Debug.Log(e.Message);
+                ws.ConnectAsync();
             };
 
             ws.ConnectAsync();
         }
 
-        public void Update()  {
+        public void Update() {
             if (jobs != null) {
                 var jobsExecutedCount = 0;
                 while (jobs.Count > 0 && jobsExecutedCount++ < maxJobsPerFrame) {
@@ -122,7 +64,7 @@ namespace FurioosSDK.Core {
             }
         }
 
-        public static void QueueJob(System.Action Job) {
+        private static void QueueJob(System.Action Job) {
             if (jobs == null) {
                 jobs = new List<System.Action>();
             }
@@ -130,9 +72,14 @@ namespace FurioosSDK.Core {
             jobs.Add(Job);
         }
 
-        public static void RestartServer()
+        public static void Send(string data)
         {
-            server.Start();
+            ws.Send(data);
+        }
+
+        public static void Send(byte[] rawData)
+        {
+            ws.Send(rawData);
         }
     }
 }
