@@ -7,11 +7,22 @@ namespace FurioosSDK.Core {
     public class FSSocket : FSBehaviour {
         static WebSocket ws;
         static List<Action> jobs;
-        static int maxJobsPerFrame = 1000;
+        static readonly int maxJobsPerFrame = 1000;
+
+        static int retryCount = 0;
+        static readonly int maxRetry = 10;
 
         public delegate void OnDataHandler(string data, byte[] rawData);
-
         public static event OnDataHandler OnData;
+
+        public delegate void OnOpenHander(EventArgs events);
+		public static event OnOpenHander OnOpen;
+
+        public delegate void OnCloseHander(CloseEventArgs events);
+		public static event OnCloseHander OnClose;
+
+        public delegate void OnErrorHander(ErrorEventArgs events);
+		public static event OnErrorHander OnError;
 
         public void Start() {
             jobs = new List<Action>();
@@ -23,31 +34,45 @@ namespace FurioosSDK.Core {
             ws = new WebSocket("ws://localhost:80");
 
             ws.OnMessage += (sender, e) => {
-                Action Handler = () => {
+                void Handler() {
                     OnData?.Invoke(e.Data, e.RawData);
-                };
+                }
 
-                FSSocket.QueueJob(Handler);
+                QueueJob(Handler);
             };
 
             ws.OnOpen += (sender, e) => {
-                Debug.Log("connected");
+				OnOpen(e);
             };
 
             ws.OnClose += (sender, e) => {
-                Debug.Log(e.Code);
+				OnClose(e);
+
+				if (retryCount > maxRetry) {
+                    return;
+                }
+
                 ws.ConnectAsync();
+
+                retryCount++;
             };
 
             ws.OnError += (sender, e) => {
-                Debug.Log(e.Message);
+				OnError(e);
+
+                if(retryCount > maxRetry) {
+                    return;
+                }
+
                 ws.ConnectAsync();
+
+                retryCount++;
             };
 
             ws.ConnectAsync();
         }
 
-        public void Update() {
+        private void Update() {
             if (jobs != null) {
                 var jobsExecutedCount = 0;
                 while (jobs.Count > 0 && jobsExecutedCount++ < maxJobsPerFrame) {
@@ -72,13 +97,11 @@ namespace FurioosSDK.Core {
             jobs.Add(Job);
         }
 
-        public static void Send(string data)
-        {
+        public static void Send(string data) {
             ws.Send(data);
         }
 
-        public static void Send(byte[] rawData)
-        {
+        public static void Send(byte[] rawData) {
             ws.Send(rawData);
         }
     }
