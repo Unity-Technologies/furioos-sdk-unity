@@ -1,17 +1,14 @@
 ﻿<Properties StartupConfiguration="{16FC830B-BE2E-496F-2046-0A6786A0F7F4}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/FurioosSDK/Editor/FurioosInspector.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/FurioosSDK/Editor/Inspector/UI/BuildAndPublishFoldout.cs">
     <Files>
-      <File FileName="Assets/FurioosSDK/Core/Network/FSSocket.cs" Line="61" Column="16" />
-      <File FileName="Assets/FurioosSDK/Core/Input/Manager/FSInputManager.cs" />
-      <File FileName="Assets/Scripts/Collections/OrganizationCollection.cs" />
-      <File FileName="Assets/Scripts/Collections/QuotaCollection.cs" />
-      <File FileName="Assets/Scripts/Collections/RegionCollection.cs" />
-      <File FileName="Assets/Scripts/Collections/SubscriptionCollection.cs" />
-      <File FileName="Assets/Scripts/Collections/ApplicationCollection.cs" />
-      <File FileName="Assets/FurioosSDK/Plugins/DDPClient/Models/MethodResponse.cs" />
-      <File FileName="Assets/Scripts/Collections/StorageCollection.cs" />
-      <File FileName="Assets/Scripts/FurioosConnectionHandler.cs" Line="103" Column="57" />
-      <File FileName="Assets/FurioosSDK/Editor/FurioosInspector.cs" Line="1" Column="1" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/UI/Login.cs" Line="15" Column="31" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/FurioosInspector.cs" Line="66" Column="1" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/FurioosConnectionHandler.cs" Line="36" Column="4" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/Collections/QuotaCollection.cs" Line="1" Column="1" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/UI/StorageFoldout.cs" Line="28" Column="7" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/UI/ApplicationFoldout.cs" Line="17" Column="5" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/Collections/ApplicationCollection.cs" Line="23" Column="28" />
+      <File FileName="Assets/FurioosSDK/Editor/Inspector/UI/BuildAndPublishFoldout.cs" Line="5" Column="39" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -35,12 +32,21 @@
                   <Node name="Network" expanded="True" />
                 </Node>
                 <Node name="Editor" expanded="True">
-                  <Node name="FurioosInspector.cs" selected="True" />
+                  <Node name="Input" expanded="True" />
+                  <Node name="Inspector" expanded="True">
+                    <Node name="Collections" expanded="True" />
+                    <Node name="UI" expanded="True">
+                      <Node name="BuildAndPublishFoldout.cs" selected="True" />
+                    </Node>
+                  </Node>
+                </Node>
+                <Node name="Plugins" expanded="True">
+                  <Node name="DDPClient" expanded="True">
+                    <Node name="Models" expanded="True" />
+                  </Node>
                 </Node>
               </Node>
-              <Node name="Scripts" expanded="True">
-                <Node name="Collections" expanded="True" />
-              </Node>
+              <Node name="Scripts" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -49,7 +55,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="d44c6716-c2b7-4860-9bd1-dcb716cc1cd4" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="b22efb03-e944-4466-b03f-8923acebef97" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/mick/Documents/Projects/Furioos/furioos-sdk-unity/Assets/FurioosSDK/Core/Network/FSSocketServer.cs" relfile="Assets/FurioosSDK/Core/Network/FSSocketServer.cs" line="79" column="1" />
