@@ -14,6 +14,8 @@ namespace FurioosSDK.Editor {
 		public static int selectedEngine;
 		public static int selectedPlatform;
 
+		public static bool lockUI;
+
 		[MenuItem("FurioosSDK/Inspector")]
 		private static void Init() {
 			FurioosInspector inspector = (FurioosInspector)EditorWindow.GetWindow(typeof(FurioosInspector), false, "Furioos");
@@ -26,7 +28,7 @@ namespace FurioosSDK.Editor {
 			}
 
 			inspector.titleContent = new GUIContent("Furioos", logo);
-			inspector.minSize = new Vector2(350.0f, 350.0f);
+			inspector.minSize = new Vector2(350.0f, 520.0f);
 			inspector.Show();
 		}
 
@@ -42,6 +44,8 @@ namespace FurioosSDK.Editor {
 		}
 
 		private void OnGUI() {
+			GUI.enabled = !lockUI;
+
 			if(connectionHandler == null) {
 				Connect();
 			}
@@ -75,6 +79,8 @@ namespace FurioosSDK.Editor {
 
 				BuildAndPublishFoldout.Draw();
 			}
+
+			GUI.enabled = true;
 
 			this.Repaint();
 		}

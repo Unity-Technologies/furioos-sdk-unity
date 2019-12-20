@@ -131,12 +131,14 @@ namespace FurioosSDK.Editor {
 		}
 
 		public void SaveChanges(ApplicationCollection application) {
+			FurioosInspector.lockUI = true;
+
 			_client.Call("application.update", (updateReponse) => {
 				if(updateReponse.HasError()) {
 					Debug.Log("[Application] | Error |" + updateReponse.Error.Error);
 				}
 
-				Debug.Log("Application updated");
+				FurioosInspector.lockUI = false;
 			}, Organization._id, application);
 		}
 	}

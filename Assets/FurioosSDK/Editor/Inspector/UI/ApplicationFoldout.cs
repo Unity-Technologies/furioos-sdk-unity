@@ -79,7 +79,7 @@ namespace FurioosSDK.Editor {
 							previewRect.width -= 5;
 
 						if(FurioosInspector.selectedApplication.thumbnailUrl != "") {
-							EditorGUI.DrawPreviewTexture(previewRect, _selectedApplicationThumbnail);
+							//EditorGUI.DrawPreviewTexture(previewRect, _selectedApplicationThumbnail);
 						}
 					EditorGUILayout.EndVertical();
 				EditorGUILayout.EndHorizontal();
@@ -101,7 +101,7 @@ namespace FurioosSDK.Editor {
 
 				GUI.enabled = false;
 				EditorGUILayout.EnumPopup("GPU type", GPUTypes.Standard);
-				GUI.enabled = true;
+				GUI.enabled = !FurioosInspector.lockUI;
 
 				EditorGUILayout.BeginHorizontal();
 					GUILayout.Label("Size");

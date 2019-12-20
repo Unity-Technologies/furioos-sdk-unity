@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
+using System.IO.Compression;
 
 namespace FurioosSDK.Editor {
 	public class BuildAndPublishFoldout {
@@ -31,17 +33,40 @@ namespace FurioosSDK.Editor {
 					(Platforms)_selectedPlatform
 				);
 
-				GUI.enabled = FurioosInspector.selectedApplication != null;
+				GUILayout.Space(5);
+
+				GUI.enabled = FurioosInspector.selectedApplication != null && !FurioosInspector.lockUI;
 				Rect buildAndPublishButtonRect = EditorGUILayout.BeginVertical();
-					buildAndPublishButtonRect.width /= 2;
-					buildAndPublishButtonRect.x = buildAndPublishButtonRect.width / 2;
+				buildAndPublishButtonRect.width /= 2;
+				buildAndPublishButtonRect.x = buildAndPublishButtonRect.width / 2;
 
-					if (GUI.Button(buildAndPublishButtonRect, "Build & Publish")) {
+				if (GUI.Button(buildAndPublishButtonRect, "Build & Publish")) {
+					string buildPath = EditorUtility.SaveFilePanel("Save build to folder", "", "", "exe");
+					string[] scenes = new string[EditorBuildSettings.scenes.Length];
 
+					Debug.Log(EditorBuildSettings.scenes);
+
+					for (int i = 0; i < EditorBuildSettings.scenes.Length; i++) {
+						if(!EditorBuildSettings.scenes[i].enabled) {
+							continue;
+						}
+
+						scenes[i] = EditorBuildSettings.scenes[i].path;
 					}
-					GUILayout.Space(40);
+
+					BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions {
+						scenes = scenes,
+						locationPathName = buildPath,
+						target = (_selectedPlatform == (int)Platforms.Windows) ? BuildTarget.StandaloneWindows64 : BuildTarget.StandaloneOSX,
+						options = BuildOptions.None
+					};
+
+					BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+					BuildSummary summary = report.summary;
+				}
+				GUILayout.Space(40);
 				EditorGUILayout.EndVertical();
-				GUI.enabled = true;
+				GUI.enabled = !FurioosInspector.lockUI;
 			}
 			EditorGUILayout.EndFoldoutHeaderGroup();
 		}
