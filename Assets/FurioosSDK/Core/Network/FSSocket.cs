@@ -24,7 +24,7 @@ public class SignalingMessage
 public class SDKMessage<T>
 {
     public string type = "furioos";
-    public string task = "SDK";
+    public string task = "sdk";
     public T data;
 }
 
@@ -61,7 +61,7 @@ namespace FurioosSDK.Core {
         }
 
         public void Connect() {
-            ws = new WebSocket("ws://localhost:8081");
+            ws = new WebSocket("ws://127.0.0.1:8081");
 
             ws.OnMessage += (sender, e) => {
 
@@ -76,7 +76,7 @@ namespace FurioosSDK.Core {
 
             ws.OnOpen += (sender, e) => {
                 Debug.Log("WS connected.");
-                WSSend("{\"type\" :\"signin\",\"peerName\" :\"Unity Test App\"}");
+                WSSend("{\"type\" :\"signIn\",\"peerName\" :\"Unity Test App\"}");
             };
 
             ws.OnClose += (sender, e) => {
@@ -157,7 +157,7 @@ namespace FurioosSDK.Core {
                 if (!string.IsNullOrEmpty(msg.type))
                 {
 
-                    if (msg.type == "signin")
+                    if (msg.type == "signIn")
                     {
 
                         if (msg.status == "SUCCESS")
