@@ -17,7 +17,7 @@ namespace FurioosSDK.Core {
 
 	[System.Serializable]
 	public class FSManager : FSPlugins {
-		public bool standalone = false;
+		private bool standalone = false;
 
 		public delegate void DeviceOrientationTypeHasChanged(UseDeviceOrientationType deviceOrientationType);
 		public static event DeviceOrientationTypeHasChanged onDeviceOrientationTypeChange;

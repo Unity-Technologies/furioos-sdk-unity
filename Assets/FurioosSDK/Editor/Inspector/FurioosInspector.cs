@@ -16,7 +16,7 @@ namespace FurioosSDK.Editor {
 
 		public static bool lockUI;
 
-		[MenuItem("FurioosSDK/Inspector")]
+		[MenuItem("Window/Furioos")]
 		private static void Init() {
 			FurioosInspector inspector = (FurioosInspector)EditorWindow.GetWindow(typeof(FurioosInspector), false, "Furioos");
 

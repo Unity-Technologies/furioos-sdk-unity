@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using WebSocketSharp;
+using WebSocketSharp.Server;
 using System.Text;
 
 
@@ -26,26 +28,33 @@ public class SDKMessage<T>
     public string type = "furioos";
     public string task = "sdk";
     public T data;
+    public string status;
+    public string message;
+    public string sessionId;
+    public string connectionId;
+    public string peerId;
 }
 
 namespace FurioosSDK.Core {
     public class FSSocket : FSBehaviour {
+        public bool debug = false;
 
         private string _sessionId;
         private string _connectionId;
 
 
         static WebSocket ws;
+        static WebSocketServer wsServer;
         static List<Action> jobs;
         static readonly int maxJobsPerFrame = 1000;
 
         static int retryCount = 0;
-        static readonly int maxRetry = 10;
+        static readonly int maxRetry = 500;
 
         public delegate void OnDataHandler(string data, byte[] rawData);
         public static event OnDataHandler OnData;
 
-        public delegate void OnOpenHander(EventArgs events);
+        public delegate void OnOpenHander();
 		public static event OnOpenHander OnOpen;
 
         public delegate void OnCloseHander(CloseEventArgs events);
@@ -57,6 +66,14 @@ namespace FurioosSDK.Core {
         public void Start() {
             jobs = new List<Action>();
 
+			/*
+			if(debug) {
+                StartServer();
+			}
+			else {
+            }
+			*/
+
             Connect();
         }
 
@@ -64,49 +81,54 @@ namespace FurioosSDK.Core {
             ws = new WebSocket("ws://127.0.0.1:8081");
 
             ws.OnMessage += (sender, e) => {
-
                 this.WSProcessMessage(sender, e);
-
-                void Handler() {
-                    OnData?.Invoke(e.Data, e.RawData);
-                }
-
-                QueueJob(Handler);
             };
 
             ws.OnOpen += (sender, e) => {
-                Debug.Log("WS connected.");
-                WSSend("{\"type\" :\"signIn\",\"peerName\" :\"Unity Test App\"}");
+                retryCount = 0;
+
+				if(debug) {
+					Debug.Log("WS connected.");
+                }
+
+                WSSend("{\"type\" :\"signIn\",\"peerName\" :\"SDK_APP\"}");
             };
 
-            ws.OnClose += (sender, e) => {
+            ws.OnClose += async (sender, e) => {
 				OnClose(e);
 
 				if (retryCount > maxRetry) {
                     return;
                 }
 
-                ws.ConnectAsync();
+                await Wait(1);
 
-                retryCount++;
+                Reconnect();
             };
 
             ws.OnError += (sender, e) => {
 				OnError(e);
-
-                if(retryCount > maxRetry) {
-                    return;
-                }
-
-                ws.ConnectAsync();
-
-                retryCount++;
             };
 
             ws.ConnectAsync();
         }
 
+		public void StartServer() {
+            //wsServer = new WebSocketServer("ws://localhost:3001");
+            //wsServer.AddWebSocketService<FSSocketDevService>("/dev");
+            //wsServer.Start();
+            //wsServer.Stop();
+        }
 
+		public void Reconnect() {
+            retryCount++;
+
+            ws.ConnectAsync();
+        }
+
+        private async Task Wait(int time) {
+            await Task.Delay(TimeSpan.FromSeconds(time));
+        }
 
         private void Update() {
             if (jobs != null) {
@@ -148,11 +170,14 @@ namespace FurioosSDK.Core {
         private void WSProcessMessage(object sender, MessageEventArgs e){
 
             var content = Encoding.UTF8.GetString(e.RawData);
-            Debug.Log($"Receiving message: {content}");
+
+			if(debug) {
+				Debug.Log($"Receiving message: {content}");
+            }
 
             try {
 
-                var msg = JsonUtility.FromJson<SignalingMessage>(content);
+                var msg = JsonUtility.FromJson<SDKMessage<string>>(content);
 
                 if (!string.IsNullOrEmpty(msg.type))
                 {
@@ -165,13 +190,16 @@ namespace FurioosSDK.Core {
 
                             this._connectionId = msg.connectionId;
                             this._sessionId = msg.peerId;
-                            Debug.Log("Signed in.");
 
-                            Send("SDK data test");
+                            if (debug) {
+                                Debug.Log("Signed in.");
+                            }
 
-                            //this.WSSend("{\"type\" :\"furioos\",\"task\" : \"ACTIVATE_WEBRTC_ROUTING\",\"appType\" : \"RenderStreaming\",\"appName\" :\"Unity Test App\"}");
+                            void Handler() {
+                                OnOpen?.Invoke();
+                            }
 
-                            //OnSignedIn?.Invoke(this);
+                            QueueJob(Handler);
 
                         }
                         else
@@ -184,15 +212,26 @@ namespace FurioosSDK.Core {
 
                         if (msg.status == "SUCCESS")
                         {
-                            Debug.Log("Slot reconnected.");
+                            if (debug) {
+								Debug.Log("Slot reconnected.");
+                            }
 
                         }
                         else
                         {
-                            Debug.LogError("Reconnect error : " + msg.message);
+                            if (debug) {
+								Debug.LogError("Reconnect error : " + msg.message);
+                            }
                         }
 
 
+                    }
+                    else if(msg.type == "furioos" && msg.task == "sdk") {
+                        void Handler() {
+                            OnData?.Invoke(msg.data, e.RawData);
+                        }
+
+                        QueueJob(Handler);
                     }
                    
 
