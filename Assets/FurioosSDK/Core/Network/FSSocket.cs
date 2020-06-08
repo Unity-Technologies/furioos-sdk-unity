@@ -166,6 +166,12 @@ namespace FurioosSDK.Core {
             message.data = rawData;
             WSSend(message);
         }
+        
+        public static void Send<T>(T rawData) {
+            SDKMessage<T> message = new SDKMessage<T>();
+            message.data = rawData;
+            WSSend(message);
+        }
 
         private void WSProcessMessage(object sender, MessageEventArgs e){
 
