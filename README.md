@@ -56,7 +56,7 @@ public class ExampleSocket : MonoBehaviour {
 
 ## Properties
 #### debug: Boolean
-Enable the local debug mode. (Not available)
+Enable the local debug mode. (Not available, still in dev)
 
 ## Events
 #### static OnOpen()
@@ -76,7 +76,11 @@ Bind an event that will be called when the connection with Furioos streaming ser
 - `callback: Function`: Implement your code.
 
 ## Methods
-#### static Connect()
+#### static FSSocket.Connect()
 You can call this function to connect your application to the Furioos Streaming Server.
 **As the script is a MonoBehavior script you don't need to call it at start.
 Use this function to reconnect when you get an error or if the connection get close.**
+
+#### static FSSocket.Send<T>(T data)
+Send data to the JS client.
+- `T data`: The data to send
