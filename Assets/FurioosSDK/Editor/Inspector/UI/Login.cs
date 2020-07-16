@@ -3,8 +3,8 @@ using UnityEditor;
 
 namespace FurioosSDK.Editor {
 	public class Login: Object {
-		static string _email = "m.korbas@obvioos.com";
-		static string _password = "MK09J1291";
+		static string _email = "";
+		static string _password = "";
 
 		public static void Draw(Rect position) {
 			GUILayout.BeginHorizontal();
