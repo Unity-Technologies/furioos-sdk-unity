@@ -36,3 +36,5 @@ Assets/Plugins/Rise
 Assets/Debug/
 Logs/
 .vs/
+*.csproj
+*.sln
