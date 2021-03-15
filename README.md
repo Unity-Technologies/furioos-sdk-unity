@@ -7,9 +7,9 @@ Then choose the app you want to use with the SDK and create a SDK link.
 ## Installation
 1. Download the latest version of the Unity package.
 2. Import the package in your project
-3. Put the prefab **FurioosSDK_Core** in your scene
+3. Put the prefab **FSNetwork** in your scene
 
-You'll need to have the **FurioosSDK_Core** prefab in each scene with SDK interactions.
+You'll need to have the **FSNetwork** prefab in each scene with SDK interactions.
 
 ## Exemple
 ```javascript

@@ -36,7 +36,7 @@ public class SDKMessage<T>
 }
 
 namespace FurioosSDK.Core {
-    public class FSSocket : FSBehaviour {
+    public class FSSocket : MonoBehaviour {
         public bool debug = false;
 
         private string _sessionId;
