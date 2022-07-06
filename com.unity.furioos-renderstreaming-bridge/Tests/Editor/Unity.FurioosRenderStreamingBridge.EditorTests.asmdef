@@ -1,0 +1,14 @@
+{
+    "name": "Unity.FurioosRenderStreamingBridge.EditorTests",
+    "references": [
+        "Unity.FurioosRenderStreamingBridge.Editor",
+        "Unity.FurioosRenderStreamingBridge"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

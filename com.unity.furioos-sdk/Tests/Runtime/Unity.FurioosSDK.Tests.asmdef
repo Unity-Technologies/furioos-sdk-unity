@@ -1,0 +1,11 @@
+{
+    "name": "Unity.FurioosSDK.Tests",
+    "references": [
+        "Unity.FurioosSDK"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

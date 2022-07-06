@@ -1,0 +1,14 @@
+{
+    "name": "Unity.FurioosSDK.EditorTests",
+    "references": [
+        "Unity.FurioosSDK.Editor",
+        "Unity.FurioosSDK"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

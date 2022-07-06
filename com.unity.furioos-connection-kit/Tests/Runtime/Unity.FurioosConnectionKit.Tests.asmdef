@@ -1,0 +1,11 @@
+{
+    "name": "Unity.FurioosConnectionKit.Tests",
+    "references": [
+        "Unity.FurioosConnectionKit"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

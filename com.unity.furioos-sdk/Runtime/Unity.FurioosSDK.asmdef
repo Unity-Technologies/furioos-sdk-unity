@@ -1,0 +1,6 @@
+{
+    "name": "Unity.FurioosSDK",
+    "references": [ "Unity.FurioosConnectionKit" ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

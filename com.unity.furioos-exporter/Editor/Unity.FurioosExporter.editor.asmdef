@@ -1,0 +1,10 @@
+{
+    "name": "Unity.FurioosExporter.Editor",
+    "references": [
+        "Unity.EditorCoroutines.Editor"
+    ],
+    "includePlatforms": [
+    "Editor"
+    ],
+    "excludePlatforms": []
+}

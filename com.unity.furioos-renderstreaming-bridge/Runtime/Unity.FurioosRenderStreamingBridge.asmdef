@@ -1,0 +1,10 @@
+{
+    "name": "Unity.FurioosRenderStreamingBridge",
+    "references": [
+		"Unity.FurioosConnectionKit",
+		"Unity.RenderStreaming.Runtime",
+		"Unity.WebRTC"
+	],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

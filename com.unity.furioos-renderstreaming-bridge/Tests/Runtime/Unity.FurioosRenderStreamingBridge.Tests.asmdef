@@ -1,0 +1,11 @@
+{
+    "name": "Unity.FurioosRenderStreamingBridge.Tests",
+    "references": [
+        "Unity.FurioosRenderStreamingBridge"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

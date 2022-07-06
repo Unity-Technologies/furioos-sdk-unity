@@ -1,0 +1,22 @@
+{
+	"name": "com.unity.furioos-renderstreaming-bridge",
+	"displayName":"Furioos RenderStreaming Bridge",
+	"version": "0.1.0",
+	"unity": "2020.3",
+	"description": "Unity package that allow a RenderStreaming app to be hosted on Furioos platform ",
+	"author": {
+		"name": "Furioos by Unity",
+		"url": "https://www.furioos.com/"
+	  },
+	"dependencies": {
+		"com.unity.renderstreaming":"3.1.0-exp.3",
+		"com.unity.furioos-connection-kit":"0.1.0"
+	},
+	"samples": [
+        {
+            "displayName": "Furioos RenderStreaming Sample",
+            "description": "Simple Furioos Sample",
+            "path": "Samples/Furioos RenderStreaming Sample"
+        }
+    ]
+}
