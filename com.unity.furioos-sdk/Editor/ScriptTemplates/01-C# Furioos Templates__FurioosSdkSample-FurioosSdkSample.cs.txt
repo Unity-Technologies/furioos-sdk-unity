@@ -1,0 +1,59 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using UnityEngine;
+using Furioos.SDK;
+
+public class #SCRIPTNAME# : MonoBehaviour
+{
+    private FurioosSDK sdk;
+
+    void OnEnable()
+    {
+        this.sdk = gameObject.AddComponent<FurioosSDK>();
+        this.sdk.OnSDKMessage += this.OnSDKMessage;
+        this.sdk.OnSDKSessionStart += this.OnSDKSessionStart;
+        this.sdk.OnSDKSessionStop += this.OnSDKSessionStop;
+    }
+
+    void OnDisable()
+    {
+
+        this.sdk.OnSDKMessage -= this.OnSDKMessage;
+        this.sdk.OnSDKSessionStart -= this.OnSDKSessionStart;
+        this.sdk.OnSDKSessionStop -= this.OnSDKSessionStop;
+    }
+
+    private void OnSDKSessionStart(string from)
+    {
+        Debug.Log("SDK session started : \"" + from);
+    }
+
+    private void OnSDKSessionStop(string from)
+    {
+        Debug.Log("SDK session stopped : \"" + from);
+    }
+
+    public void OnSDKMessage(JToken data, string from)
+    {
+        var value = JsonConvert.SerializeObject(data);
+        Debug.Log("SDK data from \"" + from + "\" : \n" + value);
+    }
+
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Return))
+        {
+            string jsonMessage = "{action:\"test\"}";
+            Debug.Log("Send Message to client: "+ jsonMessage);
+            this.sdk.send(JObject.Parse(jsonMessage));
+        }
+    }
+
+    void Start()
+    {
+    }
+
+}
+
+

@@ -1,0 +1,5 @@
+{
+	"displayName":"Furioos SDK sample",
+	"description": "Sample demonstration how to use Furioos SDK",
+	"createSeparatePackage": false
+}

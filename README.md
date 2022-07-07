@@ -1,86 +1,42 @@
-# Furioos Unity SDK
+# Furioos Unity Packages
+
+The Furioos Unity package is composed of different tools that allow you to:
+
+- Communicate between your application and your website
+- Export your Unity application to Furioos directly from the Unity Editor
+- Use [Unity Render Streaming](https://github.com/Unity-Technologies/UnityRenderStreaming) with the Furioos platform.
+
+It includes the following packages:
+|**Location**|**Description**|
+|---|---|
+|_com.unity.furioos-connection-kit_|The basic communication layer (not intended to be used alone)|
+|_com.unity.furioos-sdk_|The official Furioos SDK for Unity with debug tools and template|
+|_com.unity.furioos-exporter_|Build and deploy your application from Unity Editor to your Furioos account|
+|_com.unity.furioos-renderstreaming-bridge_|A package that allow a Unity Render Streaming application to be hosted on Furioos platform|
+
 ## Requirements
-- A Furioos Account on www.furioos.com.
-- Then choose the application you want to use with the SDK and create a SDK link.
-**Unity Editor 2019.3+**
+
+- Unity Editor 2020.3+
+- A Furioos Account on [Furioos.com](https://portal.furioos.com)
+- The Furioos SDK JS in your Web site [GitHub Repository](https://github.com/Unity-Technologies/furioos-sdk-js)
 
 ## Installation
-1. Download the latest version of the Unity package.
-2. Import the package in your project
-3. Put the prefab **FSNetwork** in your scene
 
-You'll need to have the **FSNetwork** prefab in each scene with SDK interactions.
+> ***Important**: Furioos Unity Package uses the UPM (Unity Package Manager) but it's still an experimental package. Which means that you don't find it directly from the Unity Registry. Follow the steps below to install it*
 
-## Exemple
-```javascript
-using System;
+1. Clone the repository in your local directory
+2. Open your Unity project
+3. Import the three packages from the package manager. "Window > Package Manager > Add package from disk.."
 
-using UnityEngine;
-using UnityEngine.UI;
+> ***Note**: You need to follow the installation order*
+>
+> - _com.unity.furioos-exporter/package.json_
+> - _com.unity.furioos-connection-kit/package.json_
+> - _com.unity.furioos-sdk/package.json_
 
-using WebSocketSharp;
+4. Restart the Unity Editor
 
-using FurioosSDK.Core;
+## Documentations
 
-public class ExampleSocket : MonoBehaviour {
-    void Start() {
-		FSSocket.OnOpen += OnOpen;
-		FSSocket.OnData += OnData;
-		FSSocket.OnClose += OnClose;
-		FSSocket.OnError += OnError;
-	}
-
-    void OnOpen() {}
-
-	void OnClose(CloseEventArgs events) {}
-
-	void OnError(ErrorEventArgs events) {}
-
-	void OnData(string data, byte[] rawData) {
-        var rawValue = System.Text.Encoding.UTF8.GetString(rawData);
-
-		Debug.Log(rawValue); // JSON value
-
-		Debug.Log(data); // JSON value
-	}
-
-    void Send(string data) {
-        FSSocket.Send(data);
-    }
-
-    void SendRaw(byte[] rawData) {
-        FSSocket.Send(rawData);
-    }
-}
-```
-
-## Properties
-#### debug: Boolean
-Enable the local debug mode. (Not available, still in dev)
-
-## Events
-#### static OnOpen()
-Bind an event that will be called when the application is connected to the Furioos streaming server and ready to communicate.
-
-#### OnData(string data, byte[] rawData)
-Bind an event that will be called everytime data is received.
-- `string data`: The parsed data
-- `byte[] rawData`: The raw data. Convert that data to JSON and parsed it by yourself to handle other types of data transfert. (float, int, etc...)
-
-#### OnError(ErrorEventArgs events)
-Bind an event that will be called each time an error is fired.
-- `ErrorEventArgs events`
-
-#### OnClose(CloseEventArgs events)
-Bind an event that will be called when the connection with Furioos streaming server is closed.
-- `callback: Function`: Implement your code.
-
-## Methods
-#### static FSSocket.Connect()
-You can call this function to connect your application to the Furioos Streaming Server.
-**As the script is a MonoBehavior script you don't need to call it at start.
-Use this function to reconnect when you get an error or if the connection get close.**
-
-#### static FSSocket.Send<T>(T data)
-Send data to the JS client.
-- `T data`: The data to send
+- [Furioos SDK](com.unity.furioos-sdk/README.md) About the Furioos SDK with Unity
+- [Furioos Exporter](com.unity.furioos-exporter/README.md) Learn how to export your application from Unity Editor to Furioos

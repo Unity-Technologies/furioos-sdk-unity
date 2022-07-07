@@ -1,0 +1,9 @@
+{
+    "name": "Unity.FurioosSDK.FurioosSDKSample",
+    "references": [
+        "Unity.FurioosSDK",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

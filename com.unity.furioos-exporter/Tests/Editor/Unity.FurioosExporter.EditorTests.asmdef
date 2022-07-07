@@ -1,0 +1,14 @@
+{
+    "name": "Unity.FurioosExporter.EditorTests",
+    "references": [
+        "Unity.FurioosExporter.Editor",
+        "Unity.FurioosExporter"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

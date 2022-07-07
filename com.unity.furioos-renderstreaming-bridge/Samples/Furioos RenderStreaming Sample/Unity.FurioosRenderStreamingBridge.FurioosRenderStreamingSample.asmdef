@@ -1,0 +1,11 @@
+{
+    "name": "Unity.FurioosRenderStreamingBridge.FurioosSDKSample",
+    "references": [
+        "Unity.InputSystem",
+        "Unity.FurioosRenderStreamingBridge",
+        "Unity.RenderStreaming.Runtime",
+        "Unity.TextMeshPro"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

@@ -17,6 +17,10 @@
 
 # OS generated files #
 ######################
+artifacts/**
+build/**
+.build_script/**
+node_modules/**
 .DS_Store
 .DS_Store?
 ._*
@@ -24,6 +28,13 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+.npmrc
+!Documentation~
+!.Documentation
+npm-debug.log
+build.sh.meta
+build.bat.meta
+.idea/
 
 # Project #
 ###########
@@ -38,3 +49,5 @@ Logs/
 .vs/
 *.csproj
 *.sln
+TextMesh Pro/
+*.meta

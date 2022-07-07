@@ -1,0 +1,5 @@
+{
+	"displayName":"Furioos RenderStreaming sample",
+	"description": "Sample demonstration how to use RenderStreaming with Furioos",
+	"createSeparatePackage": false
+}
