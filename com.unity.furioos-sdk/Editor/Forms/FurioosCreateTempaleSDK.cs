@@ -177,6 +177,7 @@ public class CreateTemplateSDKForm : EditorWindow
             EditorUtility.DisplayProgressBar("Generate Furioos SDK handler", "", 0);
             GenerateScript();
             var gameObj = new GameObject(fileName);
+            EditorUtility.SetDirty(gameObj);
             Selection.activeGameObject = gameObj;
             if (Selection.activeGameObject != null)
             {
