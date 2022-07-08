@@ -24,7 +24,7 @@ It includes the following packages:
 
 > ***Important**: Furioos Unity Package uses the UPM (Unity Package Manager) but it's still an experimental package. Which means that you don't find it directly from the Unity Registry. Follow the steps below to install it*
 
-1. Clone the repository in your local directory
+1. Download and unzip the last release of the Furioos Unity Packages[here](https://github.com/Unity-Technologies/furioos-sdk-unity/releases)
 2. Open your Unity project
 3. Import the three packages from the package manager. "Window > Package Manager > Add package from disk.."
 
@@ -34,7 +34,9 @@ It includes the following packages:
 > - _com.unity.furioos-connection-kit/package.json_
 > - _com.unity.furioos-sdk/package.json_
 
-4. Restart the Unity Editor
+4. **Restart the Unity Editor**
+
+> ***Note**: If your project uses the Furioos SDK Unity v1.x remove it before using the new packages*
 
 ## Documentations
 
