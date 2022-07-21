@@ -1,21 +1,21 @@
 {
-    "name": "com.unity.furioos-sdk",
-    "displayName":"Furioos SDK",
-    "version": "0.1.1",
-    "unity": "2019.3",
-    "description": "Stream any 3D project anywhere, anytime, on any device.",
-    "author": {
-		"name": "Furioos by Unity",
-		"url": "https://www.furioos.com/"
-	  },
-	"dependencies": {
-		"com.unity.furioos-connection-kit":"0.1.0"
-    },
-	"samples": [
-        {
-            "displayName": "Furioos SDK Sample",
-            "description": "Simple Furioos Sample",
-            "path": "Samples/Furioos SDK Sample"
-        }
-    ]
+  "name": "com.unity.furioos-sdk",
+  "displayName": "Furioos SDK",
+  "version": "0.1.1",
+  "unity": "2019.3",
+  "description": "Stream any 3D project anywhere, anytime, on any device.",
+  "author": {
+    "name": "Furioos by Unity",
+    "url": "https://www.furioos.com/"
+  },
+  "dependencies": {
+    "com.unity.furioos-connection-kit": "0.1.0"
+  },
+  "samples": [
+    {
+      "displayName": "Furioos SDK Sample",
+      "description": "Simple Furioos Sample",
+      "path": "Samples/Furioos SDK Sample"
+    }
+  ]
 }
