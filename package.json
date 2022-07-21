@@ -9,9 +9,9 @@
     "url": "https://www.furioos.com/"
   },
   "dependencies": {
-    "com.unity.furioos-connection-kit": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-connection-kit",
-    "com.unity.furioos-exporter": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-exporter",
-    "com.unity.furioos-renderstreaming-bridge": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-renderstreaming-bridge",
-    "com.unity.furioos-sdk": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos.sdk"
+    "com.unity.furioos-connection-kit": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-connection-kit#0.1.0",
+    "com.unity.furioos-exporter": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-exporter#0.1.0",
+    "com.unity.furioos-renderstreaming-bridge": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-renderstreaming-bridge#0.1.0",
+    "com.unity.furioos-sdk": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos.sdk#0.1.1"
   }
 }
