@@ -1,4 +1,13 @@
 {
+  "name": "com.unity.furioos-unity-packages",
+  "displayName": "Furioos SDK",
+  "version": "0.1.1",
+  "unity": "2019.3",
+  "description": "Stream any 3D project anywhere, anytime, on any device.",
+  "author": {
+    "name": "Furioos by Unity",
+    "url": "https://www.furioos.com/"
+  },
   "dependencies": {
     "com.unity.furioos-connection-kit": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-connection-kit",
     "com.unity.furioos-exporter": "https://github.com/Unity-Technologies/furioos-sdk-unity.git?path=/com.unity.furioos-exporter",
