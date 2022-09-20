@@ -234,10 +234,8 @@ namespace Furioos.ConnectionKit {
                 if (peer.getPeerId() != "") signInMessage.setDataValue("peerId", peer.getPeerId());
                 if (peer.getKey() != "") signInMessage.setDataValue("key", peer.getKey());
 
-                var assembly = typeof(FsClientSideConnectionHandler).Assembly;
-                //var packageInfo = UnityEditor.PackageManager.PackageInfo.FindForAssembly(assembly);
-
-                //signInMessage.setDataValue("clientVersion", packageInfo.version);
+                signInMessage.setDataValue("clientVersion", FurioosPackageVersion.Instance != null ? FurioosPackageVersion.Instance.FurioosConnectionKitVersion : "-");
+                signInMessage.setDataValue("clientAgent", "Unity " + Application.unityVersion);
 
                 this.status = FsConnectionStatus.FS_CONNECTION_STATUS_SIGNING_IN;
 
@@ -296,7 +294,7 @@ namespace Furioos.ConnectionKit {
 
             try {
 
-                byte[] buffer = new byte[4096];
+                byte[] buffer = new byte[8192];
                 this.socket.Client.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, onDataReceived, buffer);
 
             } catch {
@@ -326,15 +324,51 @@ namespace Furioos.ConnectionKit {
             }
 
             byte[] byteData = ar.AsyncState as byte[];
-
-            FsMessage message = FsMessage.createFsMessage(byteData);
-
-            this.processMessage(message);
+            this.processChunkMessage(byteData, dataRead);
 
             //Continue reading
             this.receiveFromSocket();
         }
 
+
+        private void processChunkMessage(byte[] byteData, int size)
+        {
+ 
+            byte[] incommingData = new byte[size];
+            Array.Copy(byteData, incommingData, size);
+
+            dataBufferSendTo.AddRange(incommingData);
+            while (dataBufferSendTo.Count > 0)
+            {
+                int splitPosition = FsMessage.jsonMessageSplit(dataBufferSendTo.ToArray());
+                if (splitPosition == dataBufferSendTo.Count) // Json message is not ending 
+                {
+                    break; // must read TCP port to get new chunk
+                }
+                else if (splitPosition < 0) // full buffer is a json message
+                {
+                    FsMessage message = FsMessage.createFsMessage(dataBufferSendTo.ToArray());
+                    this.processMessage(message);
+
+                    dataBufferSendTo.Clear();
+                }
+                else if (splitPosition > 0 && splitPosition < dataBufferSendTo.Count) // There is probably a Json Message in the buffer
+                {
+                    byte[] dataMessage = new byte[splitPosition];
+                    Array.Copy(dataBufferSendTo.ToArray(), dataMessage, splitPosition);
+
+                    FsMessage message = FsMessage.createFsMessage(dataMessage);
+                    this.processMessage(message);
+                    dataBufferSendTo.RemoveRange(0, splitPosition);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+
+        private List<byte> dataBufferSendTo = new List<byte>();
         private TcpClient socket = null;
         private NetworkStream tcpStream = null;
 

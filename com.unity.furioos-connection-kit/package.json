@@ -1,7 +1,7 @@
 {
 	"name": "com.unity.furioos-connection-kit",
 	"displayName":"Furioos Connection Kit",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"unity": "2019.3",
 	"description": "Unity base package that allow an app to connect to Furioos streaming server on VM's (for SDK, RenderStreaming ...). This is a dependency package, not intended to be used alone.",
 	"author": {

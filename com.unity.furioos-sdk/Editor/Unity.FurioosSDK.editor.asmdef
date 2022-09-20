@@ -1,6 +1,6 @@
 {
     "name": "Unity.FurioosSDK.Editor",
-    "references": [ "Unity.FurioosSDK" ],
+    "references": [ "Unity.FurioosSDK", "Unity.FurioosConnectionKit"],
     "includePlatforms": ["Editor"],
     "excludePlatforms": []
 }

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:com.unity.furioos-exporter/Tests/Editor.meta
 guid: c6ac6ef913c14994a826a748f7549c23
+========
+guid: bb3f2d345beeb214ca5360f177e0fa1d
+>>>>>>>> origin/master:com.unity.furioos-exporter/Tests.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
