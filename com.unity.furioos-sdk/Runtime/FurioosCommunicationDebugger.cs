@@ -130,7 +130,7 @@ public class FurioosCommunicationDebugger : MonoBehaviour
 			tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), 8083);
 			tcpListener.Start();
 			if (debugLog) Debug.Log("Server is listening");
-			Byte[] bytes = new Byte[1024];
+			Byte[] bytes = new Byte[8192];
 			while (true)
 			{
 				using (connectedTcpClient = tcpListener.AcceptTcpClient())

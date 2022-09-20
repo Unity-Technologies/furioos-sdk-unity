@@ -29,6 +29,35 @@ namespace Furioos.ConnectionKit {
 
 	public abstract class FsMessage {
 
+
+		/// <summary>
+		/// check if there is a valid json in the buffer 
+		/// </summary>
+		/// <param name="data"></param>
+		/// <returns>
+		/// return -1 if the buffer is a valid json
+		/// else the postion of the error 
+		/// </returns>
+		public static int jsonMessageSplit(byte[] data)
+		{
+
+			try
+			{
+				string dataStr = System.Text.Encoding.UTF8.GetString(data);
+				JObject json = JObject.Parse(dataStr);
+				return -1;
+			}
+			catch (JsonReaderException readerExeption)
+			{
+				return readerExeption.LinePosition;
+			}
+			catch (Exception ex)
+            {
+				Debug.LogError(ex.Message);
+				throw ex;
+            }
+		}
+
 		public static FsMessage createFsMessage(byte[] data) {
 
 

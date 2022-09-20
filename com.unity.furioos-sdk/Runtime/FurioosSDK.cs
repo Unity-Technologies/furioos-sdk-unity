@@ -36,6 +36,7 @@ namespace Furioos.SDK {
          
             var Fsdebugger = this.gameObject.GetComponents<FurioosCommunicationDebugger>();
             var FsSDK = this.gameObject.GetComponents<FurioosSDK>();
+            var packageVersion = FurioosPackageVersion.Instance;
             
             if (Fsdebugger != null && Fsdebugger.Length>1)
                 Destroy(Fsdebugger[0]);
@@ -193,6 +194,7 @@ namespace Furioos.SDK {
         private void onSignedIn(FsPeer peer) {
 
             FsJsonMessage enableMessage = new FsJsonMessage(FsMessageMType.REQUEST, "app-com", "enableSDK");
+            enableMessage.setDataValue("sdkVersion", FurioosPackageVersion.Instance!= null ? FurioosPackageVersion.Instance.FurioosSDKVersion : "-");
 
             this.fsConnection.send(enableMessage);
         }
